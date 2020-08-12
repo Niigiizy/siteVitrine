@@ -116,11 +116,6 @@ class App extends React.Component {
     // console.log(window.navigator.userAgent.indexOf('Mobi') !== -1)
     // console.log(this.state)
     // const offset = this.state.offset
-    
-    console.log(this.tableauImageCouleur)
-    
-    console.log(this.state.etapeRotat)
-    
     if (window.navigator.userAgent.indexOf('Mobi') !== -1) {
       return (
       <div>
@@ -1423,7 +1418,6 @@ class ComposantApercu extends React.Component {
   }
 
   render() {
-    console.log(this.state.clique_1_1_1)
     return (
       <div className="ContenaireApercu">
         <div className="ContenairePrincipalApercu">
@@ -1434,7 +1428,7 @@ class ComposantApercu extends React.Component {
                   opacite : 0.85, 
                   opaciteVoirPlus : 0, 
                   opaciteReduir: 0,
-                  elevation : "0 0 0 red"
+                 
                 }}
                 to={(() => {
                   if (
@@ -1451,11 +1445,20 @@ class ComposantApercu extends React.Component {
                       opaciteVoirPlus : 0,
                       opacite: 0.85,
                       opaciteExtensible : 0.85,
+                      opaciteTexteAgrandi: 0,
+                      topTexteAgrandi: "0px",
+                      rightTexteAgrandi: "0px",
+                      widthTexteAgrandi: "230px",
+                      heighttexteAgrandi: "410px",
+                      widthImageAgrandi: "90%",
+                      heightImageAgrandi: "90%",
+                      topImageAgrandi: "2.5%",
+                      leftImageAgrandi: "5%",
                       largeur: "90%", 
                       hauteur: "90%",
                       margTop : "5%",
                       margLeft: "5%",
-                      elevation : "100 100 100 red"
+                      margRight: "0%"
                     }
                   } else if (
                     this.state.clique_1_1_2 || 
@@ -1470,33 +1473,51 @@ class ComposantApercu extends React.Component {
                     this.state.clique_1_1_1
                   ) {
                     return {
-                      largeur: "327px", 
+                      largeur: "310px", 
                       hauteur: "173px", 
                       transform: "scale(1)",
                       opacite : 0,
                       opaciteExtensible : 1,
-                      margTop : "-1px",
+                      margTop : "-2px",
                       margLeft: "-2px",
+                      opaciteTexteAgrandi: 1,
+                      topTexteAgrandi: "40%",
+                      rightTexteAgrandi: "-460px",
+                      widthTexteAgrandi: "320px",
+                      heightTexteAgrandi: "615px",
+                      widthImageAgrandi: "180%",
+                      heightImageAgrandi: "150%",
+                      topImageAgrandi: "10%",
+                      leftImageAgrandi: "5%",
                       opaciteVoirPlus : 0
                     }
                   } else if ( 
-                    this.state.focus_1_1_1  
+                    this.state.focus_1_1_1 &&
+                    !this.state.clique_1_1_1
                   ) {
                     return {
                       transform2 : "scale(1.05)", 
                       opaciteVoirPlus : 1,
                       opacite : 1,
                       opaciteExtensible : 1,
+                      opaciteTexteAgrandi: 0,
+                      topTexteAgrandi: "0px",
+                      rightTexteAgrandi: "0px",
+                      widthTexteAgrandi: "230px",
+                      heighttexteAgrandi: "410px",
+                      widthImageAgrandi: "90%",
+                      heightImageAgrandi: "90%",
+                      topImageAgrandi: "2.5%",
+                      leftImageAgrandi: "5%",
                       largeur: "90%", 
                       hauteur: "90%",
                       margTop : "5%",
                       margLeft: "5%",
-                      elevation: "0 0 0 red"
                     }
                   } 
                 })()}
                 config={
-                  key => (key === "largeur" || "hauteur" ? {duration: 100} : {duration: 500})
+                  key => (key === "largeur" || "hauteur" ? {duration: 5} : {duration: 500})
                 }
               >
                 { props => (
@@ -1515,8 +1536,7 @@ class ComposantApercu extends React.Component {
                             [0, 0.6, 0.7, 0.8, 0.9, 1],
                             [ "translateY(300px)", "translateY(-30px)", "translateY(25px)", "translateY(-20px)", "translateY(10px)", "translateY(0px)"]
                           ),
-                          opacity : props.opacite,
-                          boxShadow : props.elevation
+                          opacity : props.opacite
                          }
                       } else if (
                         this.state.clique_1_1_2 || 
@@ -1532,11 +1552,10 @@ class ComposantApercu extends React.Component {
                       ) {
                         return {
                           transform : props.transform,
-                          // marginTop: props.margTop,
-                          // margLeft: props.margLeft
                         }
                       } else if ( 
-                        this.state.focus_1_1_1 
+                        this.state.focus_1_1_1 &&
+                        !this.state.clique_1_1_1 
                       ){
                         return {
                           transform: props.transform2
@@ -1547,18 +1566,43 @@ class ComposantApercu extends React.Component {
                   >
                     <animated.div
                       className="Apercu_extensible_1_1_1"
-                      id="gif_1_1_1"
-                      // onClick={() => this.setState({ clique_1_1_1 : false})}
                       style={{
                         width: props.largeur, 
                         height: props.hauteur,
                         opacity: props.opaciteExtensible,
                         marginTop: props.margTop,
                         marginLeft: props.margLeft,
-                        boxShadow : props.elevation
+                        boxShadow : props.elevation,
+                        backgroundColor: "yellow"
                       }}
                     >
+                      <animated.div
+                        className="Image_extensible_1_1_1"
+                        id="gif_1_1_1"
+                        style={{
+                          position: "absolute",
+                          top: props.topImageAgrandi,
+                          left: props.leftImageAgrandi,
+                          width: props.widthImageAgrandi, 
+                          height: props.heightImageAgrandi,
+                        }}
+                      >
 
+                      </animated.div>
+                      <animated.div
+                        className="Texte_extensible_1_1_1"
+                        style={{
+                          width: props.widthTexteAgrandi, 
+                          height: props.heightTexteAgrandi,
+                          backgroundColor: "white",
+                          position: "absolute",
+                          top: props.topTexteAgrandi,
+                          right: props.rightTexteAgrandi,
+                          opacity: props.opaciteTexteAgrandi
+                        }}
+                      >
+
+                      </animated.div>
                     </animated.div>
                     <animated.div 
                       className="VoirPlus"
@@ -1576,7 +1620,16 @@ class ComposantApercu extends React.Component {
                   y : 0, 
                   opacite : 0.85, 
                   opaciteVoirPlus : 0, 
-                  opaciteReduir: 0
+                  opaciteReduir: 0,
+                  opaciteTexteAgrandi: 0,
+                  topTexteAgrandi: "0px",
+                  rightTexteAgrandi: "0px",
+                  widthTexteAgrandi: "230px",
+                  heighttexteAgrandi: "410px",
+                  widthImageAgrandi: "90%",
+                  heightImageAgrandi: "90%",
+                  topImageAgrandi: "2.5%",
+                  leftImageAgrandi: "5%"
                 }}
                 to={(() => {
                   if (
@@ -1593,6 +1646,15 @@ class ComposantApercu extends React.Component {
                       opaciteVoirPlus : 0,
                       opacite: 0.85,
                       opaciteExtensible : 0.85,
+                      opaciteTexteAgrandi: 0,
+                      topTexteAgrandi: "0px",
+                      rightTexteAgrandi: "0px",
+                      widthTexteAgrandi: "230px",
+                      heighttexteAgrandi: "410px",
+                      widthImageAgrandi: "90%",
+                      heightImageAgrandi: "90%",
+                      topImageAgrandi: "2.5%",
+                      leftImageAgrandi: "5%",
                       largeur: "90%", 
                       hauteur: "90%",
                       margTop : "5%",
@@ -1606,18 +1668,28 @@ class ComposantApercu extends React.Component {
                   ) {
                     return {
                       opacite : 0,
+                      transform: "scale(0)"
                     }
                   } else if (
                     this.state.clique_1_1_2
                   ) {
                     return {
-                      largeur: "325%", 
+                      largeur: "310%", 
                       hauteur: "173%", 
                       transform: "scale(1)",
                       opacite : 0,
                       opaciteExtensible : 1,
-                      margTop : "-1%",
+                      margTop : "-2%",
                       margLeft: "-113%",
+                      opaciteTexteAgrandi: 1,
+                      topTexteAgrandi: "40%",
+                      rightTexteAgrandi: "-205%",
+                      widthTexteAgrandi: "320px",
+                      heightTexteAgrandi: "615px",
+                      widthImageAgrandi: "180%",
+                      heightImageAgrandi: "150%",
+                      topImageAgrandi: "10%",
+                      leftImageAgrandi: "-105%",
                       opaciteVoirPlus : 0
                     }
                   }  else if ( 
@@ -1629,6 +1701,15 @@ class ComposantApercu extends React.Component {
                       opaciteVoirPlus : 1,
                       opacite : 1,
                       opaciteExtensible : 1,
+                      opaciteTexteAgrandi: 0,
+                      topTexteAgrandi: "0px",
+                      rightTexteAgrandi: "0px",
+                      widthTexteAgrandi: "230px",
+                      heighttexteAgrandi: "410px",
+                      widthImageAgrandi: "90%",
+                      heightImageAgrandi: "90%",
+                      topImageAgrandi: "2.5%",
+                      leftImageAgrandi: "5%",
                       largeur: "90%", 
                       hauteur: "90%",
                       margTop : "5%",
@@ -1637,7 +1718,7 @@ class ComposantApercu extends React.Component {
                   } 
                 })()}
                 config={
-                  key => (key === "largeur" || "hauteur" ? {duration: 100} : {duration: 500})}
+                  key => (key === "largeur" || "hauteur" ? {duration: 5} : {duration: 500})}
               >
                 { props => (
                   <animated.div 
@@ -1677,8 +1758,8 @@ class ComposantApercu extends React.Component {
                       ) {
                         return {
                           transform : props.transform,
-                          marginTop: props.margTop,
-                          margLeft: props.margLeft
+                          // marginTop: props.margTop,
+                          // margLeft: props.margLeft
                         }
                       } else if ( 
                         this.state.focus_1_1_2
@@ -1691,17 +1772,43 @@ class ComposantApercu extends React.Component {
                   >
                     <animated.div
                       className="Apercu_extensible_1_1_2"
-                      id="gif_1_1_2"
-                      // onClick={() => this.setState({ clique_1_1_1 : false})}
                       style={{
                         width: props.largeur, 
                         height: props.hauteur,
                         opacity: props.opaciteExtensible,
                         marginTop: props.margTop,
-                        marginLeft: props.margLeft
+                        marginLeft: props.margLeft,
+                        boxShadow : props.elevation,
+                        backgroundColor: "#4169E1"
                       }}
                     >
+                      <animated.div
+                        className="Image_extensible_1_1_1"
+                        id="gif_1_1_2"
+                        style={{
+                          position: "absolute",
+                          top: props.topImageAgrandi,
+                          left: props.leftImageAgrandi,
+                          width: props.widthImageAgrandi, 
+                          height: props.heightImageAgrandi,
+                        }}
+                      >
 
+                      </animated.div>
+                      <animated.div
+                        className="Texte_extensible_1_1_1"
+                        style={{
+                          width: props.widthTexteAgrandi, 
+                          height: props.heightTexteAgrandi,
+                          backgroundColor: "white",
+                          position: "absolute",
+                          top: props.topTexteAgrandi,
+                          right: props.rightTexteAgrandi,
+                          opacity: props.opaciteTexteAgrandi
+                        }}
+                      >
+
+                      </animated.div>
                     </animated.div>
                     <animated.div 
                       className="VoirPlus"
@@ -1884,7 +1991,6 @@ class ComposantApercu extends React.Component {
                   opaciteReduir: 0,
                   opaciteExtensible : 0.85,
                   transform: "scale(1)", 
-                  transformAgrandi: "scale(1)",
                   largeur: "90%", 
                   hauteur: "90%",
                   margBot : "5%",
@@ -1905,7 +2011,6 @@ class ComposantApercu extends React.Component {
                       opaciteVoirPlus : 0,
                       opacite: 0.85,
                       opaciteExtensible : 0.85,
-                      transformAgrandi: "scale(1)",
                       largeur: "90%", 
                       hauteur: "90%",
                       margBot : "-2%",
@@ -1924,14 +2029,13 @@ class ComposantApercu extends React.Component {
                     this.state.clique_2_1
                   ) {
                     return {
-                      largeur: "500px", 
-                      hauteur: "150px", 
-                      opacite : 0,
+                      largeur: "400%", 
+                      hauteur: "213%", 
                       opaciteExtensible : 1,
                       transform: "scale(1)", 
-                      transformAgrandi: "scale(1)",
-                      margBot : "20%",
-                      margLeft: "-2%",
+                      margBot : "-195%",
+                      margLeft: "-270%",
+                      margRight: "-2%",
                       opaciteVoirPlus : 0
                     }
                   } else if ( 
@@ -1944,7 +2048,6 @@ class ComposantApercu extends React.Component {
                       opacite : 1,
                       opaciteExtensible : 1,
                       transform: "scale(1)", 
-                      transformAgrandi: "scale(1)",
                       largeur: "90%", 
                       hauteur: "90%",
                       margBot : "-5%",
@@ -1969,7 +2072,7 @@ class ComposantApercu extends React.Component {
                         !this.state.clique_1_1_1 &&
                         !this.state.clique_1_2_1 &&
                         !this.state.clique_2_2 && 
-                        !this.state.focus_2_1
+                        !this.state.clique_2_1
                       ) {
                         return {
                           transform: props.y.interpolate(
@@ -1991,12 +2094,12 @@ class ComposantApercu extends React.Component {
                         this.state.clique_2_1 
                       ) {
                         return {
-                          transform : props.transform,
-                          marginTop: props.margTop,
-                          margLeft: props.margLeft
+                          // width: props.largeur, 
+                          // height: props.hauteur,
                         }
                       } else if ( 
-                        this.state.focus_2_1 
+                        this.state.focus_2_1 && 
+                        !this.state.clique_2_1 
                       ) {
                         return {
                           transform: "scale(1.05)"
@@ -2011,8 +2114,10 @@ class ComposantApercu extends React.Component {
                         width: props.largeur, 
                         height: props.hauteur,
                         opacity: props.opaciteExtensible,
-                        // marginTop: props.margBot,
-                        // marginLeft: props.margLeft
+                        marginBottom: props.margBot,
+                        marginLeft: props.margLeft,
+                        marginRight: props.margRight
+                        // boxShadow : props.elevation
                       }}
                     >
                     </animated.div>
@@ -2197,10 +2302,14 @@ class ComposantApercu extends React.Component {
                         Voir plus...
                       </p>
                     </animated.div>
-                  
                   </animated.div>
                 )}
               </Spring>
+              <animated.div
+                className="BoutonReduir"
+              >
+
+              </animated.div>
         </div>
       </div>
     )
