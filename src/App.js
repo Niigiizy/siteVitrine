@@ -1573,7 +1573,7 @@ class ComposantApercu extends React.Component {
                         marginTop: props.margTop,
                         marginLeft: props.margLeft,
                         boxShadow : props.elevation,
-                        backgroundColor: "yellow"
+                        backgroundColor: "red"
                       }}
                     >
                       <animated.div
