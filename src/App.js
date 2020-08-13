@@ -1401,9 +1401,11 @@ class ComposantInfoPerso extends React.Component {
 
 class ComposantApercu extends React.Component {
 
-  constructor() {
-    super()
+  constructor(props) {
+    super(props)
     this.state = {
+      ouvert: false,
+      animation : true,
       focus_1_1_1 : false,
       focus_1_1_2 : false,
       focus_1_2_1 : false,
@@ -1415,14 +1417,111 @@ class ComposantApercu extends React.Component {
       clique_2_1 : false,
       clique_2_2 : false,
     }
+    this.reset = false
   }
+
 
   render() {
     return (
       <div className="ContenaireApercu">
-        <div className="ContenairePrincipalApercu">
-          
-        </div>
+        <Spring
+          native
+          onStart={
+            () => console.log("debut anim")
+          }
+          onRest={
+            () => console.log("fin anim")
+          }
+          onFrame={() => console.log("anim en cours")}
+          from={{
+            y: 0
+          }}
+          to={
+            this.state.clique_1_1_1 ? {y: 1} : {y: 0}
+          }
+          config={{
+            duration: 1000
+          }}
+        >
+          {(props) => (
+            <animated.div className="ContenairePrincipalApercu">
+              <animated.div
+                className="Apercu_1"
+                onClick={
+                  () => {
+                    this.setState({ clique_1_1_1: !this.state.clique_1_1_1 });
+                  }
+                }
+                style={
+                  this.state.clique_1_1_1
+                  ?
+                  { 
+                    width: props.y.interpolate(
+                      [0, 0.5, 0.7, 0.8, 1],
+                      ["70%", "90%", "100%", "150%", "100%"]
+                    )
+                  } 
+                  :
+                  { 
+                    width: props.y.interpolate(
+                      [0, 0.5, 0.7, 0.8, 1],
+                      ["70%", "90%", "100%", "150%", "100%"]
+                    )
+                  } 
+                }
+              >
+                <animated.div
+                  className="Apercu_1_1"
+                  style={{
+
+                  }}
+                >
+
+                </animated.div>
+                <animated.div
+                  className="Apercu_1_2"
+                >
+                  
+                </animated.div>
+              </animated.div>
+              <animated.div
+                className="Apercu_2"
+                onClick={
+                  () => this.setState({ clique_2_1: !this.state.clique_2_1 })
+                }
+                style={( () => {
+                  if (this.state.clique_1_1_1) {
+                    ({ 
+                      width: props.y.interpolate(
+                        [0, 0.5, 0.7, 0.8, 1],
+                        ["28%", "10%", "0%", "0%", "0%"]
+                      ),
+                      marginLeft: props.y.interpolate(
+                        [0, 0.5, 0.7, 0.8, 1],
+                        ["3%", "0%", "0%", "0%", "0%"]
+                      )
+                    })
+                  } else if (!this.state.clique_1_1_1) {
+                    return (
+                      { 
+                        width: props.y.interpolate(
+                          [0, 0.5, 0.7, 0.8, 1],
+                          ["28%", "10%", "0%", "0%", "0%"]
+                        ),
+                        marginLeft: props.y.interpolate(
+                          [0, 0.5, 0.7, 0.8, 1],
+                          ["3%", "0%", "0%", "0%", "0%"]
+                        )
+                      })
+                  }
+                } )()}
+              >
+
+              </animated.div>
+                
+            </animated.div>
+          )}
+        </Spring>
       </div>
     )
   }
