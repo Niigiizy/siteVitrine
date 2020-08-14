@@ -1416,12 +1416,21 @@ class ComposantApercu extends React.Component {
       clique_1_2_1 : false,
       clique_2_1 : false,
       clique_2_2 : false,
+      ouvert_1_1_1 : false,
+      ouvert_1_1_2 : false,
+      ouvert_1_2_1 : false,
+      ouvert_2_1 : false,
+      ouvert_2_2 : false,
     }
     this.reset = false
   }
 
 
   render() {
+    console.log("ouvert_1_1_1 : ")
+    console.log(this.state.ouvert_1_1_1)
+    console.log("ouvert_2_1 : ")
+    console.log(this.state.ouvert_2_1)
     return (
       <div className="ContenaireApercu">
         <Spring
@@ -1430,68 +1439,409 @@ class ComposantApercu extends React.Component {
             () => console.log("debut anim")
           }
           onRest={
-            () => console.log("fin anim")
+            () => {
+              if (
+                this.state.clique_1_1_1
+              ) {
+                this.setState({ ouvert_1_1_1: true })
+              } else if (
+                this.state.clique_1_1_2
+              ) {
+                this.setState({ ouvert_1_1_2: true })
+              } else if (
+                this.state.clique_1_2_1
+              ) {
+                this.setState({ ouvert_1_2_1: true })
+              } else if (
+                this.state.clique_2_1
+              ) {
+                this.setState({ ouvert_2_1: true })
+              } else if (
+                this.state.clique_2_2
+              ) {
+                this.setState({ ouvert_2_2: true })
+              } else {
+                this.setState({
+                  ouvert_1_1_1: false,
+                  ouvert_1_1_2 : false,
+                  ouvert_1_2_1 : false,
+                  ouvert_2_1 : false,
+                  ouvert_2_2 : false
+                })
+              }
+            }
           }
           onFrame={() => console.log("anim en cours")}
           from={{
             y: 0
           }}
           to={
-            this.state.clique_1_1_1 ? {y: 1} : {y: 0}
+            this.state.clique_1_1_1 || 
+            this.state.clique_1_1_2 || 
+            this.state.clique_1_2_1 || 
+            this.state.clique_2_1 || 
+            this.state.clique_2_2
+            ? 
+            { y: 1 } 
+            : 
+            { y: 0 }
           }
           config={{
-            duration: 1000
+            duration: 250
           }}
         >
           {(props) => (
             <animated.div className="ContenairePrincipalApercu">
               <animated.div
                 className="Apercu_1"
-                onClick={
-                  () => {
-                    this.setState({ clique_1_1_1: !this.state.clique_1_1_1 });
+                style={ ( () => {
+                  if (
+                    this.state.clique_1_1_1 || 
+                    this.state.clique_1_1_2 || 
+                    this.state.clique_1_2_1
+                  ) {
+                    return { 
+                      width: props.y.interpolate(
+                        [0, 0.5, 0.7, 0.8, 1],
+                        ["70%", "90%", "100%", "150%", "100%"]
+                      )
+                    }
+                  } else if (
+                    !this.state.clique_1_1_1 && 
+                    !this.state.clique_1_1_2 &&
+                    !this.state.clique_1_2_1 && 
+                    !this.state.clique_2_1 &&
+                    !this.state.clique_2_2 &&
+                    (this.state.ouvert_1_1_1 || this.state.ouvert_1_1_2 || this.state.ouvert_1_2_1)
+                  ) {
+                    return { 
+                      width: props.y.interpolate(
+                        [0, 0.5, 0.7, 0.8, 1],
+                        ["70%", "90%", "100%", "150%", "100%"]
+                      )
+                    } 
+                  } else if (
+                    !this.state.clique_1_1_1 && 
+                    !this.state.clique_1_1_2 &&
+                    !this.state.clique_1_2_1 && 
+                    !this.state.clique_2_1 &&
+                    !this.state.clique_2_2 && 
+                    (this.state.ouvert_2_1 || this.state.ouvert_2_2)
+                  ) {
+                    return { 
+                      width: props.y.interpolate(
+                        [0, 0.5, 0.7, 0.8, 1],
+                        ["70%", "60%", "30%", "20%", "0%"]
+                      )
+                    } 
+                  } else if (
+                    this.state.clique_2_1 || 
+                    this.state.clique_2_2
+                  ) {
+                    return {
+                      width: props.y.interpolate(
+                        [0, 0.5, 0.7, 0.8, 1],
+                        ["70%", "30%", "20%", "10%", "0%"]
+                      )
+                    }
                   }
-                }
-                style={
-                  this.state.clique_1_1_1
-                  ?
-                  { 
-                    width: props.y.interpolate(
-                      [0, 0.5, 0.7, 0.8, 1],
-                      ["70%", "90%", "100%", "150%", "100%"]
-                    )
-                  } 
-                  :
-                  { 
-                    width: props.y.interpolate(
-                      [0, 0.5, 0.7, 0.8, 1],
-                      ["70%", "90%", "100%", "150%", "100%"]
-                    )
-                  } 
+                } )()
                 }
               >
                 <animated.div
                   className="Apercu_1_1"
-                  style={{
+                  style={ (() => {
+                    if (
+                      this.state.clique_1_1_1 ||
+                      this.state.clique_1_1_2
+                    ) {
+                      return {
+                        height: props.y.interpolate(
+                          [0, 0.5, 0.7, 0.8, 1],
+                          ["59%", "70%", "80%", "90%", "100%"]
+                        )
+                      }
+                    } else if (
+                      this.state.clique_1_2_1
+                    ) {
+                      return {
+                        height: props.y.interpolate(
+                          [0, 0.5, 0.7, 0.8, 1],
+                          ["59%", "35%", "20%", "10%", "0%"]
+                        )
+                      }
+                    } else if (
+                      this.state.ouvert_1_1_1 ||
+                      this.state.ouvert_1_1_2
+                    ) {
+                      return {
+                        height: props.y.interpolate(
+                          [0, 0.5, 0.7, 0.8, 1],
+                          ["59%", "65%", "80%", "90%", "100%"]
+                        )
+                      }
+                    } else if (
+                      this.state.ouvert_1_2_1
+                    ) {
+                      return {
+                        height: props.y.interpolate(
+                          [0, 0.5, 0.7, 0.8, 1],
+                          ["59%", "35%", "20%", "10%", "0%"]
+                        )
+                      }
+                    }
+                  })()
 
-                  }}
+                  }
                 >
+                  <animated.div
+                    className="Apercu_1_1_1"
+                    onClick={
+                      () => {
+                        this.setState({ clique_1_1_1: !this.state.clique_1_1_1 });
+                      }
+                    }
+                    style={ ( () => {
+                      if (
+                        this.state.clique_1_1_1
+                      ) {
+                        return {
+                          width: props.y.interpolate(
+                            [0, 0.5, 0.7, 0.8, 1],
+                            ["48%", "70%", "80%", "90%", "100%"]
+                          )
+                        }
+                      } else if (
+                        this.state.clique_1_1_2
+                      ) {
+                        return {
+                          width: props.y.interpolate(
+                            [0, 0.5, 0.7, 0.8, 1],
+                            ["48%", "30%", "20%", "10%", "0%"]
+                          )
+                        }
+                      } else if (
+                        this.state.ouvert_1_1_1
+                      ) {
+                        return {
+                          width: props.y.interpolate(
+                            [0, 0.5, 0.7, 0.8, 1],
+                            ["48%", "70%", "80%", "90%", "100%"]
+                          )
+                        }
+                      } else if (
+                        this.state.ouvert_1_1_2
+                      ) {
+                        return {
+                          width: props.y.interpolate(
+                            [0, 0.5, 0.7, 0.8, 1],
+                            ["48%", "30%", "20%", "10%", "0%"]
+                          )
+                        }
+                      }
+                    } )() }
+                  >
+                    <animated.div
+                      className="Contenaire_gif_apercu_1_1_1"
+                      id="gif_1_1_1"
+                      style={ ( () => {
+                        if (
+                          this.state.clique_1_1_1
+                        ) {
+                          return {
+                            width: props.y.interpolate(
+                              [0, 0.5, 0.7, 0.8, 1],
+                              ["95%", "80%", "70%", "60%", "50.5%"]
+                            ),
+                            marginLeft : props.y.interpolate(
+                              [0, 0.5, 0.7, 0.8, 1],
+                              ["5%", "3%", "2%", "2%", "2%"]
+                            )
+                          }
+                        }
+                      } )() }
+                    >
 
+                    </animated.div>
+                    <animated.div
+                      className="Contenaire_texte_apercu_1_1_1"
+                      style={ ( () => {
+                        if (
+                          this.state.clique_1_1_1
+                        ) {
+                          return {
+                            width: props.y.interpolate(
+                              [0, 0.5, 0.7, 0.8, 1],
+                              ["0%", "20%", "30%", "40%", "43%"]
+                            ),
+                            opacity: props.y.interpolate(
+                              [0, 0.5, 0.7, 0.9, 1],
+                              ["0", "0", "0", "0.8", "1"]
+                            ), 
+                            marginLeft : props.y.interpolate(
+                              [0, 0.5, 0.7, 0.8, 1],
+                              ["0%", "30%", "35%", "38%", "50%"]
+                            ), 
+                            marginTop : props.y.interpolate(
+                              [0, 0.5, 0.7, 0.8, 1],
+                              ["0%", "0%", "0%", "2%", "2.5%"]
+                            )
+                          }
+                        }
+                      } )() }
+                    >
+                      
+                    </animated.div>
+                  </animated.div>
+                  <animated.div
+                    className="Apercu_1_1_2"
+                    onClick={
+                      () => {
+                        this.setState({ clique_1_1_2: !this.state.clique_1_1_2 });
+                      }
+                    }
+                    style={ ( () => {
+                      if (
+                        this.state.clique_1_1_2
+                      ) {
+                        return {
+                          width: props.y.interpolate(
+                            [0, 0.5, 0.7, 0.8, 1],
+                            ["48%", "70%", "80%", "90%", "100%"]
+                          ),
+                          marginLeft: props.y.interpolate(
+                            [0, 0.5, 0.7, 0.8, 1],
+                            ["4%", "0%", "0%", "0%", "0%"]
+                          )
+                        }
+                      } else if (
+                        this.state.clique_1_1_1
+                      ) {
+                        return {
+                          width: props.y.interpolate(
+                            [0, 0.5, 0.7, 0.8, 1],
+                            ["48%", "30%", "20%", "10%", "0%"]
+                          ),
+                          marginLeft: props.y.interpolate(
+                            [0, 0.5, 0.7, 0.8, 1],
+                            ["4%", "0%", "0%", "0%", "0%"]
+                          )
+                        }
+                      } else if (
+                        this.state.ouvert_1_1_2
+                      ) {
+                        return {
+                          width: props.y.interpolate(
+                            [0, 0.5, 0.7, 0.8, 1],
+                            ["48%", "70%", "80%", "90%", "100%"]
+                          ),
+                          marginLeft: props.y.interpolate(
+                            [0, 0.5, 0.7, 0.8, 1],
+                            ["4%", "0%", "0%", "0%", "0%"]
+                          )
+                        }
+                      } else if (
+                        this.state.ouvert_1_1_1
+                      ) {
+                        return {
+                          width: props.y.interpolate(
+                            [0, 0.5, 0.7, 0.8, 1],
+                            ["48%", "30%", "20%", "10%", "0%"]
+                          ),
+                          marginLeft: props.y.interpolate(
+                            [0, 0.5, 0.7, 0.8, 1],
+                            ["4%", "0%", "0%", "0%", "0%"]
+                          )
+                        }
+                      }
+                    } )() }
+                  >
+
+                  </animated.div>
                 </animated.div>
                 <animated.div
                   className="Apercu_1_2"
+                  style={ ( () => {
+                    if (
+                      this.state.clique_1_1_1 ||
+                      this.state.clique_1_1_2
+                    ) {
+                      return {
+                        height: props.y.interpolate(
+                          [0, 0.5, 0.7, 0.8, 1],
+                          ["38.5%", "30%", "20%", "10%", "0%"]
+                        ),
+                        marginTop: props.y.interpolate(
+                          [0, 0.5, 0.7, 0.8, 1],
+                          ["3.8%", "0%", "0%", "0%", "0%"]
+                        )
+                      }
+                    } else if (
+                      this.state.clique_1_2_1
+                    ) {
+                      return {
+                        height: props.y.interpolate(
+                          [0, 0.5, 0.7, 0.8, 1],
+                          ["38.5%", "65%", "80%", "90%", "100%"]
+                        ),
+                        marginTop: props.y.interpolate(
+                          [0, 0.5, 0.7, 0.8, 1],
+                          ["3.8%", "0%", "0%", "0%", "0%"]
+                        )
+                      }
+                    } else if (
+                      this.state.ouvert_1_1_1 ||
+                      this.state.ouvert_1_1_2
+                    ) {
+                      return {
+                        height: props.y.interpolate(
+                          [0, 0.5, 0.7, 0.8, 1],
+                          ["38.5%", "35%", "20%", "10%", "0%"]
+                        ),
+                        marginTop: props.y.interpolate(
+                          [0, 0.5, 0.7, 0.8, 1],
+                          ["3.8%", "0%", "0%", "0%", "0%"]
+                        )
+                      }
+                    } else if (
+                      this.state.ouvert_1_2_1
+                    ) {
+                      return {
+                        height: props.y.interpolate(
+                          [0, 0.5, 0.7, 0.8, 1],
+                          ["38.5%", "65%", "80%", "90%", "100%"]
+                        ),
+                        marginTop: props.y.interpolate(
+                          [0, 0.5, 0.7, 0.8, 1],
+                          ["3.8%", "0%", "0%", "0%", "0%"]
+                        )
+                      }
+                    }
+                  })()
+
+                  }
                 >
-                  
+                  <animated.div
+                    className="Apercu_1_2_1"
+                    onClick={
+                      () => {
+                        this.setState({ clique_1_2_1: !this.state.clique_1_2_1 });
+                      }
+                    }
+                  >
+
+                  </animated.div>
                 </animated.div>
               </animated.div>
               <animated.div
                 className="Apercu_2"
-                onClick={
-                  () => this.setState({ clique_2_1: !this.state.clique_2_1 })
-                }
                 style={( () => {
-                  if (this.state.clique_1_1_1) {
-                    ({ 
+                  if (
+                    this.state.clique_1_1_1 || 
+                    this.state.clique_1_1_2 || 
+                    this.state.clique_1_2_1
+                  ) {
+                    return { 
                       width: props.y.interpolate(
                         [0, 0.5, 0.7, 0.8, 1],
                         ["28%", "10%", "0%", "0%", "0%"]
@@ -1500,23 +1850,174 @@ class ComposantApercu extends React.Component {
                         [0, 0.5, 0.7, 0.8, 1],
                         ["3%", "0%", "0%", "0%", "0%"]
                       )
-                    })
-                  } else if (!this.state.clique_1_1_1) {
-                    return (
-                      { 
-                        width: props.y.interpolate(
-                          [0, 0.5, 0.7, 0.8, 1],
-                          ["28%", "10%", "0%", "0%", "0%"]
-                        ),
-                        marginLeft: props.y.interpolate(
-                          [0, 0.5, 0.7, 0.8, 1],
-                          ["3%", "0%", "0%", "0%", "0%"]
-                        )
-                      })
+                    }
+                  } else if (
+                    !this.state.clique_1_1_1 && 
+                    !this.state.clique_1_1_2 && 
+                    !this.state.clique_1_2_1 && 
+                    !this.state.clique_2_1 && 
+                    !this.state.clique_2_2 &&
+                    (this.state.ouvert_1_1_1 || this.state.ouvert_1_1_2 || this.state.ouvert_1_2_1)
+                  ) {
+                    return { 
+                      width: props.y.interpolate(
+                        [0, 0.5, 0.7, 0.8, 1],
+                        ["28%", "10%", "0%", "0%", "0%"]
+                      ),
+                      marginLeft: props.y.interpolate(
+                        [0, 0.5, 0.7, 0.8, 1],
+                        ["3%", "0%", "0%", "0%", "0%"]
+                      )
+                    }
+                  } else if (
+                    !this.state.clique_1_1_1 && 
+                    !this.state.clique_1_1_2 && 
+                    !this.state.clique_1_2_1 && 
+                    !this.state.clique_2_1 && 
+                    !this.state.clique_2_2 &&
+                    (this.state.ouvert_2_1 || this.state.ouvert_2_2)
+                  ) {
+                    return { 
+                      width: props.y.interpolate(
+                        [0, 0.5, 0.7, 0.8, 1],
+                        ["28%", "40%", "70%", "80%", "100%"]
+                      ),
+                      marginLeft: props.y.interpolate(
+                        [0, 0.5, 0.7, 0.8, 1],
+                        ["3%", "0%", "0%", "0%", "0%"]
+                      )
+                    }
+                  } else if (
+                    this.state.clique_2_1 || 
+                    this.state.clique_2_2
+                  ) {
+                    return {
+                      width: props.y.interpolate(
+                        [0, 0.5, 0.7, 0.8, 1],
+                        ["28%", "70%", "80%", "90%", "100%"]
+                      ),
+                      marginLeft: props.y.interpolate(
+                        [0, 0.5, 0.7, 0.8, 1],
+                        ["3%", "2%", "1%", "0%", "0%"]
+                      )
+                    }
                   }
                 } )()}
               >
+                <animated.div
+                  className="Apercu_2_1"
+                  onClick={
+                    () => {
+                      this.setState({ clique_2_1: !this.state.clique_2_1 });
+                    }
+                  }
+                  style={ ( () => {
+                    if (
+                      this.state.clique_2_1
+                    ) {
+                      return {
+                        height: props.y.interpolate(
+                          [0, 0.5, 0.7, 0.8, 1],
+                          ["48.5%", "70%", "80%", "90%", "100%"]
+                        )
+                      }
+                    } else if (
+                      this.state.clique_2_2
+                    ) {
+                      return {
+                        height: props.y.interpolate(
+                        [0, 0.5, 0.7, 0.8, 1],
+                        ["48.5%", "30%", "20%", "10%", "0%"]
+                        )
+                      }
+                    } else if (
+                      this.state.ouvert_2_1
+                    ) {
+                      return {
+                        height: props.y.interpolate(
+                        [0, 0.5, 0.7, 0.8, 1],
+                        ["48.5%", "70%", "80%", "90%", "100%"]
+                        )
+                      }
+                    } else if (
+                      this.state.ouvert_2_2
+                    ) {
+                      return {
+                        height: props.y.interpolate(
+                        [0, 0.5, 0.7, 0.8, 1],
+                        ["48.5%", "30%", "20%", "10%", "0%"]
+                        )
+                      }
+                    }
+                  } )() }
+                >
 
+                </animated.div>
+                <animated.div
+                  className="Apercu_2_2"
+                  onClick={
+                    () => {
+                      this.setState({ clique_2_2: !this.state.clique_2_2 });
+                    }
+                  }
+                  style={ ( () => {
+                    if (
+                      this.state.clique_2_1
+                    ) {
+                      return {
+                        height: props.y.interpolate(
+                          [0, 0.5, 0.7, 0.8, 1],
+                          ["48.5%", "30%", "20%", "10%", "0%"]
+                        ),
+                        marginTop: props.y.interpolate(
+                          [0, 0.5, 0.7, 0.8, 1],
+                          ["10%", "0%", "0%", "0%", "0%"]
+                        )
+                      }
+                    } else if (
+                      this.state.clique_2_2
+                    ) {
+                      return {
+                        height: props.y.interpolate(
+                        [0, 0.5, 0.7, 0.8, 1],
+                        ["48.5%", "70%", "80%", "90%", "100%"]
+                        ),
+                        marginTop: props.y.interpolate(
+                          [0, 0.5, 0.7, 0.8, 1],
+                          ["10%", "0%", "0%", "0%", "0%"]
+                        )
+                      }
+                    } else if (
+                      this.state.ouvert_2_2
+                    ) {
+                      return {
+                        height: props.y.interpolate(
+                        [0, 0.5, 0.7, 0.8, 1],
+                        ["48.5%", "70%", "80%", "90%", "100%"]
+                        ),
+                        marginTop: props.y.interpolate(
+                          [0, 0.5, 0.7, 0.8, 1],
+                          ["10%", "0%", "0%", "0%", "0%"]
+                        )
+                      }
+                    } else if (
+                      this.state.ouvert_2_1
+                    ) {
+                      return {
+                        height: props.y.interpolate(
+                        [0, 0.5, 0.7, 0.8, 1],
+                        ["48.5%", "30%", "20%", "10%", "0%"]
+                        ),
+                        marginTop: props.y.interpolate(
+                          [0, 0.5, 0.7, 0.8, 1],
+                          ["10%", "0%", "0%", "0%", "0%"]
+                        )
+                      }
+                    }
+                  } )() }
+                >
+                  
+                </animated.div>
               </animated.div>
                 
             </animated.div>
