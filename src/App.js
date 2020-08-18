@@ -15,6 +15,7 @@ class App extends React.Component {
   constructor() {
     super()
     this.state = {
+      resiz: false,
       offset : 0,
       boutonClique : 'home',
       rotat : false,
@@ -24,7 +25,6 @@ class App extends React.Component {
       rotat5 : false,
       etapeRotat : 0,
       remiseEtapeAZero : false,
-      
     }
     this.tableauImageCouleur = [ 
       [ "./infoPerso-portefolio.png", "#0abde3", "infoPerso", "20%", "14%", "60%", "60%", "/infoPerso", "info perso" ],
@@ -84,6 +84,7 @@ class App extends React.Component {
           break;
       }
     }
+    
   }
 
   path = React.createRef()
@@ -91,6 +92,11 @@ class App extends React.Component {
   
 
   componentDidMount() {
+    window.onresize = () => this.setState({resiz : !this.state.resiz})
+  }
+
+  componentWillMount() {
+    
   }
 
   componentDidUpdate() {
@@ -116,13 +122,469 @@ class App extends React.Component {
     // console.log(window.navigator.userAgent.indexOf('Mobi') !== -1)
     // console.log(this.state)
     // const offset = this.state.offset
-    if (window.navigator.userAgent.indexOf('Mobi') !== -1) {
+    
+    if (
+      window.navigator.userAgent.indexOf('Mobi') !== -1 && window.innerHeight >= window.innerWidth
+    ) {
       return (
-      <div>
-        <p>
-          site mobile
-        </p>
-      </div>   
+        <HashRouter>
+        <div className="App-web_mobile">
+        
+          <div style={{flex: 1}}>
+            <Switch>
+              <Route path="/home" children={<ComposantHome/>} />
+              <Route path="/infoPerso" children={<ComposantInfoPerso/>} />
+              <Route path="/apercu" children={<ComposantApercu/>} />
+              <Route path="/contact" children={<ComposantContact/>} />
+              <Route path="/competence" children={<ComposantCompetence/>} />
+            </Switch>
+            <div
+              style={{
+                position: "absolute",
+                width: "100%",
+                height: "10%",
+                bottom: "10%",
+                left: "0%"
+              }}
+            >
+              {/*  Animation Bouton 1 */}
+            <Spring
+              native
+              to={(() => {
+                if (this.state.rotat && this.state.etapeRotat === 0) {
+                  return {transform : `perspective(600px) rotateY(0deg)`}
+                } else if (!this.state.rotat && this.state.etapeRotat === 0){
+                  return {transform : `perspective(600px) rotateY(180deg)`}
+                } else if (this.state.etapeRotat === 1) {
+                  return {transform : `perspective(600px) rotateY(450deg)`}
+                } else if (this.state.etapeRotat === 2) {
+                  return {transform: `perspective(600px) rotateY(1080deg)`}
+                }
+              }
+                )()
+              }
+            >
+              { props => (
+                
+                <animated.div 
+                  className="Bouton-1-derriere_mobile"
+                  style={{
+                      backgroundColor: this.tableauImageCouleur[0][1],
+                      ...props
+                  }}
+                
+                >
+                    <p
+                      style={{
+                        color : 'white',
+                        fontSize : '2.5vh',
+                        fontFamily : 'cursive',
+                        textAlign : 'center'
+                    }}
+                    >
+                      {this.tableauImageCouleur[0][8]}
+                    </p>
+                </animated.div >
+              )}
+            </Spring>
+            <Spring
+              native
+              to={(() => {
+                if (this.state.rotat && this.state.etapeRotat === 0) {
+                  return {transform : `perspective(600px) rotateY(180deg)`}
+                } else if (!this.state.rotat && this.state.etapeRotat === 0){
+                  return {transform : `perspective(600px) rotateY(0deg)`}
+                } else if (this.state.etapeRotat === 1) {
+                  return {transform : `perspective(600px) rotateY(450deg)`}
+                } else if (this.state.etapeRotat === 2) {
+                  return {transform: `perspective(600px) rotateY(1080deg)`}
+                }
+              }
+                )()
+              }
+            >
+              { props => (
+                <animated.div 
+                  className="Bouton-1-devant_mobile"
+                  style={{
+                    borderColor: this.tableauImageCouleur[0][1],
+                    ...props
+                  }}
+                >
+                  <img
+                    className="Image-Bouton-1"
+                    src={this.tableauImageCouleur[0][0]}
+                    style={{
+                      marginLeft : this.tableauImageCouleur[0][3],
+                      marginTop : this.tableauImageCouleur[0][4],
+                      width: this.tableauImageCouleur[0][5],
+                      height : this.tableauImageCouleur[0][6],
+                      backfaceVisibility: "hidden",
+                      ...props
+                    }}
+                  >
+                  </img>
+                </animated.div >
+              )}
+            </Spring>
+            <Link to={this.tableauImageCouleur[0][7]}>
+              <div
+                className="Gestion-rotat-1_mobile"
+                onClick={() => 
+                  this.setState( {etapeRotat : 1, boutonClique : this.tableauImageCouleur[0][2]} )
+                }
+              >
+              
+              </div>
+            </Link>
+            
+            {/* Animation Bouton 2 */}
+            <Spring
+              native
+              to={(() => {
+                if (this.state.rotat2 && this.state.etapeRotat === 0) {
+                  return {transform : `perspective(600px) rotateY(180deg)`}
+                } else if (!this.state.rotat2 && this.state.etapeRotat === 0){
+                  return {transform : `perspective(600px) rotateY(0deg)`}
+                } else if (this.state.etapeRotat === 1) {
+                  return {transform : `perspective(600px) rotateY(450deg)`}
+                } else if (this.state.etapeRotat === 2) {
+                  return {transform: `perspective(600px) rotateY(1080deg)`}
+                }
+              }
+                )()
+              }
+            >
+              { props => (
+                <animated.div 
+                  className="Bouton-2-devant_mobile"
+                  onClick={ () => console.log("clik") }
+                  style={{
+                    borderColor: this.tableauImageCouleur[1][1],
+                    ...props
+                  }}
+                >
+                    <img
+                      className="Image-2"
+                      src={this.tableauImageCouleur[1][0]}
+                      style={{
+                        marginLeft : this.tableauImageCouleur[1][3],
+                        marginTop : this.tableauImageCouleur[1][4],
+                        width: this.tableauImageCouleur[1][5],
+                        height : this.tableauImageCouleur[1][6],
+                        backfaceVisibility: "hidden",
+                        ...props
+                      }}
+                    >
+                    </img>
+                </animated.div >
+              )}
+            </Spring>
+            <Spring
+              native
+              to={(() => {
+                if (this.state.rotat2 && this.state.etapeRotat === 0) {
+                  return {transform : `perspective(600px) rotateY(0deg)`}
+                } else if (!this.state.rotat2 && this.state.etapeRotat === 0){
+                  return {transform : `perspective(600px) rotateY(180deg)`}
+                } else if (this.state.etapeRotat === 1) {
+                  return {transform : `perspective(600px) rotateY(450deg)`}
+                } else if (this.state.etapeRotat === 2) {
+                  return {transform: `perspective(600px) rotateY(1080deg)`}
+                }
+              }
+                )()
+              }
+            >
+              { props => (
+                <animated.div 
+                  className="Bouton-2-derriere_mobile"
+                  onClick={ () => console.log("clik") }
+                  style={{
+                    backgroundColor : this.tableauImageCouleur[1][1],
+                    borderColor: this.tableauImageCouleur[1][1],
+                    ...props
+                  }}
+                >
+                    <p
+                      style={{
+                        color : 'white',
+                        fontSize : '2.5vh',
+                        fontFamily : 'cursive',
+                        textAlign : 'center'
+                    }}
+                    >
+                      {this.tableauImageCouleur[1][8]}
+                    </p>
+                </animated.div>
+              )}
+            </Spring>
+            <Link to={this.tableauImageCouleur[1][7]}>
+              <div
+                className="Gestion-rotat-2_mobile"
+                onClick={() => 
+                  this.setState( {etapeRotat : 1, boutonClique : this.tableauImageCouleur[1][2]} )
+                }
+              >
+
+              </div>
+            </Link>
+            {/* Animation Bouton 3 */}
+            <Spring
+              native
+              to={(() => {
+                if (this.state.rotat3 && this.state.etapeRotat === 0) {
+                  return {transform : `perspective(600px) rotateY(180deg)`}
+                } else if (!this.state.rotat3 && this.state.etapeRotat === 0){
+                  return {transform : `perspective(600px) rotateY(0deg)`}
+                } else if (this.state.etapeRotat === 1) {
+                  return {transform : `perspective(600px) rotateY(450deg)`}
+                } else if (this.state.etapeRotat === 2) {
+                  return {transform: `perspective(600px) rotateY(1080deg)`}
+                }
+              }
+                )()
+              }
+            >
+              { props => (
+                <animated.div 
+                  className="Bouton-3-devant_mobile"
+                  onClick={ () => console.log("clik") }
+                  style={{
+                    backgroundColor: this.tableauImageCouleur[2][1],
+                    borderColor: this.tableauImageCouleur[2][1],
+                    left: this.tableauImageCouleur[2][1],
+                    bottom: this.tableauImageCouleur[2][2],
+                    ...props 
+                  }}
+                >
+                  <img
+                    className="Image-3"
+                    src={this.tableauImageCouleur[2][0]}
+                    style={{
+                      marginLeft : this.tableauImageCouleur[2][3],
+                      marginTop : this.tableauImageCouleur[2][4],
+                      width: this.tableauImageCouleur[2][5],
+                      height : this.tableauImageCouleur[2][6],
+                      backfaceVisibility: "hidden",
+                      ...props
+                    }}
+                  >
+                  </img>
+                </animated.div >
+              )}
+            </Spring>
+            {/* Animation Bouton 4 */}
+            <Spring
+              native
+              to={(() => {
+                if (this.state.rotat4 && this.state.etapeRotat === 0) {
+                  return {transform : `perspective(600px) rotateY(180deg)`}
+                } else if (!this.state.rotat4 && this.state.etapeRotat === 0){
+                  return {transform : `perspective(600px) rotateY(0deg)`}
+                } else if (this.state.etapeRotat === 1) {
+                  return {transform : `perspective(600px) rotateY(450deg)`}
+                } else if (this.state.etapeRotat === 2) {
+                  return {transform: `perspective(600px) rotateY(1080deg)`}
+                }
+              }
+                )()
+              }
+            >
+              { props => (
+                <animated.div 
+                  className="Bouton-4-devant_mobile"
+                  onClick={ () => console.log("clik") }
+                  style={{
+                    borderColor: this.tableauImageCouleur[3][1],
+                    ...props
+                  }}
+                >
+                  <img
+                    className="Image-4"
+                    src={this.tableauImageCouleur[3][0]}
+                    style={{
+                      marginLeft : this.tableauImageCouleur[3][3],
+                      marginTop : this.tableauImageCouleur[3][4],
+                      width: this.tableauImageCouleur[3][5],
+                      height : this.tableauImageCouleur[3][6],
+                      backfaceVisibility: "hidden",
+                      ...props
+                    }}
+                  >
+                  </img>
+                </animated.div >
+              )}
+            </Spring>
+            <Spring
+              native
+              to={(() => {
+                if (this.state.rotat4 && this.state.etapeRotat === 0) {
+                  return {transform : `perspective(600px) rotateY(0deg)`}
+                } else if (!this.state.rotat4 && this.state.etapeRotat === 0){
+                  return {transform : `perspective(600px) rotateY(180deg)`}
+                } else if (this.state.etapeRotat === 1) {
+                  return {transform : `perspective(600px) rotateY(450deg)`}
+                } else if (this.state.etapeRotat === 2) {
+                  return {transform: `perspective(600px) rotateY(1080deg)`}
+                }
+              }
+                )()
+              }
+            >
+              { props => (
+                <animated.div 
+                  className="Bouton-4-derriere_mobile"
+                  onClick={ () => console.log("clik") }
+                  style={{
+                    backgroundColor: this.tableauImageCouleur[3][1],
+                    ...props
+                  }}
+                >
+                    <p
+                      style={{
+                        color : 'white',
+                        fontSize : '2.5vh',
+                        fontFamily : 'cursive',
+                        textAlign : 'center'
+                    }}
+                    >
+                      {this.tableauImageCouleur[3][8]}
+                    </p>
+                </animated.div>
+              )}
+            </Spring>
+            
+            <Link to={this.tableauImageCouleur[3][7]}>
+              <div
+                className="Gestion-rotat-4_mobile"
+                onClick={() => 
+                  this.setState( {etapeRotat : 1, boutonClique : this.tableauImageCouleur[3][2] } )
+                }
+              >
+              </div>
+            </Link>
+          
+            {/* Animation Bouton 5 */}
+            <Spring
+              native
+              to={(() => {
+                if (this.state.rotat5 && this.state.etapeRotat === 0) {
+                  return {transform : `perspective(600px) rotateY(180deg)`}
+                } else if (!this.state.rotat5 && this.state.etapeRotat === 0){
+                  return {transform : `perspective(600px) rotateY(0deg)`}
+                } else if (this.state.etapeRotat === 1) {
+                  return {transform : `perspective(600px) rotateY(450deg)`}
+                } else if (this.state.etapeRotat === 2) {
+                  return {transform: `perspective(600px) rotateY(1080deg)`}
+                }
+              }
+                )()
+              }
+            >
+              { props => (
+                <animated.div 
+                  className="Bouton-5-devant_mobile"
+                  onClick={ () => console.log("clik") }
+                  style={{
+                    borderColor: this.tableauImageCouleur[4][1],
+                    ...props
+                  }}
+                >
+                  <img
+                    className="Image-5"
+                    src={this.tableauImageCouleur[4][0]}
+                    style={{
+                      marginLeft : this.tableauImageCouleur[4][3],
+                      marginTop : this.tableauImageCouleur[4][4],
+                      width: this.tableauImageCouleur[4][5],
+                      height : this.tableauImageCouleur[4][6],
+                      backfaceVisibility: "hidden",
+                      ...props
+                    }}
+                  >
+                  </img>
+                </animated.div >
+              )}
+            </Spring>
+            <Spring
+            native
+            to={(() => {
+              if (this.state.rotat5 && this.state.etapeRotat === 0) {
+                return {transform : `perspective(600px) rotateY(0deg)`}
+              } else if (!this.state.rotat5 && this.state.etapeRotat === 0){
+                return {transform : `perspective(600px) rotateY(180deg)`}
+              } else if (this.state.etapeRotat === 1) {
+                return {transform : `perspective(600px) rotateY(450deg)`}
+              } else if (this.state.etapeRotat === 2) {
+                return {transform: `perspective(600px) rotateY(1080deg)`}
+              }
+            }
+              )()
+            }
+          >
+            { props => (
+              <animated.div 
+                className="Bouton-5-derriere_mobile"
+                onClick={ () => console.log("clik") }
+                style={{
+                  backgroundColor: this.tableauImageCouleur[4][1],
+                  ...props
+                }}
+              
+              >
+                  <p
+                    style={{
+                      color : 'white',
+                      fontSize : '2.5vh',
+                      fontFamily : 'cursive',
+                      textAlign : 'center'
+                  }}
+                  >
+                    {this.tableauImageCouleur[4][8]}
+                  </p>
+              </animated.div >
+            )}
+          </Spring>
+            
+            <Link to={this.tableauImageCouleur[4][7]}>
+              <div
+                className="Gestion-rotat-5_mobile"
+                onClick={() => 
+                  this.setState( {etapeRotat : 1, boutonClique : this.tableauImageCouleur[4][2]} )
+                }
+              >
+
+              </div>
+            </Link>
+            </div>
+            <Spring
+              native
+              to={{ 
+                couleurBordure : this.tableauImageCouleur[2][1]
+              }}
+            >
+              {props => (
+              <animated.div 
+                style={{
+                  position: "absolute",
+                  width: "100%",
+                  height: "10%",
+                  bottom: "0%",
+                  left: "0%",
+                  backgroundColor: props.couleurBordure,
+                  borderTopLeftRadius: "50%",
+                  borderTopRightRadius: "50%"
+                }}
+              >
+
+              </animated.div>
+              )
+              }
+            </Spring>
+          </div>
+        </div>
+        </HashRouter>
       )
     }
     else {
@@ -597,15 +1059,19 @@ class ComposantHome extends React.Component {
 
   render() {
     return (
-      <div className="ContenaireHome" >
-            <div className="Contenaire-Description-global">
+      <div 
+        className={window.navigator.userAgent.indexOf('Mobi') !== -1 ? "ContenaireHome_mobile" : "ContenaireHome"} 
+      >
+            <div 
+              className={window.navigator.userAgent.indexOf('Mobi') !== -1 ? "Contenaire-Description-global_mobile" : "Contenaire-Description-global"}
+            >
               <p
-                className="DescriptionGlobal1"
+                className={window.navigator.userAgent.indexOf('Mobi') !== -1 ? "DescriptionGlobal1_mobile" : "DescriptionGlobal1"}
               >
                 <span style={{color: "#5f27cd"}}>D</span>éveloppeur web et mobile <span style={{color: "#5f27cd"}}>Fullstack</span>, <span style={{color: "#5f27cd"}}>Autodidact</span> 
               </p>
               <p
-                className="DescriptionGlobal2"
+                className={window.navigator.userAgent.indexOf('Mobi') !== -1 ? "DescriptionGlobal2_mobile" : "DescriptionGlobal2"}
               >
                 en <span style={{color: "#5f27cd"}}>apprentissage perpétuel</span>
               </p>
@@ -613,11 +1079,11 @@ class ComposantHome extends React.Component {
             <div className="Contenaire-phrase-daccroche">
               
             </div>
-            <div className="Contenaire-anime">
+            <div 
+              className={window.navigator.userAgent.indexOf('Mobi') !== -1 ? "Contenaire-anime_mobile" : "Contenaire-anime"}
+            >
               <div 
-                className="Anime"
-                onMouseEnter={() => console.log('souris entre')} 
-                onMouseOut={() => console.log('souris sort') }
+                className={window.navigator.userAgent.indexOf('Mobi') !== -1 ? "Anime_mobile" : "Anime"}
               >
                 <svg 
                   version="1.0" 
@@ -1360,8 +1826,12 @@ class ComposantInfoPerso extends React.Component {
 
   render() {
     return (
-      <div className="ContenaireInfoPerso">
-        <div className="ContenairePrincipalInfoPerso">
+      <div 
+        className={window.navigator.userAgent.indexOf('Mobi') !== -1 ? "ContenaireInfoPerso_mobile" : "ContenaireInfoPerso"}
+      >
+        <div 
+          className={window.navigator.userAgent.indexOf('Mobi') !== -1 ? "ContenairePrincipalInfoPerso_mobile" : "ContenairePrincipalInfoPerso"}
+        >
           <Spring
             native
             from={{transform:"rotateX(90deg) translateZ(-500px) translateY(-50vh)"}}
@@ -1427,17 +1897,13 @@ class ComposantApercu extends React.Component {
 
 
   render() {
-    console.log("ouvert_1_1_1 : ")
-    console.log(this.state.ouvert_1_1_1)
-    console.log("ouvert_2_1 : ")
-    console.log(this.state.ouvert_2_1)
     return (
-      <div className="ContenaireApercu">
+      <div 
+        className={window.navigator.userAgent.indexOf('Mobi') !== -1 ? "ContenaireApercu_mobile" : "ContenaireApercu"}
+        
+      >
         <Spring
           native
-          onStart={
-            () => console.log("debut anim")
-          }
           onRest={
             () => {
               if (
@@ -1471,7 +1937,6 @@ class ComposantApercu extends React.Component {
               }
             }
           }
-          onFrame={() => console.log("anim en cours")}
           from={{
             y: 0
           }}
@@ -1487,11 +1952,23 @@ class ComposantApercu extends React.Component {
             { y: 0 }
           }
           config={{
-            duration: 250
+            duration: 150
           }}
         >
           {(props) => (
-            <animated.div className="ContenairePrincipalApercu">
+            <animated.div 
+              className={window.navigator.userAgent.indexOf('Mobi') !== -1 ? "ContenairePrincipalApercu_mobile" : "ContenairePrincipalApercu"}
+              style={{
+                height: window.innerHeight < 700 || window.innerWidth < 1100 ? "500px" : "703.5px",
+                width: window.innerWidth < 1100 || window.innerHeight < 700 ? "500px" : "705px",
+                top: window.innerHeight < 700 || window.innerWidth < 1100 ? 
+                String((window.innerHeight - 500)/2)+"px" 
+                : 
+                String((window.innerHeight - 700)/2)+"px" ,
+                right: window.innerWidth < 1500 && window.innerWidth > 800 ? "14vw" : window.innerWidth < 800 ? "10vw" : "28vw",
+                left: window.innerWidth < 800 ? "20vh" : null
+              }}
+            >
               <animated.div
                 className="Apercu_1"
                 style={ ( () => {
@@ -1601,6 +2078,16 @@ class ComposantApercu extends React.Component {
                         this.setState({ clique_1_1_1: !this.state.clique_1_1_1 });
                       }
                     }
+                    onMouseOver={
+                      window.navigator.userAgent.indexOf('Mobi') !== -1 ? null : () => {
+                        this.setState({ focus_1_1_1: !this.state.focus_1_1_1 })
+                      }
+                    }
+                    onMouseOut={
+                      window.navigator.userAgent.indexOf('Mobi') !== -1 ? null : () => {
+                        this.setState({ focus_1_1_1: !this.state.focus_1_1_1})
+                      }
+                    }
                     style={ ( () => {
                       if (
                         this.state.clique_1_1_1
@@ -1609,7 +2096,8 @@ class ComposantApercu extends React.Component {
                           width: props.y.interpolate(
                             [0, 0.5, 0.7, 0.8, 1],
                             ["48%", "70%", "80%", "90%", "100%"]
-                          )
+                          ),
+                          opacity: 1
                         }
                       } else if (
                         this.state.clique_1_1_2
@@ -1627,7 +2115,8 @@ class ComposantApercu extends React.Component {
                           width: props.y.interpolate(
                             [0, 0.5, 0.7, 0.8, 1],
                             ["48%", "70%", "80%", "90%", "100%"]
-                          )
+                          ),
+                          opacity: 1
                         }
                       } else if (
                         this.state.ouvert_1_1_2
@@ -1637,6 +2126,14 @@ class ComposantApercu extends React.Component {
                             [0, 0.5, 0.7, 0.8, 1],
                             ["48%", "30%", "20%", "10%", "0%"]
                           )
+                        }
+                      } else if (
+                        this.state.focus_1_1_1 &&
+                        !this.state.clique_1_1_1
+                      ) {
+                        return {
+                          transform: "scale(1.05)",
+                          opacity: 1
                         }
                       }
                     } )() }
@@ -1690,14 +2187,163 @@ class ComposantApercu extends React.Component {
                         }
                       } )() }
                     >
-                      
+                      <animated.div
+                        className="Texte_apercu_context"
+                      >
+                        <p 
+                          style={{ 
+                            fontWeight: "bold", 
+                            fontSize: window.navigator.userAgent.indexOf('Mobi') !== -1 ? "3vw" : "1.3em",
+                            textAlign: "center",
+                            marginTop: "-10%"
+                          }}
+                        >
+                          { 
+                            this.state.clique_1_1_1 
+                            ? 
+                            "Context :" 
+                            : 
+                            null
+                          }
+                        </p>
+                        <p 
+                          style={{ 
+                            fontSize: window.navigator.userAgent.indexOf('Mobi') !== -1 ? "3vw" : "1em",
+                            textAlign: "center", 
+                            marginRight: "20%", 
+                            marginLeft: "20%",
+                            marginTop: "-5%"
+                          }}
+                        >
+                          { 
+                            this.state.clique_1_1_1 
+                            ? 
+                            "Projet personnel de création d'application cross-platform" 
+                            : 
+                            null
+                          }
+                        </p>
+                      </animated.div>
+                      <animated.div
+                        className="Texte_apercu_techno"
+                      >
+                        <p 
+                          style={{ 
+                            fontWeight: "bold", 
+                            fontSize: window.navigator.userAgent.indexOf('Mobi') !== -1 ? "3vw" : "1.3em",
+                            textAlign: "center",
+                            marginTop: "-10%"
+                          }}
+                        >
+                          { 
+                            this.state.clique_1_1_1 
+                            ? 
+                            "Technologie utilisé :" 
+                            : 
+                            null}
+                        </p>
+                        <p 
+                          style={{ 
+                            fontSize: window.navigator.userAgent.indexOf('Mobi') !== -1 ? "3vw" : "1em", 
+                            textAlign: "center", 
+                            marginRight: "20%", 
+                            marginLeft: "20%",
+                            marginTop: "-5%"
+                          }}
+                        >
+                          { 
+                            this.state.clique_1_1_1 
+                            ? 
+                            "React Native | Expo | Redux | React Navigation | Express JS | Node JS | AWS " 
+                            : 
+                            null}
+                        </p>
+                      </animated.div>
+                      <animated.div
+                        className="Texte_apercu_description"
+                      >
+                        <p 
+                          style={{ 
+                            fontWeight: "bold", 
+                            fontSize: window.navigator.userAgent.indexOf('Mobi') !== -1 ? "3vw" : "1.3em",
+                            textAlign: "center",
+                            marginTop: "-35%"
+                          }}
+                        >
+                          { this.state.clique_1_1_1 ? "Description :" : null}
+                        </p>
+                      </animated.div>
                     </animated.div>
+                    <animated.div
+                      className="VoirPlus"
+                      style={
+                          !this.state.clique_1_1_1 &&
+                          !this.state.clique_1_1_2 &&
+                          !this.state.clique_1_2_1 &&
+                          !this.state.clique_2_1 &&
+                          !this.state.clique_2_2 
+                          ? 
+                          null
+                          : 
+                          {height: "0%"}
+                      }
+                    >
+                      <p
+                        style={{
+                          fontWeight: "bold",
+                          color: "white",
+                          fontSize: window.navigator.userAgent.indexOf('Mobi') !== -1 ? "0.5em" : "1em"
+                        }}
+                      >
+                        {
+                          !this.state.clique_1_1_1 &&
+                          !this.state.clique_1_1_2 &&
+                          !this.state.clique_1_2_1 &&
+                          !this.state.clique_2_1 &&
+                          !this.state.clique_2_2 
+                          ? 
+                          "Voir plus" 
+                          : 
+                          null
+                        }
+                      </p>
+                    </animated.div>
+                    <div
+                      className="CliquezReduir"
+                      style={{
+                        opacity: this.state.clique_1_1_1 ? 1 : 0,
+                        textAlign: "center",
+                        fontSize:"0.8em",
+                        color: "white",
+                        fontWeight: "bold"
+                      }}
+                    >
+                      <p>
+                      {
+                          this.state.clique_1_1_1
+                          ? 
+                          "Cliquez pour Réduir" 
+                          : 
+                          null
+                        }
+                      </p>
+                    </div>
                   </animated.div>
                   <animated.div
                     className="Apercu_1_1_2"
                     onClick={
                       () => {
                         this.setState({ clique_1_1_2: !this.state.clique_1_1_2 });
+                      }
+                    }
+                    onMouseOver={
+                      window.navigator.userAgent.indexOf('Mobi') !== -1 ? null : () => {
+                        this.setState({ focus_1_1_2: !this.state.focus_1_1_2 })
+                      }
+                    }
+                    onMouseOut={
+                      window.navigator.userAgent.indexOf('Mobi') !== -1 ? null : () => {
+                        this.setState({ focus_1_1_2: !this.state.focus_1_1_2})
                       }
                     }
                     style={ ( () => {
@@ -1712,7 +2358,8 @@ class ComposantApercu extends React.Component {
                           marginLeft: props.y.interpolate(
                             [0, 0.5, 0.7, 0.8, 1],
                             ["4%", "0%", "0%", "0%", "0%"]
-                          )
+                          ),
+                          opacity: 1
                         }
                       } else if (
                         this.state.clique_1_1_1
@@ -1738,7 +2385,8 @@ class ComposantApercu extends React.Component {
                           marginLeft: props.y.interpolate(
                             [0, 0.5, 0.7, 0.8, 1],
                             ["4%", "0%", "0%", "0%", "0%"]
-                          )
+                          ),
+                          opacity: 1
                         }
                       } else if (
                         this.state.ouvert_1_1_1
@@ -1753,10 +2401,122 @@ class ComposantApercu extends React.Component {
                             ["4%", "0%", "0%", "0%", "0%"]
                           )
                         }
+                      } else if (
+                        this.state.focus_1_1_2 &&
+                        !this.state.clique_1_1_2
+                      ) {
+                        return {
+                          transform: "scale(1.05)",
+                          opacity: 1
+                        }
                       }
                     } )() }
                   >
+                    <animated.div
+                      className="Contenaire_gif_apercu_1_1_2"
+                      id="gif_1_1_2"
+                      style={ ( () => {
+                        if (
+                          this.state.clique_1_1_2
+                        ) {
+                          return {
+                            width: props.y.interpolate(
+                              [0, 0.5, 0.7, 0.8, 1],
+                              ["95%", "80%", "70%", "60%", "50.5%"]
+                            ),
+                            marginLeft : props.y.interpolate(
+                              [0, 0.5, 0.7, 0.8, 1],
+                              ["5%", "3%", "2%", "2%", "2%"]
+                            )
+                          }
+                        }
+                      } )() }
+                    >
 
+                    </animated.div>
+                    <animated.div
+                      className="Contenaire_texte_apercu_1_1_2"
+                      style={ ( () => {
+                        if (
+                          this.state.clique_1_1_2
+                        ) {
+                          return {
+                            width: props.y.interpolate(
+                              [0, 0.5, 0.7, 0.8, 1],
+                              ["0%", "20%", "30%", "40%", "43%"]
+                            ),
+                            opacity: props.y.interpolate(
+                              [0, 0.5, 0.7, 0.9, 1],
+                              ["0", "0", "0", "0.8", "1"]
+                            ), 
+                            marginLeft : props.y.interpolate(
+                              [0, 0.5, 0.7, 0.8, 1],
+                              ["0%", "30%", "35%", "38%", "50%"]
+                            ), 
+                            marginTop : props.y.interpolate(
+                              [0, 0.5, 0.7, 0.8, 1],
+                              ["0%", "0%", "0%", "2%", "2.5%"]
+                            )
+                          }
+                        }
+                      } )() }
+                    >
+                      
+                    </animated.div>
+                    <animated.div
+                      className="VoirPlus"
+                      style={
+                          !this.state.clique_1_1_1 &&
+                          !this.state.clique_1_1_2 &&
+                          !this.state.clique_1_2_1 &&
+                          !this.state.clique_2_1 &&
+                          !this.state.clique_2_2 
+                          ? 
+                          null
+                          : 
+                          {height: "0%"}
+                      }
+                    >
+                      <p
+                        style={{
+                          fontWeight: "bold",
+                          color: "white",
+                          fontSize: window.navigator.userAgent.indexOf('Mobi') !== -1 ? "0.5em" : "1em"
+                        }}
+                      >
+                        {
+                          !this.state.clique_1_1_1 &&
+                          !this.state.clique_1_1_2 &&
+                          !this.state.clique_1_2_1 &&
+                          !this.state.clique_2_1 &&
+                          !this.state.clique_2_2 
+                          ? 
+                          "Voir plus" 
+                          : 
+                          null
+                        }
+                      </p>
+                    </animated.div>
+                    <div
+                      className="CliquezReduir"
+                      style={{
+                        opacity: this.state.clique_1_1_2 ? 1 : 0,
+                        textAlign: "center",
+                        fontSize:"0.8em",
+                        color: "white",
+                        fontWeight: "bold"
+                      }}
+                    >
+                      <p>
+                      {
+                          this.state.clique_1_1_2
+                          ? 
+                          "Cliquez pour Réduir" 
+                          : 
+                          null
+                        }
+                      </p>
+                    </div>
                   </animated.div>
                 </animated.div>
                 <animated.div
@@ -1829,7 +2589,196 @@ class ComposantApercu extends React.Component {
                       }
                     }
                   >
+                    <animated.div
+                      className="Contenaire_gif_apercu_1_2_1"
+                      id="gif_1_2_1"
+                      style={ ( () => {
+                        if (
+                          this.state.clique_1_2_1
+                        ) {
+                          return {
+                            width: props.y.interpolate(
+                              [0, 0.5, 0.7, 0.8, 1],
+                              ["95%", "80%", "70%", "60%", "50.5%"]
+                            ),
+                            marginLeft : props.y.interpolate(
+                              [0, 0.5, 0.7, 0.8, 1],
+                              ["5%", "3%", "2%", "2%", "2%"]
+                            )
+                          }
+                        }
+                      } )() }
+                    >
 
+                    </animated.div>
+                    <animated.div
+                      className="Contenaire_texte_apercu_1_2_1"
+                      style={ ( () => {
+                        if (
+                          this.state.clique_1_2_1
+                        ) {
+                          return {
+                            width: props.y.interpolate(
+                              [0, 0.5, 0.7, 0.8, 1],
+                              ["0%", "20%", "30%", "40%", "43%"]
+                            ),
+                            opacity: props.y.interpolate(
+                              [0, 0.5, 0.7, 0.9, 1],
+                              ["0", "0", "0", "0.8", "1"]
+                            ), 
+                            marginLeft : props.y.interpolate(
+                              [0, 0.5, 0.7, 0.8, 1],
+                              ["0%", "30%", "35%", "38%", "50%"]
+                            ), 
+                            marginTop : props.y.interpolate(
+                              [0, 0.5, 0.7, 0.8, 1],
+                              ["0%", "0%", "0%", "2%", "2.5%"]
+                            )
+                          }
+                        }
+                      } )() }
+                    >
+                      <animated.div
+                        className="Texte_apercu_context"
+                      >
+                        <p 
+                          style={{ 
+                            fontWeight: "bold", 
+                            fontSize: window.navigator.userAgent.indexOf('Mobi') !== -1 ? "3vw" : "1.3em",
+                            textAlign: "center",
+                            marginTop: "-10%"
+                          }}
+                        >
+                          { 
+                            this.state.clique_1_2_1 
+                            ? 
+                            "Context :" 
+                            : 
+                            null
+                          }
+                        </p>
+                        <p 
+                          style={{ 
+                            fontSize: window.navigator.userAgent.indexOf('Mobi') !== -1 ? "3vw" : "1em",
+                            textAlign: "center", 
+                            marginRight: "20%", 
+                            marginLeft: "20%",
+                            marginTop: "-5%"
+                          }}
+                        >
+                          { 
+                            this.state.clique_1_2_1 
+                            ? 
+                            "Projet personnel de création d'application cross-platform" 
+                            : 
+                            null
+                          }
+                        </p>
+                      </animated.div>
+                      <animated.div
+                        className="Texte_apercu_techno"
+                      >
+                        <p 
+                          style={{ 
+                            fontWeight: "bold", 
+                            fontSize: window.navigator.userAgent.indexOf('Mobi') !== -1 ? "3vw" : "1.3em",
+                            textAlign: "center",
+                            marginTop: "-10%"
+                          }}
+                        >
+                          { 
+                            this.state.clique_1_2_1 
+                            ? 
+                            "Technologie utilisé :" 
+                            : 
+                            null}
+                        </p>
+                        <p 
+                          style={{ 
+                            fontSize: window.navigator.userAgent.indexOf('Mobi') !== -1 ? "3vw" : "1em", 
+                            textAlign: "center", 
+                            marginRight: "20%", 
+                            marginLeft: "20%",
+                            marginTop: "-5%"
+                          }}
+                        >
+                          { 
+                            this.state.clique_1_2_1 
+                            ? 
+                            "React Native | Expo | Redux | React Navigation | Express JS | Node JS | AWS " 
+                            : 
+                            null}
+                        </p>
+                      </animated.div>
+                      <animated.div
+                        className="Texte_apercu_description"
+                      >
+                        <p 
+                          style={{ 
+                            fontWeight: "bold", 
+                            fontSize: window.navigator.userAgent.indexOf('Mobi') !== -1 ? "3vw" : "1.3em",
+                            textAlign: "center",
+                            marginTop: "-35%"
+                          }}
+                        >
+                          { this.state.clique_1_2_1 ? "Description :" : null}
+                        </p>
+                      </animated.div>
+                    </animated.div>
+                    <animated.div
+                      className="VoirPlus"
+                      style={
+                          !this.state.clique_1_1_1 &&
+                          !this.state.clique_1_1_2 &&
+                          !this.state.clique_1_2_1 &&
+                          !this.state.clique_2_1 &&
+                          !this.state.clique_2_2 
+                          ? 
+                          null
+                          : 
+                          {height: "0%"}
+                      }
+                    >
+                      <p
+                        style={{
+                          fontWeight: "bold",
+                          color: "white",
+                          fontSize: window.navigator.userAgent.indexOf('Mobi') !== -1 ? "0.5em" : "1em"
+                        }}
+                      >
+                        {
+                          !this.state.clique_1_1_1 &&
+                          !this.state.clique_1_1_2 &&
+                          !this.state.clique_1_2_1 &&
+                          !this.state.clique_2_1 &&
+                          !this.state.clique_2_2 
+                          ? 
+                          "Voir plus" 
+                          : 
+                          null
+                        }
+                      </p>
+                    </animated.div>
+                    <div
+                      className="CliquezReduir"
+                      style={{
+                        opacity: this.state.clique_1_2_1 ? 1 : 0,
+                        textAlign: "center",
+                        fontSize:"0.8em",
+                        color: "white",
+                        fontWeight: "bold"
+                      }}
+                    >
+                      <p>
+                      {
+                          this.state.clique_1_2_1
+                          ? 
+                          "Cliquez pour Réduir" 
+                          : 
+                          null
+                        }
+                      </p>
+                    </div>
                   </animated.div>
                 </animated.div>
               </animated.div>
@@ -1911,6 +2860,16 @@ class ComposantApercu extends React.Component {
                       this.setState({ clique_2_1: !this.state.clique_2_1 });
                     }
                   }
+                  onMouseOver={
+                    window.navigator.userAgent.indexOf('Mobi') !== -1 ? null : () => {
+                      this.setState({ focus_2_1: !this.state.focus_2_1 })
+                    }
+                  }
+                  onMouseOut={
+                    window.navigator.userAgent.indexOf('Mobi') !== -1 ? null : () => {
+                      this.setState({ focus_2_1: !this.state.focus_2_1})
+                    }
+                  }
                   style={ ( () => {
                     if (
                       this.state.clique_2_1
@@ -1919,7 +2878,8 @@ class ComposantApercu extends React.Component {
                         height: props.y.interpolate(
                           [0, 0.5, 0.7, 0.8, 1],
                           ["48.5%", "70%", "80%", "90%", "100%"]
-                        )
+                        ),
+                        opacity: 1
                       }
                     } else if (
                       this.state.clique_2_2
@@ -1927,7 +2887,7 @@ class ComposantApercu extends React.Component {
                       return {
                         height: props.y.interpolate(
                         [0, 0.5, 0.7, 0.8, 1],
-                        ["48.5%", "30%", "20%", "10%", "0%"]
+                        ["48.5%", "30%", "20%", "10%", "-10%"]
                         )
                       }
                     } else if (
@@ -1937,7 +2897,8 @@ class ComposantApercu extends React.Component {
                         height: props.y.interpolate(
                         [0, 0.5, 0.7, 0.8, 1],
                         ["48.5%", "70%", "80%", "90%", "100%"]
-                        )
+                        ),
+                        opacity: 1
                       }
                     } else if (
                       this.state.ouvert_2_2
@@ -1948,16 +2909,139 @@ class ComposantApercu extends React.Component {
                         ["48.5%", "30%", "20%", "10%", "0%"]
                         )
                       }
+                    } else if (
+                      this.state.focus_2_1 &&
+                      !this.state.clique_2_1
+                    ) {
+                      return {
+                        transform: "scale(1.05)",
+                        opacity: 1
+                      }
                     }
                   } )() }
                 >
+                  <animated.div
+                    className="Contenaire_gif_apercu_2_1"
+                    id="gif_2_1"
+                    style={ ( () => {
+                      if (
+                        this.state.clique_2_1
+                      ) {
+                        return {
+                          width: props.y.interpolate(
+                            [0, 0.5, 0.7, 0.8, 1],
+                            ["95%", "80%", "70%", "60%", "50.5%"]
+                          ),
+                          marginLeft : props.y.interpolate(
+                            [0, 0.5, 0.7, 0.8, 1],
+                            ["5%", "3%", "2%", "2%", "2%"]
+                          )
+                        }
+                      }
+                    } )() }
+                  >
 
+                  </animated.div>
+                  <animated.div
+                    className="Contenaire_texte_apercu_2_1"
+                    style={ ( () => {
+                      if (
+                        this.state.clique_2_1
+                      ) {
+                        return {
+                          width: props.y.interpolate(
+                            [0, 0.5, 0.7, 0.8, 1],
+                            ["0%", "20%", "30%", "40%", "43%"]
+                          ),
+                          opacity: props.y.interpolate(
+                            [0, 0.5, 0.7, 0.9, 1],
+                            ["0", "0", "0", "0.8", "1"]
+                          ), 
+                          marginLeft : props.y.interpolate(
+                            [0, 0.5, 0.7, 0.8, 1],
+                            ["0%", "30%", "35%", "38%", "50%"]
+                          ), 
+                          marginTop : props.y.interpolate(
+                            [0, 0.5, 0.7, 0.8, 1],
+                            ["0%", "0%", "0%", "2%", "2.5%"]
+                          )
+                        }
+                      }
+                    } )() }
+                  >
+                    
+                  </animated.div>
+                  <animated.div
+                      className="VoirPlus"
+                      style={
+                          !this.state.clique_1_1_1 &&
+                          !this.state.clique_1_1_2 &&
+                          !this.state.clique_1_2_1 &&
+                          !this.state.clique_2_1 &&
+                          !this.state.clique_2_2 
+                          ? 
+                          null
+                          : 
+                          {height: "0%"}
+                      }
+                    >
+                      <p
+                        style={{
+                          fontWeight: "bold",
+                          color: "white",
+                          fontSize: window.navigator.userAgent.indexOf('Mobi') !== -1 ? "0.5em" : "1em"
+                        }}
+                      >
+                        {
+                          !this.state.clique_1_1_1 &&
+                          !this.state.clique_1_1_2 &&
+                          !this.state.clique_1_2_1 &&
+                          !this.state.clique_2_1 &&
+                          !this.state.clique_2_2 
+                          ? 
+                          "Voir plus" 
+                          : 
+                          null
+                        }
+                      </p>
+                    </animated.div>
+                    <div
+                      className="CliquezReduir"
+                      style={{
+                        opacity: this.state.clique_2_1 ? 1 : 0,
+                        textAlign: "center",
+                        fontSize:"0.8em",
+                        color: "white",
+                        fontWeight: "bold"
+                      }}
+                    >
+                      <p>
+                      {
+                          this.state.clique_2_1
+                          ? 
+                          "Cliquez pour Réduir" 
+                          : 
+                          null
+                        }
+                      </p>
+                    </div>
                 </animated.div>
                 <animated.div
                   className="Apercu_2_2"
                   onClick={
                     () => {
                       this.setState({ clique_2_2: !this.state.clique_2_2 });
+                    }
+                  }
+                  onMouseOver={
+                    window.navigator.userAgent.indexOf('Mobi') !== -1 ? null : () => {
+                      this.setState({ focus_2_2: !this.state.focus_2_2 })
+                      console.log("mouse enter apercu_2_2")
+                    }
+                  }
+                  onMouseOut={
+                    window.navigator.userAgent.indexOf('Mobi') !== -1 ? null : () => {
+                      this.setState({ focus_2_2: !this.state.focus_2_2})
                     }
                   }
                   style={ ( () => {
@@ -1985,7 +3069,8 @@ class ComposantApercu extends React.Component {
                         marginTop: props.y.interpolate(
                           [0, 0.5, 0.7, 0.8, 1],
                           ["10%", "0%", "0%", "0%", "0%"]
-                        )
+                        ),
+                        opacity: 1
                       }
                     } else if (
                       this.state.ouvert_2_2
@@ -1998,7 +3083,8 @@ class ComposantApercu extends React.Component {
                         marginTop: props.y.interpolate(
                           [0, 0.5, 0.7, 0.8, 1],
                           ["10%", "0%", "0%", "0%", "0%"]
-                        )
+                        ),
+                        opacity: 1
                       }
                     } else if (
                       this.state.ouvert_2_1
@@ -2013,10 +3099,122 @@ class ComposantApercu extends React.Component {
                           ["10%", "0%", "0%", "0%", "0%"]
                         )
                       }
+                    } else if (
+                      this.state.focus_2_2 &&
+                      !this.state.clique_2_2
+                    ) {
+                      return {
+                        transform: "scale(1.05)",
+                        opacity: 1
+                      }
                     }
                   } )() }
                 >
-                  
+                  <animated.div
+                    className="Contenaire_gif_apercu_2_2"
+                    id="gif_2_2"
+                    style={ ( () => {
+                      if (
+                        this.state.clique_2_2
+                      ) {
+                        return {
+                          width: props.y.interpolate(
+                            [0, 0.5, 0.7, 0.8, 1],
+                            ["95%", "80%", "70%", "60%", "50.5%"]
+                          ),
+                          marginLeft : props.y.interpolate(
+                            [0, 0.5, 0.7, 0.8, 1],
+                            ["5%", "3%", "2%", "2%", "2%"]
+                          )
+                        }
+                      }
+                    } )() }
+                  >
+
+                  </animated.div>
+                  <animated.div
+                    className="Contenaire_texte_apercu_2_2"
+                    style={ ( () => {
+                      if (
+                        this.state.clique_2_2
+                      ) {
+                        return {
+                          width: props.y.interpolate(
+                            [0, 0.5, 0.7, 0.8, 1],
+                            ["0%", "20%", "30%", "40%", "43%"]
+                          ),
+                          opacity: props.y.interpolate(
+                            [0, 0.5, 0.7, 0.9, 1],
+                            ["0", "0", "0", "0.8", "1"]
+                          ), 
+                          marginLeft : props.y.interpolate(
+                            [0, 0.5, 0.7, 0.8, 1],
+                            ["0%", "30%", "35%", "38%", "50%"]
+                          ), 
+                          marginTop : props.y.interpolate(
+                            [0, 0.5, 0.7, 0.8, 1],
+                            ["0%", "0%", "0%", "2%", "2.5%"]
+                          )
+                        }
+                      }
+                    } )() }
+                  >
+                    
+                  </animated.div>
+                  <animated.div
+                      className="VoirPlus"
+                      style={
+                          !this.state.clique_1_1_1 &&
+                          !this.state.clique_1_1_2 &&
+                          !this.state.clique_1_2_1 &&
+                          !this.state.clique_2_1 &&
+                          !this.state.clique_2_2 
+                          ? 
+                          null
+                          : 
+                          {height: "0%"}
+                      }
+                    >
+                      <p
+                        style={{
+                          fontWeight: "bold",
+                          color: "white",
+                          fontSize: window.navigator.userAgent.indexOf('Mobi') !== -1 ? "0.5em" : "1em"
+                        }}
+                      >
+                        {
+                          !this.state.clique_1_1_1 &&
+                          !this.state.clique_1_1_2 &&
+                          !this.state.clique_1_2_1 &&
+                          !this.state.clique_2_1 &&
+                          !this.state.clique_2_2 
+                          ? 
+                          "Voir plus" 
+                          : 
+                          null
+                        }
+                      </p>
+                    </animated.div>
+                    <div
+                      className="CliquezReduir"
+                      style={{
+                        opacity: this.state.clique_2_2 ? 1 : 0,
+                        textAlign: "center",
+                        fontSize:"0.8em",
+                        color: "white",
+                        fontWeight: "bold"
+                      }}
+                    >
+                      <p>
+                      {
+                          this.state.clique_2_2
+                          ? 
+                          "Cliquez pour Réduir" 
+                          : 
+                          null
+                        }
+                      </p>
+                    </div>
                 </animated.div>
               </animated.div>
                 
@@ -2038,41 +3236,52 @@ class ComposantContact extends React.Component {
 
   render() {
     return (
-      <div className="ContenaireContact">
+      <div 
+        className={window.navigator.userAgent.indexOf('Mobi') !== -1 ? "ContenaireContact_mobile" : "ContenaireContact"}
+      >
         <form id="contact">
-          <div className="ContenairePrincipalContact" style={{ perspective : "600px"}}>
-            <div className="TitreContact">
+          <div 
+            className={window.navigator.userAgent.indexOf('Mobi') !== -1 ? "ContenairePrincipalContact_mobile" : "ContenairePrincipalContact"} 
+            style={{ 
+              perspective : "600px"
+            }}
+          >
+            <div 
+              className={window.navigator.userAgent.indexOf('Mobi') !== -1 ? "TitreContact_mobile" : "TitreContact"}
+            >
               <p className="TexteTitreContact">
                 Une réponse rapide assuré sur la boîte mail renseigné
               </p>
             </div>
-            
-              <div className="NomEmail" style={{ perspective : "600px"}}>
-                <Spring
-                  native
-                  from={{ transform : "translateX(-100px) translateZ(20vw) rotateY(270deg)" }}
-                  to={{ transform : "translateX(0px) translateZ(0vh) rotateY(360deg)" }}
-                  config={{ duration : 750}}
-                >
-                  { props => (
-                    <animated.div className="Nom" style={props}>
-                      <input className="InputNom" type="name" placeholder="Nom"/>
-                    </animated.div>
-                  )}
-                </Spring>
-                <Spring
-                  native
-                  from={{ transform : "translateX(100px) translateZ(20vw) rotateY(90deg)" }}
-                  to={{ transform : "translateX(0px) translateZ(0vw) rotateY(0deg)" }}
-                  config={{ duration : 750}}
-                >
-                  { props => (
-                    <animated.div className="Email" style={props}>
-                      <input className="InputEmail" type="email" placeholder="E-mail" />
-                    </animated.div>
-                  )}
-                </Spring>
-              </div>
+            <div 
+              className={window.navigator.userAgent.indexOf('Mobi') !== -1 ? "NomEmail_mobile" : "NomEmail"} 
+              style={{ perspective : "600px"}}
+            >
+              <Spring
+                native
+                from={{ transform : "translateX(-100px) translateZ(20vw) rotateY(270deg)" }}
+                to={{ transform : "translateX(0px) translateZ(0vh) rotateY(360deg)" }}
+                config={{ duration : 750}}
+              >
+                { props => (
+                  <animated.div className="Nom" style={props}>
+                    <input className="InputNom" type="name" placeholder="Nom"/>
+                  </animated.div>
+                )}
+              </Spring>
+              <Spring
+                native
+                from={{ transform : "translateX(100px) translateZ(20vw) rotateY(90deg)" }}
+                to={{ transform : "translateX(0px) translateZ(0vw) rotateY(0deg)" }}
+                config={{ duration : 750}}
+              >
+                { props => (
+                  <animated.div className="Email" style={props}>
+                    <input className="InputEmail" type="email" placeholder="E-mail" />
+                  </animated.div>
+                )}
+              </Spring>
+            </div>
               <Spring
                 native
                 from={{ transform : "perspective(600px) translateY(-2vh) translateZ(6vh) rotateX(90deg)" }}
@@ -2080,7 +3289,10 @@ class ComposantContact extends React.Component {
                 config={{ duration : 750, delay : 750}}
               >
                 { props => (
-                  <animated.div className="Sujet" style={props}>
+                  <animated.div 
+                    className={window.navigator.userAgent.indexOf('Mobi') !== -1 ? "Sujet_mobile" : "Sujet"} 
+                    style={props}
+                  >
                     <input className="InputSujet" type="text" placeholder="Sujet" />
                   </animated.div>
                 )}
@@ -2092,7 +3304,10 @@ class ComposantContact extends React.Component {
                 config={{ duration : 750, delay : 750}}
               >
                 { props => (
-                  <animated.div className="Message" style={props}>
+                  <animated.div 
+                    className={window.navigator.userAgent.indexOf('Mobi') !== -1 ? "Message_mobile" : "Message" }
+                    style={props}
+                  >
                     <textarea className="InputMessage" form="contact" placeholder="Message" />
                   </animated.div>
                 )}
@@ -2104,20 +3319,27 @@ class ComposantContact extends React.Component {
                 config={{ duration : 1000, delay : 1500}}
               >
                 { props => (
-                  <animated.div className="Envoyer" style={{
-                    transform: props.x.interpolate(
-                      [0, 0.7, 0.8, 0.9, 1], 
-                      ["translateX(-150vw)", "translateX(20vw)", "translateX(-10vw)", "translateX(10vw)", "translateX(0vw)"]
-                    ),
-                    opacity: props.x.interpolate(
-                      [0, 0.5, 1],
-                      [0, 0, 1]
-                    )
-                  }}>
-                    <div className="ContenaireEnvoyer1">
+                  <animated.div 
+                    className={window.navigator.userAgent.indexOf('Mobi') !== -1 ? "Envoyer_mobile" : "Envoyer" }
+                    style={{
+                      transform: props.x.interpolate(
+                        [0, 0.7, 0.8, 0.9, 1], 
+                        ["translateX(-150vw)", "translateX(20vw)", "translateX(-10vw)", "translateX(10vw)", "translateX(0vw)"]
+                      ),
+                      opacity: props.x.interpolate(
+                        [0, 0.5, 1],
+                        [0, 0, 1]
+                      )
+                    }}
+                  >
+                    <div 
+                      className={window.navigator.userAgent.indexOf('Mobi') !== -1 ? "ContenaireEnvoyer1_mobile" : "ContenaireEnvoyer1"}
+                    >
 
                     </div>
-                    <div className="ContenaireEnvoyer2">
+                    <div 
+                      className={window.navigator.userAgent.indexOf('Mobi') !== -1 ? "ContenaireEnvoyer2_mobile" : "ContenaireEnvoyer2"}
+                    >
                       <input className="BoutonEnvoyer" type="submit" placeholder="Envoyer" />  
                     </div>
                   </animated.div>
@@ -2140,8 +3362,12 @@ class ComposantCompetence extends React.Component {
 
   render() {
     return (
-      <div className="ContenaireCompetence">
-        <div className="ContenairePrincipalCompetence">
+      <div 
+        className={window.navigator.userAgent.indexOf('Mobi') !== -1 ? "ContenaireCompetence_mobile" :"ContenaireCompetence"}
+      >
+        <div 
+          className={window.navigator.userAgent.indexOf('Mobi') !== -1 ? "ContenairePrincipalCompetence_mobile" : "ContenairePrincipalCompetence"}
+        >
           <Spring
             native
             from={{transform:"rotateY(270deg) translateZ(-40vw) translateX(-10vw)", opacite:0, opaciteValider: 0}}
