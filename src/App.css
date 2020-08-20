@@ -642,6 +642,7 @@
 }
 
 .ContenairePrincipalInfoPerso {
+  opacity:0.75;
   width: 50vw;
   height: 50vh;
   min-width: 400px;
@@ -659,6 +660,7 @@
 }
 
 .ContenairePrincipalCompetence {
+  opacity: 1;
   width: 50vw;
   height: 50vh;
   margin-left: 10vw;
@@ -671,6 +673,7 @@
 }
 
 .ContenairePrincipalContact {
+  opacity: 0.85;
   width: 50vw;
   height: 70vh;
   min-height: 400px;
@@ -967,6 +970,19 @@
   display: flex;
   justify-content: center;
   flex-direction: column;
+}
+
+.Contenaire_anim_de_fond {
+  position: absolute;
+  width: 80vw;
+  height:100vh;
+  left: 20vw;
+}
+
+.Anim_de_fond_1 {
+  position: absolute;
+  background-color: tomato;
+  opacity: 0
 }
 
 .TitreContact {
