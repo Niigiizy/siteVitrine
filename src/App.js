@@ -1682,7 +1682,6 @@ class App extends React.Component {
                   </animated.div>
                 )}
               </Spring>
-              
               <Link to={this.tableauImageCouleur[3][7]}>
                 <div
                   className="Gestion-rotat-4"
@@ -1776,7 +1775,6 @@ class App extends React.Component {
                 </animated.div >
               )}
             </Spring>
-              
               <Link to={this.tableauImageCouleur[4][7]}>
                 <div
                   className="Gestion-rotat-5"
@@ -2967,6 +2965,7 @@ class ComposantApercu extends React.Component {
                         <p 
                           style={{ 
                             fontWeight: "bold", 
+                            color: "#4169E1",
                             fontSize: window.navigator.userAgent.indexOf('Mobi') !== -1 ? "3vw" : "1.3em",
                             textAlign: "center",
                             marginTop: "-10%"
@@ -2982,6 +2981,7 @@ class ComposantApercu extends React.Component {
                         </p>
                         <p 
                           style={{ 
+                            fontWeight: "bold",
                             fontSize: window.navigator.userAgent.indexOf('Mobi') !== -1 ? "3vw" : "1em",
                             textAlign: "center", 
                             marginRight: "20%", 
@@ -3003,6 +3003,7 @@ class ComposantApercu extends React.Component {
                       >
                         <p 
                           style={{ 
+                            color: "#4169E1",
                             fontWeight: "bold", 
                             fontSize: window.navigator.userAgent.indexOf('Mobi') !== -1 ? "3vw" : "1.3em",
                             textAlign: "center",
@@ -3018,6 +3019,7 @@ class ComposantApercu extends React.Component {
                         </p>
                         <p 
                           style={{ 
+                            fontWeight: "bold",
                             fontSize: window.navigator.userAgent.indexOf('Mobi') !== -1 ? "3vw" : "1em", 
                             textAlign: "center", 
                             marginRight: "20%", 
@@ -3038,6 +3040,7 @@ class ComposantApercu extends React.Component {
                       >
                         <p 
                           style={{ 
+                            color: "#4169E1",
                             fontWeight: "bold", 
                             fontSize: window.navigator.userAgent.indexOf('Mobi') !== -1 ? "3vw" : "1.3em",
                             textAlign: "center",
@@ -3045,6 +3048,23 @@ class ComposantApercu extends React.Component {
                           }}
                         >
                           { this.state.clique_1_1_1 ? "Description :" : null}
+                        </p>
+                        <p 
+                          style={{ 
+                            fontWeight: "bold",
+                            fontSize: window.navigator.userAgent.indexOf('Mobi') !== -1 ? "3vw" : "1em", 
+                            textAlign: "center", 
+                            marginRight: "20%", 
+                            marginLeft: "20%",
+                            marginTop: "-5%"
+                          }}
+                        >
+                          { 
+                            this.state.clique_1_1_1 
+                            ? 
+                            "Gestion du composant Flatlist pour afficher le résultat de recherche avec utilisation d'AWS en back-end" 
+                            : 
+                            null}
                         </p>
                       </animated.div>
                     </animated.div>
@@ -3210,7 +3230,7 @@ class ComposantApercu extends React.Component {
 
                     </animated.div>
                     <animated.div
-                      className="Contenaire_texte_apercu_1_1_2"
+                      className="Contenaire_texte_apercu_1_1_1"
                       style={ ( () => {
                         if (
                           this.state.clique_1_1_2
@@ -3236,7 +3256,114 @@ class ComposantApercu extends React.Component {
                         }
                       } )() }
                     >
-                      
+                      <animated.div
+                        className="Texte_apercu_context"
+                      >
+                        <p 
+                          style={{ 
+                            fontWeight: "bold", 
+                            color: "#4169E1",
+                            fontSize: window.navigator.userAgent.indexOf('Mobi') !== -1 ? "3vw" : "1.3em",
+                            textAlign: "center",
+                            marginTop: "-10%"
+                          }}
+                        >
+                          { 
+                            this.state.clique_1_1_2 
+                            ? 
+                            "Context :" 
+                            : 
+                            null
+                          }
+                        </p>
+                        <p 
+                          style={{ 
+                            fontWeight: "bold",
+                            fontSize: window.navigator.userAgent.indexOf('Mobi') !== -1 ? "3vw" : "1em",
+                            textAlign: "center", 
+                            marginRight: "20%", 
+                            marginLeft: "20%",
+                            marginTop: "-5%"
+                          }}
+                        >
+                          { 
+                            this.state.clique_1_1_2 
+                            ? 
+                            "Projet personnel de création d'application cross-platform" 
+                            : 
+                            null
+                          }
+                        </p>
+                      </animated.div>
+                      <animated.div
+                        className="Texte_apercu_techno"
+                      >
+                        <p 
+                          style={{ 
+                            color: "#4169E1",
+                            fontWeight: "bold", 
+                            fontSize: window.navigator.userAgent.indexOf('Mobi') !== -1 ? "3vw" : "1.3em",
+                            textAlign: "center",
+                            marginTop: "-10%"
+                          }}
+                        >
+                          { 
+                            this.state.clique_1_1_2 
+                            ? 
+                            "Technologie utilisé :" 
+                            : 
+                            null}
+                        </p>
+                        <p 
+                          style={{ 
+                            fontWeight: "bold",
+                            fontSize: window.navigator.userAgent.indexOf('Mobi') !== -1 ? "3vw" : "1em", 
+                            textAlign: "center", 
+                            marginRight: "20%", 
+                            marginLeft: "20%",
+                            marginTop: "-5%"
+                          }}
+                        >
+                          { 
+                            this.state.clique_1_1_2 
+                            ? 
+                            "React Native | Expo | Redux | React Navigation | Express JS | Node JS | AWS " 
+                            : 
+                            null}
+                        </p>
+                      </animated.div>
+                      <animated.div
+                        className="Texte_apercu_description"
+                      >
+                        <p 
+                          style={{ 
+                            color: "#4169E1",
+                            fontWeight: "bold", 
+                            fontSize: window.navigator.userAgent.indexOf('Mobi') !== -1 ? "3vw" : "1.3em",
+                            textAlign: "center",
+                            marginTop: "-35%"
+                          }}
+                        >
+                          { this.state.clique_1_1_2 ? "Description :" : null}
+                        </p>
+                        <p 
+                          style={{ 
+                            fontWeight: "bold",
+                            fontSize: window.navigator.userAgent.indexOf('Mobi') !== -1 ? "3vw" : "1em", 
+                            textAlign: "center", 
+                            marginRight: "20%", 
+                            marginLeft: "20%",
+                            marginTop: "-5%"
+                          }}
+                        >
+                          { 
+                            this.state.clique_1_1_2 
+                            ? 
+                            "Animations légère pour intéractivité accru" 
+                            : 
+                            null}
+                        </p>
+                      </animated.div>
                     </animated.div>
                     <animated.div
                       className="VoirPlus"
@@ -3322,7 +3449,7 @@ class ComposantApercu extends React.Component {
                         ),
                         marginTop: props.y.interpolate(
                           [0, 0.5, 0.7, 0.8, 1],
-                          ["3.8%", "0%", "0%", "0%", "0%"]
+                          ["3.8%", "0%", "0%", "0%", "-1%"]
                         )
                       }
                     } else if (
@@ -3352,6 +3479,14 @@ class ComposantApercu extends React.Component {
                           ["3.8%", "0%", "0%", "0%", "0%"]
                         )
                       }
+                    } else if (
+                      this.state.focus_1_2_1 &&
+                      !this.state.clique_1_2_1
+                    ) {
+                      return {
+                        transform: "scale(1.05)",
+                        opacity: 1
+                      }
                     }
                   })()
 
@@ -3362,6 +3497,16 @@ class ComposantApercu extends React.Component {
                     onClick={
                       () => {
                         this.setState({ clique_1_2_1: !this.state.clique_1_2_1 });
+                      }
+                    }
+                    onMouseOver={
+                      window.navigator.userAgent.indexOf('Mobi') !== -1 ? null : () => {
+                        this.setState({ focus_1_2_1: !this.state.focus_1_2_1 })
+                      }
+                    }
+                    onMouseOut={
+                      window.navigator.userAgent.indexOf('Mobi') !== -1 ? null : () => {
+                        this.setState({ focus_1_2_1: !this.state.focus_1_2_1})
                       }
                     }
                   >
@@ -3375,8 +3520,12 @@ class ComposantApercu extends React.Component {
                           return {
                             width: props.y.interpolate(
                               [0, 0.5, 0.7, 0.8, 1],
-                              ["95%", "80%", "70%", "60%", "50.5%"]
+                              ["95%", "94%", "93%", "92%", "90%"]
                             ),
+                            height: props.y.interpolate(
+                              [0, 0.5, 0.7, 0.8, 1],
+                              ["95%", "70%", "60%", "50%", "40%"]
+                            ), 
                             marginLeft : props.y.interpolate(
                               [0, 0.5, 0.7, 0.8, 1],
                               ["5%", "3%", "2%", "2%", "2%"]
@@ -3396,7 +3545,11 @@ class ComposantApercu extends React.Component {
                           return {
                             width: props.y.interpolate(
                               [0, 0.5, 0.7, 0.8, 1],
-                              ["0%", "20%", "30%", "40%", "43%"]
+                              ["0%", "0%", "0%", "0%", "90%"]
+                            ),
+                            height: props.y.interpolate(
+                              [0, 0.5, 0.7, 0.8, 1],
+                              ["0%", "0%", "0%", "0%", "53%"]
                             ),
                             opacity: props.y.interpolate(
                               [0, 0.5, 0.7, 0.9, 1],
@@ -3404,100 +3557,82 @@ class ComposantApercu extends React.Component {
                             ), 
                             marginLeft : props.y.interpolate(
                               [0, 0.5, 0.7, 0.8, 1],
-                              ["0%", "30%", "35%", "38%", "50%"]
+                              ["0%", "0%", "0%", "0%", "-0.5%"]
                             ), 
                             marginTop : props.y.interpolate(
                               [0, 0.5, 0.7, 0.8, 1],
-                              ["0%", "0%", "0%", "2%", "2.5%"]
+                              ["0%", "0%", "0%", "2%", "39%"]
                             )
                           }
                         }
                       } )() }
                     >
                       <animated.div
-                        className="Texte_apercu_context"
+                        className="Texte_apercu_parcekonlepeu"
                       >
                         <p 
                           style={{ 
-                            fontWeight: "bold", 
+                            fontWeight: "bold",
                             fontSize: window.navigator.userAgent.indexOf('Mobi') !== -1 ? "3vw" : "1.3em",
                             textAlign: "center",
-                            marginTop: "-10%"
+                            color: "#4169E1"
                           }}
                         >
                           { 
                             this.state.clique_1_2_1 
                             ? 
-                            "Context :" 
+                            "Le site ici présent est un aperçu de mon savoir faire en React JS, Javascript, CSS, HTML, AWS, Git et Github." 
                             : 
                             null
                           }
                         </p>
                         <p 
                           style={{ 
-                            fontSize: window.navigator.userAgent.indexOf('Mobi') !== -1 ? "3vw" : "1em",
-                            textAlign: "center", 
-                            marginRight: "20%", 
-                            marginLeft: "20%",
-                            marginTop: "-5%"
+                            fontWeight: "bold",
+                            fontSize: window.navigator.userAgent.indexOf('Mobi') !== -1 ? "3vw" : "1.3em",
+                            textAlign: "center",
+                            color: "#4169E1"
                           }}
                         >
                           { 
                             this.state.clique_1_2_1 
                             ? 
-                            "Projet personnel de création d'application cross-platform" 
+                            " J'ai essayé d'apporté de l'interactivité avec divers animations en utilisant React Spring, et est utilisé React Routeur pour assuré la navigation sur cette application web monopage."
                             : 
                             null
                           }
                         </p>
-                      </animated.div>
-                      <animated.div
-                        className="Texte_apercu_techno"
-                      >
                         <p 
                           style={{ 
-                            fontWeight: "bold", 
+                            fontWeight: "bold",
                             fontSize: window.navigator.userAgent.indexOf('Mobi') !== -1 ? "3vw" : "1.3em",
                             textAlign: "center",
-                            marginTop: "-10%"
+                            color: "#4169E1"
                           }}
                         >
                           { 
                             this.state.clique_1_2_1 
                             ? 
-                            "Technologie utilisé :" 
+                            " une gestion des divers devices sur lequel ce site pourrait être visité a été effectué en adaptant l'agencement des divers composants."
                             : 
-                            null}
+                            null
+                          }
                         </p>
                         <p 
                           style={{ 
-                            fontSize: window.navigator.userAgent.indexOf('Mobi') !== -1 ? "3vw" : "1em", 
-                            textAlign: "center", 
-                            marginRight: "20%", 
-                            marginLeft: "20%",
-                            marginTop: "-5%"
+                            fontWeight: "bold",
+                            fontSize: window.navigator.userAgent.indexOf('Mobi') !== -1 ? "3vw" : "1.3em",
+                            textAlign: "center",
+                            color: "#4169E1"
                           }}
                         >
                           { 
                             this.state.clique_1_2_1 
                             ? 
-                            "React Native | Expo | Redux | React Navigation | Express JS | Node JS | AWS " 
+                            "Pour finir un travail de design a été effectué sur la mise en page même si cela n'égale pas le travail d'un professionnel."
                             : 
-                            null}
-                        </p>
-                      </animated.div>
-                      <animated.div
-                        className="Texte_apercu_description"
-                      >
-                        <p 
-                          style={{ 
-                            fontWeight: "bold", 
-                            fontSize: window.navigator.userAgent.indexOf('Mobi') !== -1 ? "3vw" : "1.3em",
-                            textAlign: "center",
-                            marginTop: "-35%"
-                          }}
-                        >
-                          { this.state.clique_1_2_1 ? "Description :" : null}
+                            null
+                          }
                         </p>
                       </animated.div>
                     </animated.div>
@@ -3527,7 +3662,8 @@ class ComposantApercu extends React.Component {
                           !this.state.clique_1_1_2 &&
                           !this.state.clique_1_2_1 &&
                           !this.state.clique_2_1 &&
-                          !this.state.clique_2_2 
+                          !this.state.clique_2_2 &&
+                          this.state.focus_1_2_1
                           ? 
                           "Voir plus" 
                           : 
@@ -3719,7 +3855,7 @@ class ComposantApercu extends React.Component {
 
                   </animated.div>
                   <animated.div
-                    className="Contenaire_texte_apercu_2_1"
+                    className="Contenaire_texte_apercu_1_1_1"
                     style={ ( () => {
                       if (
                         this.state.clique_2_1
@@ -3745,7 +3881,114 @@ class ComposantApercu extends React.Component {
                       }
                     } )() }
                   >
-                    
+                    <animated.div
+                        className="Texte_apercu_context"
+                      >
+                        <p 
+                          style={{ 
+                            fontWeight: "bold", 
+                            color: "#4169E1",
+                            fontSize: window.navigator.userAgent.indexOf('Mobi') !== -1 ? "3vw" : "1.3em",
+                            textAlign: "center",
+                            marginTop: "-10%"
+                          }}
+                        >
+                          { 
+                            this.state.clique_2_1
+                            ? 
+                            "Context :" 
+                            : 
+                            null
+                          }
+                        </p>
+                        <p 
+                          style={{ 
+                            fontWeight: "bold",
+                            fontSize: window.navigator.userAgent.indexOf('Mobi') !== -1 ? "3vw" : "1em",
+                            textAlign: "center", 
+                            marginRight: "20%", 
+                            marginLeft: "20%",
+                            marginTop: "-5%"
+                          }}
+                        >
+                          { 
+                            this.state.clique_2_1 
+                            ? 
+                            "Projet personnel de création d'application cross-platform" 
+                            : 
+                            null
+                          }
+                        </p>
+                      </animated.div>
+                      <animated.div
+                        className="Texte_apercu_techno"
+                      >
+                        <p 
+                          style={{ 
+                            color: "#4169E1",
+                            fontWeight: "bold", 
+                            fontSize: window.navigator.userAgent.indexOf('Mobi') !== -1 ? "3vw" : "1.3em",
+                            textAlign: "center",
+                            marginTop: "-10%"
+                          }}
+                        >
+                          { 
+                            this.state.clique_2_1 
+                            ? 
+                            "Technologie utilisé :" 
+                            : 
+                            null}
+                        </p>
+                        <p 
+                          style={{ 
+                            fontWeight: "bold",
+                            fontSize: window.navigator.userAgent.indexOf('Mobi') !== -1 ? "3vw" : "1em", 
+                            textAlign: "center", 
+                            marginRight: "20%", 
+                            marginLeft: "20%",
+                            marginTop: "-5%"
+                          }}
+                        >
+                          { 
+                            this.state.clique_2_1 
+                            ? 
+                            "React Native | Expo | Redux | React Navigation | Express JS | Node JS | AWS " 
+                            : 
+                            null}
+                        </p>
+                      </animated.div>
+                      <animated.div
+                        className="Texte_apercu_description"
+                      >
+                        <p 
+                          style={{ 
+                            color: "#4169E1",
+                            fontWeight: "bold", 
+                            fontSize: window.navigator.userAgent.indexOf('Mobi') !== -1 ? "3vw" : "1.3em",
+                            textAlign: "center",
+                            marginTop: "-35%"
+                          }}
+                        >
+                          { this.state.clique_2_1 ? "Description :" : null}
+                        </p>
+                        <p 
+                          style={{ 
+                            fontWeight: "bold",
+                            fontSize: window.navigator.userAgent.indexOf('Mobi') !== -1 ? "3vw" : "1em", 
+                            textAlign: "center", 
+                            marginRight: "20%", 
+                            marginLeft: "20%",
+                            marginTop: "-5%"
+                          }}
+                        >
+                          { 
+                            this.state.clique_2_1 
+                            ? 
+                            "Gestion de l'état global de l'application avec Redux" 
+                            : 
+                            null}
+                        </p>
+                      </animated.div>
                   </animated.div>
                   <animated.div
                       className="VoirPlus"
@@ -3910,7 +4153,7 @@ class ComposantApercu extends React.Component {
 
                   </animated.div>
                   <animated.div
-                    className="Contenaire_texte_apercu_2_2"
+                    className="Contenaire_texte_apercu_1_1_1"
                     style={ ( () => {
                       if (
                         this.state.clique_2_2
@@ -3936,7 +4179,114 @@ class ComposantApercu extends React.Component {
                       }
                     } )() }
                   >
-                    
+                    <animated.div
+                        className="Texte_apercu_context"
+                      >
+                        <p 
+                          style={{ 
+                            fontWeight: "bold", 
+                            color: "#4169E1",
+                            fontSize: window.navigator.userAgent.indexOf('Mobi') !== -1 ? "3vw" : "1.3em",
+                            textAlign: "center",
+                            marginTop: "-10%"
+                          }}
+                        >
+                          { 
+                            this.state.clique_2_2 
+                            ? 
+                            "Context :" 
+                            : 
+                            null
+                          }
+                        </p>
+                        <p 
+                          style={{ 
+                            fontWeight: "bold",
+                            fontSize: window.navigator.userAgent.indexOf('Mobi') !== -1 ? "3vw" : "1em",
+                            textAlign: "center", 
+                            marginRight: "20%", 
+                            marginLeft: "20%",
+                            marginTop: "-5%"
+                          }}
+                        >
+                          { 
+                            this.state.clique_2_2 
+                            ? 
+                            "Projet personnel de création d'application cross-platform" 
+                            : 
+                            null
+                          }
+                        </p>
+                      </animated.div>
+                      <animated.div
+                        className="Texte_apercu_techno"
+                      >
+                        <p 
+                          style={{ 
+                            color: "#4169E1",
+                            fontWeight: "bold", 
+                            fontSize: window.navigator.userAgent.indexOf('Mobi') !== -1 ? "3vw" : "1.3em",
+                            textAlign: "center",
+                            marginTop: "-10%"
+                          }}
+                        >
+                          { 
+                            this.state.clique_2_2 
+                            ? 
+                            "Technologie utilisé :" 
+                            : 
+                            null}
+                        </p>
+                        <p 
+                          style={{ 
+                            fontWeight: "bold",
+                            fontSize: window.navigator.userAgent.indexOf('Mobi') !== -1 ? "3vw" : "1em", 
+                            textAlign: "center", 
+                            marginRight: "20%", 
+                            marginLeft: "20%",
+                            marginTop: "-5%"
+                          }}
+                        >
+                          { 
+                            this.state.clique_2_2
+                            ? 
+                            "React Native | Expo | Redux | React Navigation | Express JS | Node JS | AWS " 
+                            : 
+                            null}
+                        </p>
+                      </animated.div>
+                      <animated.div
+                        className="Texte_apercu_description"
+                      >
+                        <p 
+                          style={{ 
+                            color: "#4169E1",
+                            fontWeight: "bold", 
+                            fontSize: window.navigator.userAgent.indexOf('Mobi') !== -1 ? "3vw" : "1.3em",
+                            textAlign: "center",
+                            marginTop: "-35%"
+                          }}
+                        >
+                          { this.state.clique_2_2 ? "Description :" : null}
+                        </p>
+                        <p 
+                          style={{ 
+                            fontWeight: "bold",
+                            fontSize: window.navigator.userAgent.indexOf('Mobi') !== -1 ? "3vw" : "1em", 
+                            textAlign: "center", 
+                            marginRight: "20%", 
+                            marginLeft: "20%",
+                            marginTop: "-5%"
+                          }}
+                        >
+                          { 
+                            this.state.clique_2_2 
+                            ? 
+                            "Gestion des dates et horaire pour système de reservation en fonction de la durée de la préstation" 
+                            : 
+                            null}
+                        </p>
+                      </animated.div>
                   </animated.div>
                   <animated.div
                       className="VoirPlus"
@@ -3964,7 +4314,8 @@ class ComposantApercu extends React.Component {
                           !this.state.clique_1_1_2 &&
                           !this.state.clique_1_2_1 &&
                           !this.state.clique_2_1 &&
-                          !this.state.clique_2_2 
+                          !this.state.clique_2_2 &&
+                          this.state.focus_2_2
                           ? 
                           "Voir plus" 
                           : 
