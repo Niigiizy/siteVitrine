@@ -1,13 +1,13 @@
 import React from 'react';
-import logo from './logo.svg'
+import axios from 'axios';
 import {Spring, animated, Keyframes} from 'react-spring/renderprops'
 import './App.css';
+import CircularProgress from '@material-ui/core/CircularProgress'
 import {
-  HashRouter ,
   Switch,
   Route,
   Link,
-  useParams
+  withRouter
 } from "react-router-dom"
 
 class App extends React.Component {
@@ -25,62 +25,67 @@ class App extends React.Component {
       rotat5 : false,
       etapeRotat : 0,
       remiseEtapeAZero : false,
-      anim_de_fond: false
+      anim_de_fond: false,
+      hauteur_bas_bouton: "10vh",
+      hauteur_bas_arrondi: "0vh"
     }
     this.tableauImageCouleur = [ 
-      [ "./infoPerso-portefolio.png", "#0abde3", "infoPerso", "20%", "14%", "60%", "60%", "/infoPerso", "info perso" ],
+      [ "./infoperso-portefolio.png", "#0abde3", "infoPerso", "20%", "14%", "60%", "60%", "/infoPerso", "info perso" ],
       [ "./apercu-portfolio-bleu.png", "#4169E1", "apercu", "20%", "25%", "60%", "50%", "/apercu", "aperçu" ],
-      [ "./home-portefolio-blanc.png", "#5f27cd", "home", "20%", "24%", "60%", "50%", "/home" ],
+      [ "./home-portefolio-blanc.png", "#5f27cd", "home", "20%", "24%", "60%", "50%", "/home", "home" ],
       [ "./contact-portfolio-bleu.png", "#00008B", "contact", "20%", "24%", "60%", "50%", "/contact", "contact" ],
       [ "./competence-portefolio.png", "#222f3e", "competence", "20%", "15%", "60%", "70%", "/competence", "savoir faire" ],
     ]
     this.choixImageCouleur = () => {
-      switch (this.state.boutonClique) {
-        case 'home':
+      switch (this.props.location.pathname) {
+        case '/':
           return [ 
-            [ "./infoPerso-portefolio.png", "#0abde3", "infoPerso", "20%", "14%", "60%", "60%", "/infoPerso", "info perso" ],
+            [ "./infoperso-portefolio.png", "#0abde3", "infoPerso", "20%", "14%", "60%", "60%", "/infoPerso", "info perso" ],
             [ "./apercu-portfolio-bleu.png", "#4169E1", "apercu", "20%", "25%", "60%", "50%", "/apercu", "aperçu" ],
-            [ "./home-portefolio-blanc.png", "#5f27cd", "home", "20%", "24%", "60%", "50%", "/home" ],
+            [ "./home-portefolio-blanc.png", "#5f27cd", "home", "20%", "24%", "60%", "50%", "/home", "home" ],
             [ "./contact-portfolio-bleu.png", "#00008B", "contact", "20%", "24%", "60%", "50%", "/contact", "contact" ],
             [ "./competence-portefolio.png", "#222f3e", "competence", "20%", "15%", "60%", "70%", "/competence", "savoir faire" ],
           ]
-          break;
-        case 'contact':
+        case '/home':
           return [ 
-            [ "./infoPerso-portefolio.png", "#0abde3", "infoPerso", "20%", "14%", "60%", "60%", "/infoPerso", "info perso" ],
+            [ "./infoperso-portefolio.png", "#0abde3", "infoPerso", "20%", "14%", "60%", "60%", "/infoPerso", "info perso" ],
             [ "./apercu-portfolio-bleu.png", "#4169E1", "apercu", "20%", "25%", "60%", "50%", "/apercu", "aperçu" ],
-            [ "./contact-portfolio-bleu-blanc.png", "#00008B", "contact", "20%", "24%", "60%", "50%", "/contact" ],
+            [ "./home-portefolio-blanc.png", "#5f27cd", "home", "20%", "24%", "60%", "50%", "/home", "home" ],
+            [ "./contact-portfolio-bleu.png", "#00008B", "contact", "20%", "24%", "60%", "50%", "/contact", "contact" ],
+            [ "./competence-portefolio.png", "#222f3e", "competence", "20%", "15%", "60%", "70%", "/competence", "savoir faire" ],
+          ]
+        case '/contact':
+          return [ 
+            [ "./infoperso-portefolio.png", "#0abde3", "infoPerso", "20%", "14%", "60%", "60%", "/infoPerso", "info perso" ],
+            [ "./apercu-portfolio-bleu.png", "#4169E1", "apercu", "20%", "25%", "60%", "50%", "/apercu", "aperçu" ],
+            [ "./contact-portfolio-bleu-blanc.png", "#00008B", "contact", "20%", "24%", "60%", "50%", "/contact", "contact" ],
             [ "./competence-portefolio.png", "#222f3e", "competence", "20%", "15%", "60%", "70%", "/competence", "savoir faire" ],
             [ "./home-portefolio.png", "#5f27cd", "home", "20%", "24%", "60%", "50%", "/home", "home" ],
           ]
-          break;
-        case 'competence':
+        case '/competence':
           return [ 
-            [ "./infoPerso-portefolio.png", "#0abde3", "infoPerso", "20%", "14%", "60%", "60%", "/infoPerso", "info perso" ],
+            [ "./infoperso-portefolio.png", "#0abde3", "infoPerso", "20%", "14%", "60%", "60%", "/infoPerso", "info perso" ],
             [ "./apercu-portfolio-bleu.png", "#4169E1", "apercu", "20%", "25%", "60%", "50%", "/apercu", "aperçu" ],
-            [ "./competence-portefolio-blanc.png", "#222f3e", "competence", "20%", "15%", "60%", "70%", "/competence" ],
+            [ "./competence-portefolio-blanc.png", "#222f3e", "competence", "20%", "15%", "60%", "70%", "/competence", "compétence" ],
             [ "./contact-portfolio-bleu.png", "#00008B", "contact", "20%", "24%", "60%", "50%", "/contact", "contact" ],
             [ "./home-portefolio.png", "#5f27cd", "home", "20%", "24%", "60%", "50%", "/home", "home" ],
           ]
-          break;
-        case 'apercu':
+        case '/apercu':
           return [ 
-            [ "./infoPerso-portefolio.png", "#0abde3", "infoPerso", "20%", "14%", "60%", "60%", "/infoPerso", "info perso" ],
+            [ "./infoperso-portefolio.png", "#0abde3", "infoPerso", "20%", "14%", "60%", "60%", "/infoPerso", "info perso" ],
             [ "./competence-portefolio.png", "#222f3e", "competence", "20%", "15%", "60%", "70%", "/competence", "savoir faire" ],
-            [ "./apercu-portfolio-bleu-blanc.png", "#4169E1", "apercu", "20%", "25%", "60%", "50%", "/apercu" ],
+            [ "./apercu-portfolio-bleu-blanc.png", "#4169E1", "apercu", "20%", "25%", "60%", "50%", "/apercu", "savoir faire" ],
             [ "./contact-portfolio-bleu.png", "#00008B", "contact", "20%", "24%", "60%", "50%", "/contact", "contact" ],
             [ "./home-portefolio.png", "#5f27cd", "home", "20%", "24%", "60%", "50%", "/home", "home" ],
           ]
-          break;
-        case 'infoPerso':
+        case '/infoPerso':
           return [ 
             [ "./competence-portefolio.png", "#222f3e", "competence", "20%", "15%", "60%", "70%", "/competence", "savoir faire" ],
             [ "./apercu-portfolio-bleu.png", "#4169E1", "apercu", "20%", "25%", "60%", "50%", "/apercu", "aperçu" ],
-            [ "./infoPerso-portefolio-blanc.png", "#0abde3", "infoPerso", "20%", "14%", "60%", "60%", "/infoPerso" ],
+            [ "./infoperso-portefolio-blanc.png", "#0abde3", "infoPerso", "20%", "14%", "60%", "60%", "/infoPerso", "info perso" ],
             [ "./contact-portfolio-bleu.png", "#00008B", "contact", "20%", "24%", "60%", "50%", "/contact", "contact" ],
             [ "./home-portefolio.png", "#5f27cd", "home", "20%", "24%", "60%", "50%", "/home", "home" ],
           ]
-          break;
         default:
           break;
       }
@@ -91,15 +96,9 @@ class App extends React.Component {
   }
 
   path = React.createRef()
-  
-  
 
   componentDidMount() {
     window.onresize = () => this.setState({resiz : !this.state.resiz})
-  }
-
-  componentWillMount() {
-    
   }
 
   componentDidUpdate() {
@@ -110,7 +109,6 @@ class App extends React.Component {
       
       this.setState({ remiseEtapeAZero : true})
     } else if (this.state.etapeRotat === 2 && this.state.remiseEtapeAZero) {
-      this.tableauImageCouleur = this.choixImageCouleur()
       setTimeout(() => {
         this.setState({ remiseEtapeAZero : false, etapeRotat : 0});
       }, 400)
@@ -163,14 +161,53 @@ class App extends React.Component {
             this.randL_19 = Math.random(),
             this.randT_19 = Math.random(), 
             this.randL_20 = Math.random(),
-            this.randT_20 = Math.random(), 
-            this.aller = !this.aller,
-            console.log(this.randL), console.log(this.randT), console.log(this.aller))
+            this.randT_20 = Math.random(),
+            this.randL_21 = Math.random(), 
+            this.randT_21 = Math.random(), 
+            this.randL_22 = Math.random(), 
+            this.randT_22 = Math.random(), 
+            this.randL_23 = Math.random(), 
+            this.randT_23 = Math.random(), 
+            this.randL_24 = Math.random(), 
+            this.randT_24 = Math.random(), 
+            this.randL_25 = Math.random(), 
+            this.randT_25 = Math.random(), 
+            this.randL_26 = Math.random(), 
+            this.randT_26 = Math.random(), 
+            this.randL_27 = Math.random(), 
+            this.randT_27 = Math.random(),
+            this.randL_28 = Math.random(), 
+            this.randT_28 = Math.random(), 
+            this.randL_29 = Math.random(), 
+            this.randT_29 = Math.random(), 
+            this.randL_30 = Math.random(), 
+            this.randT_30 = Math.random(), 
+            this.randL_31 = Math.random(), 
+            this.randT_31 = Math.random(), 
+            this.randL_32 = Math.random(), 
+            this.randT_32 = Math.random(), 
+            this.randL_33 = Math.random(), 
+            this.randT_33 = Math.random(), 
+            this.randL_34 = Math.random(), 
+            this.randT_34 = Math.random(), 
+            this.randL_35 = Math.random(), 
+            this.randT_35 = Math.random(), 
+            this.randL_36 = Math.random(), 
+            this.randT_36 = Math.random(), 
+            this.randL_37 = Math.random(), 
+            this.randT_37 = Math.random(), 
+            this.randL_38 = Math.random(), 
+            this.randT_38 = Math.random(), 
+            this.randL_39 = Math.random(), 
+            this.randT_39 = Math.random(), 
+            this.randL_40 = Math.random(),
+            this.randT_40 = Math.random(), 
+            this.aller = !this.aller)
         })
         await next({
           to: { x: 0 },
           onRest:
-            (this.aller=!this.aller ,console.log("anim fini:"))
+            (this.aller=!this.aller)
         })
       }
     }
@@ -183,28 +220,1094 @@ class App extends React.Component {
     // console.log(window.navigator.userAgent.indexOf('Mobi') !== -1)
     // console.log(this.state)
     // const offset = this.state.offset
-    console.log("app rerendu")
+    console.log("props APP")
+    console.log(this.props)
+    this.tableauImageCouleur = this.choixImageCouleur()
     if (
-      window.navigator.userAgent.indexOf('Mobi') !== -1 && window.innerHeight >= window.innerWidth
+      window.navigator.userAgent.indexOf('Mobi') !== -1 
+      // && window.innerHeight >= window.innerWidth
     ) {
       return (
-        <HashRouter>
+        <div>
+          <div
+            className="Contenaire_anim_de_fond_mobile" 
+          >
+            <this.AnimInfini
+              native
+              config={ {duration: 1000} }
+            >
+              {({x}) => (
+                <div>
+                  <animated.div
+                    style={{
+                      left: String(this.randL_1*25+"vw"),
+                      // transform: String("translate("+props.x*10+"vw)"),
+                      transform: !this.aller ? 
+                      x.interpolate(
+                        x => 
+                        `translate(${x*10}vw,${this.randL_1*x*10}vh)`
+                      )
+                      :
+                      x.interpolate(
+                        x => 
+                        `translate(${20-x*10}vw,${this.randL_1*20-this.randL_1*x*10}vh)`
+                      )
+                      ,
+                      bottom: String(this.randT_1*20+"vh"),
+                      width: "5px",
+                      height: "5px",
+                      borderRadius: "50%",
+                      position: "absolute",
+                      backgroundColor: this.tableauImageCouleur[2][1],
+                      opacity:  !this.aller ? 
+                      x.interpolate(
+                        [0,1],
+                        [0, 1]
+                      )
+                      :
+                      x.interpolate(
+                        [0, 1],
+                        [0, 1]
+                      )
+                      ,
+                    }}
+                  >
+                  </animated.div>
+                  <animated.div
+                  style={{
+                    left: String(this.randL_2*25+"vw"),
+                      // transform: String("translate("+props.x*10+"vw)"),
+                      transform: !this.aller ? 
+                      x.interpolate(
+                        x => 
+                        `translate(${x*10}vw,${this.randL_2*x*10}vh)`
+                      )
+                      :
+                      x.interpolate(
+                        x => 
+                        `translate(${20-x*10}vw,${this.randL_2*20-this.randL_2*x*10}vh)`
+                      )
+                      ,
+                    bottom: String(this.randT_2*20+"vh"),
+                    width: "5px",
+                    height: "5px",
+                    borderRadius: "50%",
+                    position: "absolute",
+                    backgroundColor: this.tableauImageCouleur[2][1],
+                    opacity:  !this.aller ? 
+                    x.interpolate(
+                      [0,1],
+                      [0, 1]
+                    )
+                    :
+                    x.interpolate(
+                      [0, 1],
+                      [0, 1]
+                    )
+                    ,
+                  }}
+                >
+                </animated.div>
+                  <animated.div
+                    style={{
+                      left: String(this.randL_3*25+"vw"),
+                      // transform: String("translate("+props.x*10+"vw)"),
+                      transform: !this.aller ? 
+                      x.interpolate(
+                        x => 
+                        `translate(${x*10}vw,${this.randL_3*x*10}vh)`
+                      )
+                      :
+                      x.interpolate(
+                        x => 
+                        `translate(${20-x*10}vw,${this.randL_3*20-this.randL_3*x*10}vh)`
+                      )
+                      ,
+                      bottom: String(this.randT_3*20+"vh"),
+                      width: "5px",
+                      height: "5px",
+                      borderRadius: "50%",
+                      position: "absolute",
+                      backgroundColor: this.tableauImageCouleur[2][1],
+                      opacity:  !this.aller ? 
+                      x.interpolate(
+                        [0,1],
+                        [0, 1]
+                      )
+                      :
+                      x.interpolate(
+                        [0, 1],
+                        [0, 1]
+                      )
+                      ,
+                    }}
+                  >
+                  </animated.div>
+                  <animated.div
+                    style={{
+                      left: String(this.randL_4*25+"vw"),
+                      // transform: String("translate("+props.x*10+"vw)"),
+                      transform: !this.aller ? 
+                      x.interpolate(
+                        x => 
+                        `translate(${x*10}vw,${this.randL_4*x*10}vh)`
+                      )
+                      :
+                      x.interpolate(
+                        x => 
+                        `translate(${20-x*10}vw,${this.randL_4*20-this.randL_4*x*10}vh)`
+                      )
+                      ,
+                      bottom: String(this.randT_4*20+"vh"),
+                      width: "5px",
+                      height: "5px",
+                      borderRadius: "50%",
+                      position: "absolute",
+                      backgroundColor: this.tableauImageCouleur[2][1],
+                      opacity:  !this.aller ? 
+                      x.interpolate(
+                        [0,1],
+                        [0, 1]
+                      )
+                      :
+                      x.interpolate(
+                        [0, 1],
+                        [0, 1]
+                      )
+                      ,
+                    }}
+                  >
+                  </animated.div>
+                  <animated.div
+                    style={{
+                      left: String(this.randL_5*25+"vw"),
+                      // transform: String("translate("+props.x*10+"vw)"),
+                      transform: !this.aller ? 
+                      x.interpolate(
+                        x => 
+                        `translate(${x*10}vw,${this.randL_5*x*10}vh)`
+                      )
+                      :
+                      x.interpolate(
+                        x => 
+                        `translate(${20-x*10}vw,${this.randL_5*20-this.randL_5*x*10}vh)`
+                      )
+                      ,
+                      bottom: String(this.randT_5*20+"vh"),
+                      width: "5px",
+                      height: "5px",
+                      borderRadius: "50%",
+                      position: "absolute",
+                      backgroundColor: this.tableauImageCouleur[2][1],
+                      opacity:  !this.aller ? 
+                      x.interpolate(
+                        [0,1],
+                        [0, 1]
+                      )
+                      :
+                      x.interpolate(
+                        [0, 1],
+                        [0, 1]
+                      )
+                      ,
+                    }}
+                  >
+                  </animated.div>
+                  <animated.div
+                    style={{
+                      right: String(this.randL_6*25+"vw"),
+                      // transform: String("translate("+props.x*10+"vw)"),
+                      transform: !this.aller ? 
+                      x.interpolate(
+                        x => 
+                        `translate(${-x*10}vw,${this.randL_6*x*10}vh)`
+                      )
+                      :
+                      x.interpolate(
+                        x => 
+                        `translate(${-(20-x*10)}vw,${this.randL_6*20-this.randL_6*x*10}vh)`
+                      )
+                      ,
+                      bottom: String(this.randT_6*20+"vh"),
+                      width: "5px",
+                      height: "5px",
+                      borderRadius: "50%",
+                      position: "absolute",
+                      backgroundColor: this.tableauImageCouleur[2][1],
+                      opacity:  !this.aller ? 
+                      x.interpolate(
+                        [0,1],
+                        [0, 1]
+                      )
+                      :
+                      x.interpolate(
+                        [0, 1],
+                        [0, 1]
+                      )
+                      ,
+                    }}
+                  >
+                  </animated.div>
+                  <animated.div
+                    style={{
+                      right: String(this.randL_7*25+"vw"),
+                      // transform: String("translate("+props.x*10+"vw)"),
+                      transform: !this.aller ? 
+                      x.interpolate(
+                        x => 
+                        `translate(${-x*10}vw,${this.randL_7*x*10}vh)`
+                      )
+                      :
+                      x.interpolate(
+                        x => 
+                        `translate(${-(20-x*10)}vw,${this.randL_7*20-this.randL_7*x*10}vh)`
+                      )
+                      ,
+                      bottom: String(this.randT_7*20+"vh"),
+                      width: "5px",
+                      height: "5px",
+                      borderRadius: "50%",
+                      position: "absolute",
+                      backgroundColor: this.tableauImageCouleur[2][1],
+                      opacity:  !this.aller ? 
+                      x.interpolate(
+                        [0,1],
+                        [0, 1]
+                      )
+                      :
+                      x.interpolate(
+                        [0, 1],
+                        [0, 1]
+                      )
+                      ,
+                    }}
+                  >
+                  </animated.div>
+                  <animated.div
+                    style={{
+                      right: String(this.randL_8*25+"vw"),
+                      // transform: String("translate("+props.x*10+"vw)"),
+                      transform: !this.aller ? 
+                      x.interpolate(
+                        x => 
+                        `translate(${-x*10}vw,${this.randL_8*x*10}vh)`
+                      )
+                      :
+                      x.interpolate(
+                        x => 
+                        `translate(${-(20-x*10)}vw,${this.randL_8*20-this.randL_8*x*10}vh)`
+                      )
+                      ,
+                      bottom: String(this.randT_8*20+"vh"),
+                      width: "5px",
+                      height: "5px",
+                      borderRadius: "50%",
+                      position: "absolute",
+                      backgroundColor: this.tableauImageCouleur[2][1],
+                      opacity:  !this.aller ? 
+                      x.interpolate(
+                        [0,1],
+                        [0, 1]
+                      )
+                      :
+                      x.interpolate(
+                        [0, 1],
+                        [0, 1]
+                      )
+                      ,
+                    }}
+                  >
+                  </animated.div>
+                  <animated.div
+                    style={{
+                      right: String(this.randL_9*25+"vw"),
+                      // transform: String("translate("+props.x*10+"vw)"),
+                      transform: !this.aller ? 
+                      x.interpolate(
+                        x => 
+                        `translate(${-x*10}vw,${this.randL_9*x*10}vh)`
+                      )
+                      :
+                      x.interpolate(
+                        x => 
+                        `translate(${-(20-x*10)}vw,${this.randL_9*20-this.randL_9*x*10}vh)`
+                      )
+                      ,
+                      bottom: String(this.randT_9*20+"vh"),
+                      width: "5px",
+                      height: "5px",
+                      borderRadius: "50%",
+                      position: "absolute",
+                      backgroundColor: this.tableauImageCouleur[2][1],
+                      opacity:  !this.aller ? 
+                      x.interpolate(
+                        [0,1],
+                        [0, 1]
+                      )
+                      :
+                      x.interpolate(
+                        [0, 1],
+                        [0, 1]
+                      )
+                      ,
+                    }}
+                  >
+                  </animated.div>
+                  <animated.div
+                    style={{
+                      right: String(this.randL_10*75+"vw"),
+                      // transform: String("translate("+props.x*10+"vw)"),
+                      transform: !this.aller ? 
+                      x.interpolate(
+                        x => 
+                        `translate(${-x*10}vw,${this.randL_10*x*10}vh)`
+                      )
+                      :
+                      x.interpolate(
+                        x => 
+                        `translate(${-(20-x*10)}vw,${this.randL_10*20-this.randL_10*x*10}vh)`
+                      )
+                      ,
+                      bottom: String(this.randT_10*20+"vh"),
+                      width: "5px",
+                      height: "5px",
+                      borderRadius: "50%",
+                      position: "absolute",
+                      backgroundColor: this.tableauImageCouleur[2][1],
+                      opacity:  !this.aller ? 
+                      x.interpolate(
+                        [0,1],
+                        [0, 1]
+                      )
+                      :
+                      x.interpolate(
+                        [0, 1],
+                        [0, 1]
+                      )
+                      ,
+                    }}
+                  >
+                  </animated.div>
+                  <animated.div
+                    style={{
+                      left: String(this.randL_11*75+"vw"),
+                      // transform: String("translate("+props.x*10+"vw)"),
+                      transform: !this.aller ? 
+                      x.interpolate(
+                        x => 
+                        `translate(${this.randL_11*x*10}vw,${-x*10}vh)`
+                      )
+                      :
+                      x.interpolate(
+                        x => 
+                        `translate(${this.randL_11*20-this.randL_11*x*10}vw,${-(20-x*10)}vh)`
+                      )
+                      ,
+                      bottom: String(-this.randT_11*5+"vh"),
+                      width: "5px",
+                      height: "5px",
+                      borderRadius: "50%",
+                      position: "absolute",
+                      backgroundColor: this.tableauImageCouleur[2][1],
+                      opacity:  !this.aller ? 
+                      x.interpolate(
+                        [0,1],
+                        [0, 1]
+                      )
+                      :
+                      x.interpolate(
+                        [0, 1],
+                        [0, 1]
+                      )
+                      ,
+                    }}
+                  >
+                  </animated.div>
+                  <animated.div
+                    style={{
+                      left: String(this.randL_12*75+"vw"),
+                      // transform: String("translate("+props.x*10+"vw)"),
+                      transform: !this.aller ? 
+                      x.interpolate(
+                        x => 
+                        `translate(${this.randL_12*x*10}vw,${-x*10}vh)`
+                      )
+                      :
+                      x.interpolate(
+                        x => 
+                        `translate(${this.randL_12*20-this.randL_12*x*10}vw,${-(20-x*10)}vh)`
+                      )
+                      ,
+                      bottom: String(-this.randT_12*5+"vh"),
+                      width: "5px",
+                      height: "5px",
+                      borderRadius: "50%",
+                      position: "absolute",
+                      backgroundColor: this.tableauImageCouleur[2][1],
+                      opacity:  !this.aller ? 
+                      x.interpolate(
+                        [0,1],
+                        [0, 1]
+                      )
+                      :
+                      x.interpolate(
+                        [0, 1],
+                        [0, 1]
+                      )
+                      ,
+                    }}
+                  >
+                  </animated.div>
+                  <animated.div
+                    style={{
+                      left: String(this.randL_13*75+"vw"),
+                      // transform: String("translate("+props.x*10+"vw)"),
+                      transform: !this.aller ? 
+                      x.interpolate(
+                        x => 
+                        `translate(${this.randL_13*x*10}vw,${-x*10}vh)`
+                      )
+                      :
+                      x.interpolate(
+                        x => 
+                        `translate(${this.randL_13*20-this.randL_13*x*10}vw,${-(20-x*10)}vh)`
+                      )
+                      ,
+                      bottom: String(-this.randT_13*5+"vh"),
+                      width: "5px",
+                      height: "5px",
+                      borderRadius: "50%",
+                      position: "absolute",
+                      backgroundColor: this.tableauImageCouleur[2][1],
+                      opacity:  !this.aller ? 
+                      x.interpolate(
+                        [0,1],
+                        [0, 1]
+                      )
+                      :
+                      x.interpolate(
+                        [0, 1],
+                        [0, 1]
+                      )
+                      ,
+                    }}
+                  >
+                  </animated.div>
+                  <animated.div
+                    style={{
+                      left: String(this.randL_14*75+"vw"),
+                      // transform: String("translate("+props.x*10+"vw)"),
+                      transform: !this.aller ? 
+                      x.interpolate(
+                        x => 
+                        `translate(${this.randL_14*x*10}vw,${-x*10}vh)`
+                      )
+                      :
+                      x.interpolate(
+                        x => 
+                        `translate(${this.randL_14*20-this.randL_14*x*10}vw,${-(20-x*10)}vh)`
+                      )
+                      ,
+                      bottom: String(-this.randT_14*5+"vh"),
+                      width: "5px",
+                      height: "5px",
+                      borderRadius: "50%",
+                      position: "absolute",
+                      backgroundColor: this.tableauImageCouleur[2][1],
+                      opacity:  !this.aller ? 
+                      x.interpolate(
+                        [0,1],
+                        [0, 1]
+                      )
+                      :
+                      x.interpolate(
+                        [0, 1],
+                        [0, 1]
+                      )
+                      ,
+                    }}
+                  >
+                  </animated.div>
+                  <animated.div
+                    style={{
+                      left: String(this.randL_15*75+"vw"),
+                      // transform: String("translate("+props.x*10+"vw)"),
+                      transform: !this.aller ? 
+                      x.interpolate(
+                        x => 
+                        `translate(${this.randL_15*x*10}vw,${-x*10}vh)`
+                      )
+                      :
+                      x.interpolate(
+                        x => 
+                        `translate(${this.randL_15*20-this.randL_15*x*10}vw,${-(20-x*10)}vh)`
+                      )
+                      ,
+                      bottom: String(-this.randT_15*5+"vh"),
+                      width: "5px",
+                      height: "5px",
+                      borderRadius: "50%",
+                      position: "absolute",
+                      backgroundColor: this.tableauImageCouleur[2][1],
+                      opacity:  !this.aller ? 
+                      x.interpolate(
+                        [0,1],
+                        [0, 1]
+                      )
+                      :
+                      x.interpolate(
+                        [0, 1],
+                        [0, 1]
+                      )
+                      ,
+                    }}
+                  >
+                  </animated.div>
+                  <animated.div
+                    style={{
+                      left: String(this.randL_16*75+"vw"),
+                      // transform: String("translate("+props.x*10+"vw)"),
+                      transform: !this.aller ? 
+                      x.interpolate(
+                        x => 
+                        `translate(${this.randL_16*x*10}vw,${x*10}vh)`
+                      )
+                      :
+                      x.interpolate(
+                        x => 
+                        `translate(${this.randL_16*20-this.randL_16*x*10}vw,${20-x*10}vh)`
+                      )
+                      ,
+                      top: String(this.randT_16*5+"vh"),
+                      width: "5px",
+                      height: "5px",
+                      borderRadius: "50%",
+                      position: "absolute",
+                      backgroundColor: this.tableauImageCouleur[2][1],
+                      opacity:  !this.aller ? 
+                      x.interpolate(
+                        [0,1],
+                        [0, 1]
+                      )
+                      :
+                      x.interpolate(
+                        [0, 1],
+                        [0, 1]
+                      )
+                      ,
+                    }}
+                  >
+                  </animated.div>
+                  <animated.div
+                    style={{
+                      left: String(this.randL_17*75+"vw"),
+                      // transform: String("translate("+props.x*10+"vw)"),
+                      transform: !this.aller ? 
+                      x.interpolate(
+                        x => 
+                        `translate(${this.randL_17*x*10}vw,${x*10}vh)`
+                      )
+                      :
+                      x.interpolate(
+                        x => 
+                        `translate(${this.randL_17*20-this.randL_17*x*10}vw,${20-x*10}vh)`
+                      )
+                      ,
+                      top: String(this.randT_17*5+"vh"),
+                      width: "5px",
+                      height: "5px",
+                      borderRadius: "50%",
+                      position: "absolute",
+                      backgroundColor: this.tableauImageCouleur[2][1],
+                      opacity:  !this.aller ? 
+                      x.interpolate(
+                        [0,1],
+                        [0, 1]
+                      )
+                      :
+                      x.interpolate(
+                        [0, 1],
+                        [0, 1]
+                      )
+                      ,
+                    }}
+                  >
+                  </animated.div>
+                  <animated.div
+                    style={{
+                      left: String(this.randL_18*75+"vw"),
+                      // transform: String("translate("+props.x*10+"vw)"),
+                      transform: !this.aller ? 
+                      x.interpolate(
+                        x => 
+                        `translate(${this.randL_18*x*10}vw,${x*10}vh)`
+                      )
+                      :
+                      x.interpolate(
+                        x => 
+                        `translate(${this.randL_18*20-this.randL_18*x*10}vw,${20-x*10}vh)`
+                      )
+                      ,
+                      top: String(this.randT_18*5+"vh"),
+                      width: "5px",
+                      height: "5px",
+                      borderRadius: "50%",
+                      position: "absolute",
+                      backgroundColor: this.tableauImageCouleur[2][1],
+                      opacity:  !this.aller ? 
+                      x.interpolate(
+                        [0,1],
+                        [0, 1]
+                      )
+                      :
+                      x.interpolate(
+                        [0, 1],
+                        [0, 1]
+                      )
+                      ,
+                    }}
+                  >
+                  </animated.div>
+                  <animated.div
+                    style={{
+                      left: String(this.randL_19*75+"vw"),
+                      // transform: String("translate("+props.x*10+"vw)"),
+                      transform: !this.aller ? 
+                      x.interpolate(
+                        x => 
+                        `translate(${this.randL_19*x*10}vw,${x*10}vh)`
+                      )
+                      :
+                      x.interpolate(
+                        x => 
+                        `translate(${this.randL_19*20-this.randL_19*x*10}vw,${20-x*10}vh)`
+                      )
+                      ,
+                      top: String(this.randT_19*5+"vh"),
+                      width: "5px",
+                      height: "5px",
+                      borderRadius: "50%",
+                      position: "absolute",
+                      backgroundColor: this.tableauImageCouleur[2][1],
+                      opacity:  !this.aller ? 
+                      x.interpolate(
+                        [0,1],
+                        [0, 1]
+                      )
+                      :
+                      x.interpolate(
+                        [0, 1],
+                        [0, 1]
+                      )
+                      ,
+                    }}
+                  >
+                  </animated.div>
+                  <animated.div
+                    style={{
+                      left: String(this.randL_20*75+"vw"),
+                      // transform: String("translate("+props.x*10+"vw)"),
+                      transform: !this.aller ? 
+                      x.interpolate(
+                        x => 
+                        `translate(${this.randL_20*x*10}vw,${x*10}vh)`
+                      )
+                      :
+                      x.interpolate(
+                        x => 
+                        `translate(${this.randL_20*20-this.randL_20*x*10}vw,${20-x*10}vh)`
+                      )
+                      ,
+                      top: String(this.randT_20*5+"vh"),
+                      width: "5px",
+                      height: "5px",
+                      borderRadius: "50%",
+                      position: "absolute",
+                      backgroundColor: this.tableauImageCouleur[2][1],
+                      opacity:  !this.aller ? 
+                      x.interpolate(
+                        [0,1],
+                        [0, 1]
+                      )
+                      :
+                      x.interpolate(
+                        [0, 1],
+                        [0, 1]
+                      )
+                      ,
+                    }}
+                  >
+                  </animated.div>
+                  <animated.div
+                    style={{
+                      left: String(20+this.randL_21*80+"vw"),
+                      // transform: String("translate("+props.x*10+"vw)"),
+                      transform: !this.aller ? 
+                      x.interpolate(
+                        x => 
+                        `translate(${-this.randL_21*x*10}vw,${-x*10}vh)`
+                      )
+                      :
+                      x.interpolate(
+                        x => 
+                        `translate(${-(this.randL_21*20-this.randL_20*x*10)}vw,${-(20-x*10)}vh)`
+                      )
+                      ,
+                      top: String(20+this.randT_21*5+"vh"),
+                      width: "5px",
+                      height: "5px",
+                      borderRadius: "50%",
+                      position: "absolute",
+                      backgroundColor: this.tableauImageCouleur[2][1],
+                      opacity:  !this.aller ? 
+                      x.interpolate(
+                        [0,1],
+                        [0, 1]
+                      )
+                      :
+                      x.interpolate(
+                        [0, 1],
+                        [0, 1]
+                      )
+                      ,
+                    }}
+                  >
+                  </animated.div>
+                  <animated.div
+                    style={{
+                      left: String(20+this.randL_22*80+"vw"),
+                      // transform: String("translate("+props.x*10+"vw)"),
+                      transform: !this.aller ? 
+                      x.interpolate(
+                        x => 
+                        `translate(${-this.randL_22*x*10}vw,${-x*10}vh)`
+                      )
+                      :
+                      x.interpolate(
+                        x => 
+                        `translate(${-(this.randL_22*20-this.randL_22*x*10)}vw,${-(20-x*10)}vh)`
+                      )
+                      ,
+                      top: String(20+this.randT_22*5+"vh"),
+                      width: "5px",
+                      height: "5px",
+                      borderRadius: "50%",
+                      position: "absolute",
+                      backgroundColor: this.tableauImageCouleur[2][1],
+                      opacity:  !this.aller ? 
+                      x.interpolate(
+                        [0,1],
+                        [0, 1]
+                      )
+                      :
+                      x.interpolate(
+                        [0, 1],
+                        [0, 1]
+                      )
+                      ,
+                    }}
+                  >
+                  </animated.div>
+                  <animated.div
+                    style={{
+                      left: String(20+this.randL_23*80+"vw"),
+                      // transform: String("translate("+props.x*10+"vw)"),
+                      transform: !this.aller ? 
+                      x.interpolate(
+                        x => 
+                        `translate(${-this.randL_23*x*10}vw,${-x*10}vh)`
+                      )
+                      :
+                      x.interpolate(
+                        x => 
+                        `translate(${-(this.randL_23*20-this.randL_23*x*10)}vw,${-(20-x*10)}vh)`
+                      )
+                      ,
+                      top: String(20+this.randT_23*5+"vh"),
+                      width: "5px",
+                      height: "5px",
+                      borderRadius: "50%",
+                      position: "absolute",
+                      backgroundColor: this.tableauImageCouleur[2][1],
+                      opacity:  !this.aller ? 
+                      x.interpolate(
+                        [0,1],
+                        [0, 1]
+                      )
+                      :
+                      x.interpolate(
+                        [0, 1],
+                        [0, 1]
+                      )
+                      ,
+                    }}
+                  >
+                  </animated.div>
+                  <animated.div
+                    style={{
+                      left: String(20+this.randL_24*80+"vw"),
+                      // transform: String("translate("+props.x*10+"vw)"),
+                      transform: !this.aller ? 
+                      x.interpolate(
+                        x => 
+                        `translate(${-this.randL_24*x*10}vw,${-x*10}vh)`
+                      )
+                      :
+                      x.interpolate(
+                        x => 
+                        `translate(${-(this.randL_24*20-this.randL_24*x*10)}vw,${-(20-x*10)}vh)`
+                      )
+                      ,
+                      top: String(20+this.randT_24*5+"vh"),
+                      width: "5px",
+                      height: "5px",
+                      borderRadius: "50%",
+                      position: "absolute",
+                      backgroundColor: this.tableauImageCouleur[2][1],
+                      opacity:  !this.aller ? 
+                      x.interpolate(
+                        [0,1],
+                        [0, 1]
+                      )
+                      :
+                      x.interpolate(
+                        [0, 1],
+                        [0, 1]
+                      )
+                      ,
+                    }}
+                  >
+                  </animated.div>
+                  <animated.div
+                    style={{
+                      left: String(20+this.randL_25*80+"vw"),
+                      // transform: String("translate("+props.x*10+"vw)"),
+                      transform: !this.aller ? 
+                      x.interpolate(
+                        x => 
+                        `translate(${-this.randL_25*x*10}vw,${-x*10}vh)`
+                      )
+                      :
+                      x.interpolate(
+                        x => 
+                        `translate(${-(this.randL_25*20-this.randL_25*x*10)}vw,${-(20-x*10)}vh)`
+                      )
+                      ,
+                      top: String(20+this.randT_25*5+"vh"),
+                      width: "5px",
+                      height: "5px",
+                      borderRadius: "50%",
+                      position: "absolute",
+                      backgroundColor: this.tableauImageCouleur[2][1],
+                      opacity:  !this.aller ? 
+                      x.interpolate(
+                        [0,1],
+                        [0, 1]
+                      )
+                      :
+                      x.interpolate(
+                        [0, 1],
+                        [0, 1]
+                      )
+                      ,
+                    }}
+                  >
+                  </animated.div>
+                  <animated.div
+                    style={{
+                      left: String(this.randL_26*5+"vw"),
+                      // transform: String("translate("+props.x*10+"vw)"),
+                      transform: !this.aller ? 
+                      x.interpolate(
+                        x => 
+                        `translate(${x*10}vw,${this.randL_26*x*10}vh)`
+                      )
+                      :
+                      x.interpolate(
+                        x => 
+                        `translate(${20-x*10}vw,${this.randL_26*20-this.randL_26*x*10}vh)`
+                      )
+                      ,
+                      top: String(this.randT_26*30+"vh"),
+                      width: "5px",
+                      height: "5px",
+                      borderRadius: "50%",
+                      position: "absolute",
+                      backgroundColor: this.tableauImageCouleur[2][1],
+                      opacity:  !this.aller ? 
+                      x.interpolate(
+                        [0,1],
+                        [0, 1]
+                      )
+                      :
+                      x.interpolate(
+                        [0, 1],
+                        [0, 1]
+                      )
+                      ,
+                    }}
+                  >
+                  </animated.div>
+                  <animated.div
+                    style={{
+                      left: String(this.randL_27*5+"vw"),
+                      // transform: String("translate("+props.x*10+"vw)"),
+                      transform: !this.aller ? 
+                      x.interpolate(
+                        x => 
+                        `translate(${x*10}vw,${this.randL_27*x*10}vh)`
+                      )
+                      :
+                      x.interpolate(
+                        x => 
+                        `translate(${20-x*10}vw,${this.randL_27*20-this.randL_27*x*10}vh)`
+                      )
+                      ,
+                      top: String(this.randT_27*30+"vh"),
+                      width: "5px",
+                      height: "5px",
+                      borderRadius: "50%",
+                      position: "absolute",
+                      backgroundColor: this.tableauImageCouleur[2][1],
+                      opacity:  !this.aller ? 
+                      x.interpolate(
+                        [0,1],
+                        [0, 1]
+                      )
+                      :
+                      x.interpolate(
+                        [0, 1],
+                        [0, 1]
+                      )
+                      ,
+                    }}
+                  >
+                  </animated.div>
+                  <animated.div
+                    style={{
+                      left: String(this.randL_28*5+"vw"),
+                      // transform: String("translate("+props.x*10+"vw)"),
+                      transform: !this.aller ? 
+                      x.interpolate(
+                        x => 
+                        `translate(${x*10}vw,${this.randL_28*x*10}vh)`
+                      )
+                      :
+                      x.interpolate(
+                        x => 
+                        `translate(${20-x*10}vw,${this.randL_28*20-this.randL_28*x*10}vh)`
+                      )
+                      ,
+                      top: String(this.randT_28*30+"vh"),
+                      width: "5px",
+                      height: "5px",
+                      borderRadius: "50%",
+                      position: "absolute",
+                      backgroundColor: this.tableauImageCouleur[2][1],
+                      opacity:  !this.aller ? 
+                      x.interpolate(
+                        [0,1],
+                        [0, 1]
+                      )
+                      :
+                      x.interpolate(
+                        [0, 1],
+                        [0, 1]
+                      )
+                      ,
+                    }}
+                  >
+                  </animated.div>
+                  <animated.div
+                    style={{
+                      right: String(this.randL_29*5+"vw"),
+                      // transform: String("translate("+props.x*10+"vw)"),
+                      transform: !this.aller ? 
+                      x.interpolate(
+                        x => 
+                        `translate(${-x*10}vw,${this.randL_29*x*10}vh)`
+                      )
+                      :
+                      x.interpolate(
+                        x => 
+                        `translate(${-(20-x*10)}vw,${this.randL_29*20-this.randL_29*x*10}vh)`
+                      )
+                      ,
+                      top: String(this.randT_29*20+"vh"),
+                      width: "5px",
+                      height: "5px",
+                      borderRadius: "50%",
+                      position: "absolute",
+                      backgroundColor: this.tableauImageCouleur[2][1],
+                      opacity:  !this.aller ? 
+                      x.interpolate(
+                        [0,1],
+                        [0, 1]
+                      )
+                      :
+                      x.interpolate(
+                        [0, 1],
+                        [0, 1]
+                      )
+                      ,
+                    }}
+                  >
+                  </animated.div>
+                  <animated.div
+                    style={{
+                      right: String(this.randL_30*5+"vw"),
+                      // transform: String("translate("+props.x*10+"vw)"),
+                      transform: !this.aller ? 
+                      x.interpolate(
+                        x => 
+                        `translate(${-x*10}vw,${this.randL_30*x*10}vh)`
+                      )
+                      :
+                      x.interpolate(
+                        x => 
+                        `translate(${-(20-x*10)}vw,${this.randL_30*20-this.randL_30*x*10}vh)`
+                      )
+                      ,
+                      top: String(this.randT_30*20+"vh"),
+                      width: "5px",
+                      height: "5px",
+                      borderRadius: "50%",
+                      position: "absolute",
+                      backgroundColor: this.tableauImageCouleur[2][1],
+                      opacity:  !this.aller ? 
+                      x.interpolate(
+                        [0,1],
+                        [0, 1]
+                      )
+                      :
+                      x.interpolate(
+                        [0, 1],
+                        [0, 1]
+                      )
+                      ,
+                    }}
+                  >
+                  </animated.div>
+                </div>
+              )}
+            </this.AnimInfini>
+          </div>
         <div className="App-web_mobile">
-        
-          <div style={{flex: 1}}>
+          <div style={{ minHeight: "700px"}}>
             <Switch>
-              <Route path="/home" children={<ComposantHome/>} />
-              <Route path="/infoPerso" children={<ComposantInfoPerso/>} />
-              <Route path="/apercu" children={<ComposantApercu/>} />
-              <Route path="/contact" children={<ComposantContact/>} />
-              <Route path="/competence" children={<ComposantCompetence/>} />
+              <Route path="/home" component={ComposantHome} />
+              <Route path="/infoPerso" component={ComposantInfoPerso} />
+              <Route path="/apercu" component={ComposantApercu} />
+              <Route path="/contact" component={ComposantContact} />
+              <Route path="/competence" component={ComposantCompetence} />
+              <Route path="/" component={ComposantHome} />
             </Switch>
             <div
               style={{
                 position: "absolute",
                 width: "100%",
                 height: "10%",
-                bottom: "10%",
+                bottom: this.state.hauteur_bas_bouton,
                 left: "0%"
               }}
             >
@@ -235,16 +1338,6 @@ class App extends React.Component {
                   }}
                 
                 >
-                    <p
-                      style={{
-                        color : 'white',
-                        fontSize : '2.5vh',
-                        fontFamily : 'cursive',
-                        textAlign : 'center'
-                    }}
-                    >
-                      {this.tableauImageCouleur[0][8]}
-                    </p>
                 </animated.div >
               )}
             </Spring>
@@ -367,16 +1460,6 @@ class App extends React.Component {
                     ...props
                   }}
                 >
-                    <p
-                      style={{
-                        color : 'white',
-                        fontSize : '2.5vh',
-                        fontFamily : 'cursive',
-                        textAlign : 'center'
-                    }}
-                    >
-                      {this.tableauImageCouleur[1][8]}
-                    </p>
                 </animated.div>
               )}
             </Spring>
@@ -502,20 +1585,9 @@ class App extends React.Component {
                     ...props
                   }}
                 >
-                    <p
-                      style={{
-                        color : 'white',
-                        fontSize : '2.5vh',
-                        fontFamily : 'cursive',
-                        textAlign : 'center'
-                    }}
-                    >
-                      {this.tableauImageCouleur[3][8]}
-                    </p>
                 </animated.div>
               )}
             </Spring>
-            
             <Link to={this.tableauImageCouleur[3][7]}>
               <div
                 className="Gestion-rotat-4_mobile"
@@ -594,20 +1666,9 @@ class App extends React.Component {
                 }}
               
               >
-                  <p
-                    style={{
-                      color : 'white',
-                      fontSize : '2.5vh',
-                      fontFamily : 'cursive',
-                      textAlign : 'center'
-                  }}
-                  >
-                    {this.tableauImageCouleur[4][8]}
-                  </p>
               </animated.div >
             )}
           </Spring>
-            
             <Link to={this.tableauImageCouleur[4][7]}>
               <div
                 className="Gestion-rotat-5_mobile"
@@ -631,26 +1692,40 @@ class App extends React.Component {
                   position: "absolute",
                   width: "100%",
                   height: "10%",
-                  bottom: "0%",
+                  bottom: this.state.hauteur_bas_arrondi,
                   left: "0%",
                   backgroundColor: props.couleurBordure,
                   borderTopLeftRadius: "50%",
-                  borderTopRightRadius: "50%"
+                  borderTopRightRadius: "50%",
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center"
                 }}
               >
-
+                <animated.div className="Titre_page_actuel_mobile" style={{ backgroundColor: props.couleurBordure}}>
+                  <p
+                    style={{
+                      color: "white",
+                      fontSize: "1.5em",
+                      fontWeight: "bold",
+                      fontFamily: "cursive"
+                    }}
+                  >
+                    {this.tableauImageCouleur[2][8]}
+                  </p>
+                </animated.div>
               </animated.div>
               )
               }
             </Spring>
           </div>
         </div>
-        </HashRouter>
+        </div>
       )
     }
     else {
       return (
-        <HashRouter>
+        <div>
           <div
             className="Contenaire_anim_de_fond"
           >
@@ -662,7 +1737,7 @@ class App extends React.Component {
                 <div>
                   <animated.div
                     style={{
-                      left: String(this.randL_1*50+"vw"),
+                      right: String(20+this.randL_1*20+"vw"),
                       // transform: String("translate("+props.x*10+"vw)"),
                       transform: !this.aller ? 
                       x.interpolate(
@@ -675,9 +1750,9 @@ class App extends React.Component {
                         `translate(${20-x*10}vw,${this.randL_1*20-this.randL_1*x*10}vh)`
                       )
                       ,
-                      top: String(this.randT_1*50+"vh"),
-                      width: "10px",
-                      height: "10px",
+                      top: String(this.randT_1*25+"vh"),
+                      width: "7.5px",
+                      height: "7.5px",
                       borderRadius: "50%",
                       position: "absolute",
                       backgroundColor: this.tableauImageCouleur[2][1],
@@ -697,7 +1772,7 @@ class App extends React.Component {
                   </animated.div>
                   <animated.div
                   style={{
-                    left: String(this.randL_2*50+"vw"),
+                    right: String(20+this.randL_2*20+"vw"),
                       // transform: String("translate("+props.x*10+"vw)"),
                       transform: !this.aller ? 
                       x.interpolate(
@@ -710,9 +1785,9 @@ class App extends React.Component {
                         `translate(${20-x*10}vw,${this.randL_2*20-this.randL_2*x*10}vh)`
                       )
                       ,
-                    top: String(this.randT_2*50+"vh"),
-                    width: "10px",
-                    height: "10px",
+                    top: String(this.randT_2*25+"vh"),
+                    width: "7.5px",
+                    height: "7.5px",
                     borderRadius: "50%",
                     position: "absolute",
                     backgroundColor: this.tableauImageCouleur[2][1],
@@ -732,7 +1807,7 @@ class App extends React.Component {
                 </animated.div>
                   <animated.div
                     style={{
-                      left: String(this.randL_3*50+"vw"),
+                      right: String(20+this.randL_3*20+"vw"),
                       // transform: String("translate("+props.x*10+"vw)"),
                       transform: !this.aller ? 
                       x.interpolate(
@@ -745,9 +1820,9 @@ class App extends React.Component {
                         `translate(${20-x*10}vw,${this.randL_3*20-this.randL_3*x*10}vh)`
                       )
                       ,
-                      top: String(this.randT_3*50+"vh"),
-                      width: "10px",
-                      height: "10px",
+                      top: String(this.randT_3*25+"vh"),
+                      width: "7.5px",
+                      height: "7.5px",
                       borderRadius: "50%",
                       position: "absolute",
                       backgroundColor: this.tableauImageCouleur[2][1],
@@ -767,7 +1842,7 @@ class App extends React.Component {
                   </animated.div>
                   <animated.div
                     style={{
-                      left: String(this.randL_4*50+"vw"),
+                      right: String(20+this.randL_4*20+"vw"),
                       // transform: String("translate("+props.x*10+"vw)"),
                       transform: !this.aller ? 
                       x.interpolate(
@@ -780,9 +1855,9 @@ class App extends React.Component {
                         `translate(${20-x*10}vw,${this.randL_4*20-this.randL_4*x*10}vh)`
                       )
                       ,
-                      top: String(this.randT_4*50+"vh"),
-                      width: "10px",
-                      height: "10px",
+                      top: String(this.randT_4*25+"vh"),
+                      width: "7.5px",
+                      height: "7.5px",
                       borderRadius: "50%",
                       position: "absolute",
                       backgroundColor: this.tableauImageCouleur[2][1],
@@ -802,7 +1877,7 @@ class App extends React.Component {
                   </animated.div>
                   <animated.div
                     style={{
-                      left: String(this.randL_5*50+"vw"),
+                      right: String(20+this.randL_5*20+"vw"),
                       // transform: String("translate("+props.x*10+"vw)"),
                       transform: !this.aller ? 
                       x.interpolate(
@@ -815,9 +1890,9 @@ class App extends React.Component {
                         `translate(${20-x*10}vw,${this.randL_5*20-this.randL_5*x*10}vh)`
                       )
                       ,
-                      top: String(this.randT_5*50+"vh"),
-                      width: "10px",
-                      height: "10px",
+                      top: String(this.randT_5*25+"vh"),
+                      width: "7.5px",
+                      height: "7.5px",
                       borderRadius: "50%",
                       position: "absolute",
                       backgroundColor: this.tableauImageCouleur[2][1],
@@ -850,9 +1925,9 @@ class App extends React.Component {
                         `translate(${-(20-x*10)}vw,${this.randL_6*20-this.randL_6*x*10}vh)`
                       )
                       ,
-                      top: String(this.randT_6*50+"vh"),
-                      width: "10px",
-                      height: "10px",
+                      top: String(this.randT_6*25+"vh"),
+                      width: "7.5px",
+                      height: "7.5px",
                       borderRadius: "50%",
                       position: "absolute",
                       backgroundColor: this.tableauImageCouleur[2][1],
@@ -885,9 +1960,9 @@ class App extends React.Component {
                         `translate(${-(20-x*10)}vw,${this.randL_7*20-this.randL_7*x*10}vh)`
                       )
                       ,
-                      top: String(this.randT_7*50+"vh"),
-                      width: "10px",
-                      height: "10px",
+                      top: String(this.randT_7*25+"vh"),
+                      width: "7.5px",
+                      height: "7.5px",
                       borderRadius: "50%",
                       position: "absolute",
                       backgroundColor: this.tableauImageCouleur[2][1],
@@ -920,9 +1995,9 @@ class App extends React.Component {
                         `translate(${-(20-x*10)}vw,${this.randL_8*20-this.randL_8*x*10}vh)`
                       )
                       ,
-                      top: String(this.randT_8*50+"vh"),
-                      width: "10px",
-                      height: "10px",
+                      top: String(this.randT_8*25+"vh"),
+                      width: "7.5px",
+                      height: "7.5px",
                       borderRadius: "50%",
                       position: "absolute",
                       backgroundColor: this.tableauImageCouleur[2][1],
@@ -955,9 +2030,9 @@ class App extends React.Component {
                         `translate(${-(20-x*10)}vw,${this.randL_9*20-this.randL_9*x*10}vh)`
                       )
                       ,
-                      top: String(this.randT_9*50+"vh"),
-                      width: "10px",
-                      height: "10px",
+                      top: String(this.randT_9*25+"vh"),
+                      width: "7.5px",
+                      height: "7.5px",
                       borderRadius: "50%",
                       position: "absolute",
                       backgroundColor: this.tableauImageCouleur[2][1],
@@ -990,9 +2065,9 @@ class App extends React.Component {
                         `translate(${-(20-x*10)}vw,${this.randL_10*20-this.randL_10*x*10}vh)`
                       )
                       ,
-                      top: String(this.randT_10*50+"vh"),
-                      width: "10px",
-                      height: "10px",
+                      top: String(this.randT_10*25+"vh"),
+                      width: "7.5px",
+                      height: "7.5px",
                       borderRadius: "50%",
                       position: "absolute",
                       backgroundColor: this.tableauImageCouleur[2][1],
@@ -1025,9 +2100,9 @@ class App extends React.Component {
                         `translate(${20-x*10}vw,${-(this.randL_11*20-this.randL_11*x*10)}vh)`
                       )
                       ,
-                      bottom: String(this.randT_11*50+"vh"),
-                      width: "10px",
-                      height: "10px",
+                      bottom: String(this.randT_11*25+"vh"),
+                      width: "7.5px",
+                      height: "7.5px",
                       borderRadius: "50%",
                       position: "absolute",
                       backgroundColor: this.tableauImageCouleur[2][1],
@@ -1060,9 +2135,9 @@ class App extends React.Component {
                         `translate(${20-x*10}vw,${-(this.randL_12*20-this.randL_12*x*10)}vh)`
                       )
                       ,
-                      bottom: String(this.randT_12*50+"vh"),
-                      width: "10px",
-                      height: "10px",
+                      bottom: String(this.randT_12*25+"vh"),
+                      width: "7.5px",
+                      height: "7.5px",
                       borderRadius: "50%",
                       position: "absolute",
                       backgroundColor: this.tableauImageCouleur[2][1],
@@ -1095,9 +2170,9 @@ class App extends React.Component {
                         `translate(${20-x*10}vw,${-(this.randL_13*20-this.randL_13*x*10)}vh)`
                       )
                       ,
-                      bottom: String(this.randT_13*50+"vh"),
-                      width: "10px",
-                      height: "10px",
+                      bottom: String(this.randT_13*25+"vh"),
+                      width: "7.5px",
+                      height: "7.5px",
                       borderRadius: "50%",
                       position: "absolute",
                       backgroundColor: this.tableauImageCouleur[2][1],
@@ -1130,9 +2205,9 @@ class App extends React.Component {
                         `translate(${20-x*10}vw,${-(this.randL_14*20-this.randL_14*x*10)}vh)`
                       )
                       ,
-                      bottom: String(this.randT_14*50+"vh"),
-                      width: "10px",
-                      height: "10px",
+                      bottom: String(this.randT_14*25+"vh"),
+                      width: "7.5px",
+                      height: "7.5px",
                       borderRadius: "50%",
                       position: "absolute",
                       backgroundColor: this.tableauImageCouleur[2][1],
@@ -1165,9 +2240,9 @@ class App extends React.Component {
                         `translate(${20-x*10}vw,${-(this.randL_15*20-this.randL_15*x*10)}vh)`
                       )
                       ,
-                      bottom: String(this.randT_15*50+"vh"),
-                      width: "10px",
-                      height: "10px",
+                      bottom: String(this.randT_15*25+"vh"),
+                      width: "7.5px",
+                      height: "7.5px",
                       borderRadius: "50%",
                       position: "absolute",
                       backgroundColor: this.tableauImageCouleur[2][1],
@@ -1200,9 +2275,9 @@ class App extends React.Component {
                         `translate(${-(20-x*10)}vw,${-(this.randL_16*20-this.randL_16*x*10)}vh)`
                       )
                       ,
-                      bottom: String(this.randT_16*50+"vh"),
-                      width: "10px",
-                      height: "10px",
+                      bottom: String(this.randT_16*25+"vh"),
+                      width: "7.5px",
+                      height: "7.5px",
                       borderRadius: "50%",
                       position: "absolute",
                       backgroundColor: this.tableauImageCouleur[2][1],
@@ -1235,9 +2310,9 @@ class App extends React.Component {
                         `translate(${-(20-x*10)}vw,${-(this.randL_17*20-this.randL_17*x*10)}vh)`
                       )
                       ,
-                      bottom: String(this.randT_17*50+"vh"),
-                      width: "10px",
-                      height: "10px",
+                      bottom: String(this.randT_17*25+"vh"),
+                      width: "7.5px",
+                      height: "7.5px",
                       borderRadius: "50%",
                       position: "absolute",
                       backgroundColor: this.tableauImageCouleur[2][1],
@@ -1270,9 +2345,9 @@ class App extends React.Component {
                         `translate(${-(20-x*10)}vw,${-(this.randL_18*20-this.randL_18*x*10)}vh)`
                       )
                       ,
-                      bottom: String(this.randT_18*50+"vh"),
-                      width: "10px",
-                      height: "10px",
+                      bottom: String(this.randT_18*25+"vh"),
+                      width: "7.5px",
+                      height: "7.5px",
                       borderRadius: "50%",
                       position: "absolute",
                       backgroundColor: this.tableauImageCouleur[2][1],
@@ -1305,9 +2380,9 @@ class App extends React.Component {
                         `translate(${-(20-x*10)}vw,${-(this.randL_19*20-this.randL_19*x*10)}vh)`
                       )
                       ,
-                      bottom: String(this.randT_19*50+"vh"),
-                      width: "10px",
-                      height: "10px",
+                      bottom: String(this.randT_19*25+"vh"),
+                      width: "7.5px",
+                      height: "7.5px",
                       borderRadius: "50%",
                       position: "absolute",
                       backgroundColor: this.tableauImageCouleur[2][1],
@@ -1340,9 +2415,744 @@ class App extends React.Component {
                         `translate(${-(20-x*10)}vw,${-(this.randL_20*20-this.randL_20*x*10)}vh)`
                       )
                       ,
-                      bottom: String(this.randT_20*50+"vh"),
-                      width: "10px",
-                      height: "10px",
+                      bottom: String(this.randT_20*25+"vh"),
+                      width: "7.5px",
+                      height: "7.5px",
+                      borderRadius: "50%",
+                      position: "absolute",
+                      backgroundColor: this.tableauImageCouleur[2][1],
+                      opacity:  !this.aller ? 
+                      x.interpolate(
+                        [0,1],
+                        [0, 1]
+                      )
+                      :
+                      x.interpolate(
+                        [0, 1],
+                        [0, 1]
+                      )
+                      ,
+                    }}
+                  >
+                  </animated.div>
+                  <animated.div
+                    style={{
+                      left: String(this.randL_20*50+"vw"),
+                      // transform: String("translate("+props.x*10+"vw)"),
+                      transform: !this.aller ? 
+                      x.interpolate(
+                        x => 
+                        `translate(${-x*10}vw,${-this.randL_20*x*10}vh)`
+                      )
+                      :
+                      x.interpolate(
+                        x => 
+                        `translate(${-(20-x*10)}vw,${-(this.randL_20*20-this.randL_20*x*10)}vh)`
+                      )
+                      ,
+                      bottom: String(this.randT_20*25+"vh"),
+                      width: "7.5px",
+                      height: "7.5px",
+                      borderRadius: "50%",
+                      position: "absolute",
+                      backgroundColor: this.tableauImageCouleur[2][1],
+                      opacity:  !this.aller ? 
+                      x.interpolate(
+                        [0,1],
+                        [0, 1]
+                      )
+                      :
+                      x.interpolate(
+                        [0, 1],
+                        [0, 1]
+                      )
+                      ,
+                    }}
+                  >
+                  </animated.div>
+                  <animated.div
+                    style={{
+                      right: String(this.randL_21*5+"vw"),
+                      // transform: String("translate("+props.x*10+"vw)"),
+                      transform: !this.aller ? 
+                      x.interpolate(
+                        x => 
+                        `translate(${-x*10}vw,${-this.randL_21*x*10}vh)`
+                      )
+                      :
+                      x.interpolate(
+                        x => 
+                        `translate(${-(20-x*10)}vw,${-(this.randL_21*20-this.randL_21*x*10)}vh)`
+                      )
+                      ,
+                      bottom: String(15+this.randT_21*80+"vh"),
+                      width: "7.5px",
+                      height: "7.5px",
+                      borderRadius: "50%",
+                      position: "absolute",
+                      backgroundColor: this.tableauImageCouleur[2][1],
+                      opacity:  !this.aller ? 
+                      x.interpolate(
+                        [0,1],
+                        [0, 1]
+                      )
+                      :
+                      x.interpolate(
+                        [0, 1],
+                        [0, 1]
+                      )
+                      ,
+                    }}
+                  >
+                  </animated.div>
+                  <animated.div
+                    style={{
+                      right: String(this.randL_22*5+"vw"),
+                      // transform: String("translate("+props.x*10+"vw)"),
+                      transform: !this.aller ? 
+                      x.interpolate(
+                        x => 
+                        `translate(${-x*10}vw,${-this.randL_22*x*10}vh)`
+                      )
+                      :
+                      x.interpolate(
+                        x => 
+                        `translate(${-(20-x*10)}vw,${-(this.randL_22*20-this.randL_22*x*10)}vh)`
+                      )
+                      ,
+                      bottom: String(15+this.randT_22*80+"vh"),
+                      width: "7.5px",
+                      height: "7.5px",
+                      borderRadius: "50%",
+                      position: "absolute",
+                      backgroundColor: this.tableauImageCouleur[2][1],
+                      opacity:  !this.aller ? 
+                      x.interpolate(
+                        [0,1],
+                        [0, 1]
+                      )
+                      :
+                      x.interpolate(
+                        [0, 1],
+                        [0, 1]
+                      )
+                      ,
+                    }}
+                  >
+                  </animated.div>
+                  <animated.div
+                    style={{
+                      right: String(this.randL_23*5+"vw"),
+                      // transform: String("translate("+props.x*10+"vw)"),
+                      transform: !this.aller ? 
+                      x.interpolate(
+                        x => 
+                        `translate(${-x*10}vw,${-this.randL_23*x*10}vh)`
+                      )
+                      :
+                      x.interpolate(
+                        x => 
+                        `translate(${-(20-x*10)}vw,${-(this.randL_23*20-this.randL_23*x*10)}vh)`
+                      )
+                      ,
+                      bottom: String(15+this.randT_23*80+"vh"),
+                      width: "7.5px",
+                      height: "7.5px",
+                      borderRadius: "50%",
+                      position: "absolute",
+                      backgroundColor: this.tableauImageCouleur[2][1],
+                      opacity:  !this.aller ? 
+                      x.interpolate(
+                        [0,1],
+                        [0, 1]
+                      )
+                      :
+                      x.interpolate(
+                        [0, 1],
+                        [0, 1]
+                      )
+                      ,
+                    }}
+                  >
+                  </animated.div>
+                  <animated.div
+                    style={{
+                      right: String(this.randL_24*5+"vw"),
+                      // transform: String("translate("+props.x*10+"vw)"),
+                      transform: !this.aller ? 
+                      x.interpolate(
+                        x => 
+                        `translate(${-x*10}vw,${-this.randL_24*x*10}vh)`
+                      )
+                      :
+                      x.interpolate(
+                        x => 
+                        `translate(${-(20-x*10)}vw,${-(this.randL_24*20-this.randL_24*x*10)}vh)`
+                      )
+                      ,
+                      bottom: String(15+this.randT_24*80+"vh"),
+                      width: "7.5px",
+                      height: "7.5px",
+                      borderRadius: "50%",
+                      position: "absolute",
+                      backgroundColor: this.tableauImageCouleur[2][1],
+                      opacity:  !this.aller ? 
+                      x.interpolate(
+                        [0,1],
+                        [0, 1]
+                      )
+                      :
+                      x.interpolate(
+                        [0, 1],
+                        [0, 1]
+                      )
+                      ,
+                    }}
+                  >
+                  </animated.div>
+                  <animated.div
+                    style={{
+                      right: String(this.randL_25*5+"vw"),
+                      // transform: String("translate("+props.x*10+"vw)"),
+                      transform: !this.aller ? 
+                      x.interpolate(
+                        x => 
+                        `translate(${-x*10}vw,${-this.randL_25*x*10}vh)`
+                      )
+                      :
+                      x.interpolate(
+                        x => 
+                        `translate(${-(20-x*10)}vw,${-(this.randL_25*20-this.randL_25*x*10)}vh)`
+                      )
+                      ,
+                      bottom: String(15+this.randT_25*80+"vh"),
+                      width: "7.5px",
+                      height: "7.5px",
+                      borderRadius: "50%",
+                      position: "absolute",
+                      backgroundColor: this.tableauImageCouleur[2][1],
+                      opacity:  !this.aller ? 
+                      x.interpolate(
+                        [0,1],
+                        [0, 1]
+                      )
+                      :
+                      x.interpolate(
+                        [0, 1],
+                        [0, 1]
+                      )
+                      ,
+                    }}
+                  >
+                  </animated.div>
+                  <animated.div
+                    style={{
+                      right: String(this.randL_26*5+"vw"),
+                      // transform: String("translate("+props.x*10+"vw)"),
+                      transform: !this.aller ? 
+                      x.interpolate(
+                        x => 
+                        `translate(${-x*10}vw,${this.randL_26*x*10}vh)`
+                      )
+                      :
+                      x.interpolate(
+                        x => 
+                        `translate(${-(20-x*10)}vw,${this.randL_26*20-this.randL_26*x*10}vh)`
+                      )
+                      ,
+                      bottom: String(20+this.randT_26*25+"vh"),
+                      width: "7.5px",
+                      height: "7.5px",
+                      borderRadius: "50%",
+                      position: "absolute",
+                      backgroundColor: this.tableauImageCouleur[2][1],
+                      opacity:  !this.aller ? 
+                      x.interpolate(
+                        [0,1],
+                        [0, 1]
+                      )
+                      :
+                      x.interpolate(
+                        [0, 1],
+                        [0, 1]
+                      )
+                      ,
+                    }}
+                  >
+                  </animated.div>
+                  <animated.div
+                    style={{
+                      right: String(this.randL_27*5+"vw"),
+                      // transform: String("translate("+props.x*10+"vw)"),
+                      transform: !this.aller ? 
+                      x.interpolate(
+                        x => 
+                        `translate(${-x*10}vw,${this.randL_27*x*10}vh)`
+                      )
+                      :
+                      x.interpolate(
+                        x => 
+                        `translate(${-(20-x*10)}vw,${this.randL_27*20-this.randL_27*x*10}vh)`
+                      )
+                      ,
+                      bottom: String(20+this.randT_27*25+"vh"),
+                      width: "7.5px",
+                      height: "7.5px",
+                      borderRadius: "50%",
+                      position: "absolute",
+                      backgroundColor: this.tableauImageCouleur[2][1],
+                      opacity:  !this.aller ? 
+                      x.interpolate(
+                        [0,1],
+                        [0, 1]
+                      )
+                      :
+                      x.interpolate(
+                        [0, 1],
+                        [0, 1]
+                      )
+                      ,
+                    }}
+                  >
+                  </animated.div>
+                  <animated.div
+                    style={{
+                      right: String(this.randL_28*5+"vw"),
+                      // transform: String("translate("+props.x*10+"vw)"),
+                      transform: !this.aller ? 
+                      x.interpolate(
+                        x => 
+                        `translate(${-x*10}vw,${this.randL_28*x*10}vh)`
+                      )
+                      :
+                      x.interpolate(
+                        x => 
+                        `translate(${-(20-x*10)}vw,${this.randL_28*20-this.randL_28*x*10}vh)`
+                      )
+                      ,
+                      bottom: String(20+this.randT_28*25+"vh"),
+                      width: "7.5px",
+                      height: "7.5px",
+                      borderRadius: "50%",
+                      position: "absolute",
+                      backgroundColor: this.tableauImageCouleur[2][1],
+                      opacity:  !this.aller ? 
+                      x.interpolate(
+                        [0,1],
+                        [0, 1]
+                      )
+                      :
+                      x.interpolate(
+                        [0, 1],
+                        [0, 1]
+                      )
+                      ,
+                    }}
+                  >
+                  </animated.div>
+                  <animated.div
+                    style={{
+                      right: String(this.randL_29*5+"vw"),
+                      // transform: String("translate("+props.x*10+"vw)"),
+                      transform: !this.aller ? 
+                      x.interpolate(
+                        x => 
+                        `translate(${-x*10}vw,${this.randL_29*x*10}vh)`
+                      )
+                      :
+                      x.interpolate(
+                        x => 
+                        `translate(${-(20-x*10)}vw,${this.randL_29*20-this.randL_29*x*10}vh)`
+                      )
+                      ,
+                      bottom: String(20+this.randT_29*25+"vh"),
+                      width: "7.5px",
+                      height: "7.5px",
+                      borderRadius: "50%",
+                      position: "absolute",
+                      backgroundColor: this.tableauImageCouleur[2][1],
+                      opacity:  !this.aller ? 
+                      x.interpolate(
+                        [0,1],
+                        [0, 1]
+                      )
+                      :
+                      x.interpolate(
+                        [0, 1],
+                        [0, 1]
+                      )
+                      ,
+                    }}
+                  >
+                  </animated.div>
+                  <animated.div
+                    style={{
+                      right: String(this.randL_30*5+"vw"),
+                      // transform: String("translate("+props.x*10+"vw)"),
+                      transform: !this.aller ? 
+                      x.interpolate(
+                        x => 
+                        `translate(${-x*10}vw,${this.randL_30*x*10}vh)`
+                      )
+                      :
+                      x.interpolate(
+                        x => 
+                        `translate(${-(20-x*10)}vw,${this.randL_30*20-this.randL_30*x*10}vh)`
+                      )
+                      ,
+                      bottom: String(20+this.randT_30*25+"vh"),
+                      width: "7.5px",
+                      height: "7.5px",
+                      borderRadius: "50%",
+                      position: "absolute",
+                      backgroundColor: this.tableauImageCouleur[2][1],
+                      opacity:  !this.aller ? 
+                      x.interpolate(
+                        [0,1],
+                        [0, 1]
+                      )
+                      :
+                      x.interpolate(
+                        [0, 1],
+                        [0, 1]
+                      )
+                      ,
+                    }}
+                  >
+                  </animated.div>
+                  <animated.div
+                    style={{
+                      left: String(-this.randL_31*10+"vw"),
+                      // transform: String("translate("+props.x*10+"vw)"),
+                      transform: !this.aller ? 
+                      x.interpolate(
+                        x => 
+                        `translate(${x*10}vw,${this.randL_31*x*10}vh)`
+                      )
+                      :
+                      x.interpolate(
+                        x => 
+                        `translate(${20-x*10}vw,${this.randL_31*20-this.randL_31*x*10}vh)`
+                      )
+                      ,
+                      bottom: String(20+this.randT_31*45+"vh"),
+                      width: "7.5px",
+                      height: "7.5px",
+                      borderRadius: "50%",
+                      position: "absolute",
+                      backgroundColor: this.tableauImageCouleur[2][1],
+                      opacity:  !this.aller ? 
+                      x.interpolate(
+                        [0,1],
+                        [0, 1]
+                      )
+                      :
+                      x.interpolate(
+                        [0, 1],
+                        [0, 1]
+                      )
+                      ,
+                    }}
+                  >
+                  </animated.div>
+                  <animated.div
+                    style={{
+                      left: String(-this.randL_32*10+"vw"),
+                      // transform: String("translate("+props.x*10+"vw)"),
+                      transform: !this.aller ? 
+                      x.interpolate(
+                        x => 
+                        `translate(${x*10}vw,${this.randL_32*x*10}vh)`
+                      )
+                      :
+                      x.interpolate(
+                        x => 
+                        `translate(${20-x*10}vw,${this.randL_32*20-this.randL_32*x*10}vh)`
+                      )
+                      ,
+                      bottom: String(20+this.randT_32*45+"vh"),
+                      width: "7.5px",
+                      height: "7.5px",
+                      borderRadius: "50%",
+                      position: "absolute",
+                      backgroundColor: this.tableauImageCouleur[2][1],
+                      opacity:  !this.aller ? 
+                      x.interpolate(
+                        [0,1],
+                        [0, 1]
+                      )
+                      :
+                      x.interpolate(
+                        [0, 1],
+                        [0, 1]
+                      )
+                      ,
+                    }}
+                  >
+                  </animated.div>
+                  <animated.div
+                    style={{
+                      left: String(this.randL_33*10+"vw"),
+                      // transform: String("translate("+props.x*10+"vw)"),
+                      transform: !this.aller ? 
+                      x.interpolate(
+                        x => 
+                        `translate(${x*10}vw,${this.randL_33*x*10}vh)`
+                      )
+                      :
+                      x.interpolate(
+                        x => 
+                        `translate(${20-x*10}vw,${this.randL_33*20-this.randL_33*x*10}vh)`
+                      )
+                      ,
+                      bottom: String(20+this.randT_33*45+"vh"),
+                      width: "7.5px",
+                      height: "7.5px",
+                      borderRadius: "50%",
+                      position: "absolute",
+                      backgroundColor: this.tableauImageCouleur[2][1],
+                      opacity:  !this.aller ? 
+                      x.interpolate(
+                        [0,1],
+                        [0, 1]
+                      )
+                      :
+                      x.interpolate(
+                        [0, 1],
+                        [0, 1]
+                      )
+                      ,
+                    }}
+                  >
+                  </animated.div>
+                  <animated.div
+                    style={{
+                      left: String(-this.randL_34*10+"vw"),
+                      // transform: String("translate("+props.x*10+"vw)"),
+                      transform: !this.aller ? 
+                      x.interpolate(
+                        x => 
+                        `translate(${x*10}vw,${-this.randL_34*x*10}vh)`
+                      )
+                      :
+                      x.interpolate(
+                        x => 
+                        `translate(${20-x*1}vw,${-(this.randL_34*20-this.randL_34*x*10)}vh)`
+                      )
+                      ,
+                      bottom: String(20+this.randT_34*45+"vh"),
+                      width: "7.5px",
+                      height: "7.5px",
+                      borderRadius: "50%",
+                      position: "absolute",
+                      backgroundColor: this.tableauImageCouleur[2][1],
+                      opacity:  !this.aller ? 
+                      x.interpolate(
+                        [0,1],
+                        [0, 1]
+                      )
+                      :
+                      x.interpolate(
+                        [0, 1],
+                        [0, 1]
+                      )
+                      ,
+                    }}
+                  >
+                  </animated.div>
+                  <animated.div
+                    style={{
+                      left: String(-this.randL_35*10+"vw"),
+                      // transform: String("translate("+props.x*10+"vw)"),
+                      transform: !this.aller ? 
+                      x.interpolate(
+                        x => 
+                        `translate(${x*10}vw,${-this.randL_35*x*10}vh)`
+                      )
+                      :
+                      x.interpolate(
+                        x => 
+                        `translate(${20-x*10}vw,${-(this.randL_35*20-this.randL_35*x*10)}vh)`
+                      )
+                      ,
+                      bottom: String(20+this.randT_35*45+"vh"),
+                      width: "7.5px",
+                      height: "7.5px",
+                      borderRadius: "50%",
+                      position: "absolute",
+                      backgroundColor: this.tableauImageCouleur[2][1],
+                      opacity:  !this.aller ? 
+                      x.interpolate(
+                        [0,1],
+                        [0, 1]
+                      )
+                      :
+                      x.interpolate(
+                        [0, 1],
+                        [0, 1]
+                      )
+                      ,
+                    }}
+                  >
+                  </animated.div>
+                  <animated.div
+                    style={{
+                      left: String(this.randL_36*5+"vw"),
+                      // transform: String("translate("+props.x*10+"vw)"),
+                      transform: !this.aller ? 
+                      x.interpolate(
+                        x => 
+                        `translate(${-x*10}vw,${this.randL_36*x*10}vh)`
+                      )
+                      :
+                      x.interpolate(
+                        x => 
+                        `translate(${-(20-x*10)}vw,${this.randL_36*20-this.randL_36*x*10}vh)`
+                      )
+                      ,
+                      bottom: String(20+this.randT_36*45+"vh"),
+                      width: "7.5px",
+                      height: "7.5px",
+                      borderRadius: "50%",
+                      position: "absolute",
+                      backgroundColor: this.tableauImageCouleur[2][1],
+                      opacity:  !this.aller ? 
+                      x.interpolate(
+                        [0,1],
+                        [0, 1]
+                      )
+                      :
+                      x.interpolate(
+                        [0, 1],
+                        [0, 1]
+                      )
+                      ,
+                    }}
+                  >
+                  </animated.div>
+                  <animated.div
+                    style={{
+                      left: String(this.randL_37*5+"vw"),
+                      // transform: String("translate("+props.x*10+"vw)"),
+                      transform: !this.aller ? 
+                      x.interpolate(
+                        x => 
+                        `translate(${-x*10}vw,${this.randL_37*x*10}vh)`
+                      )
+                      :
+                      x.interpolate(
+                        x => 
+                        `translate(${-(20-x*10)}vw,${this.randL_37*20-this.randL_37*x*10}vh)`
+                      )
+                      ,
+                      bottom: String(20+this.randT_37*45+"vh"),
+                      width: "7.5px",
+                      height: "7.5px",
+                      borderRadius: "50%",
+                      position: "absolute",
+                      backgroundColor: this.tableauImageCouleur[2][1],
+                      opacity:  !this.aller ? 
+                      x.interpolate(
+                        [0,1],
+                        [0, 1]
+                      )
+                      :
+                      x.interpolate(
+                        [0, 1],
+                        [0, 1]
+                      )
+                      ,
+                    }}
+                  >
+                  </animated.div>
+                  <animated.div
+                    style={{
+                      left: String(this.randL_38*5+"vw"),
+                      // transform: String("translate("+props.x*10+"vw)"),
+                      transform: !this.aller ? 
+                      x.interpolate(
+                        x => 
+                        `translate(${-x*10}vw,${this.randL_38*x*10}vh)`
+                      )
+                      :
+                      x.interpolate(
+                        x => 
+                        `translate(${-(20-x*10)}vw,${this.randL_38*20-this.randL_38*x*10}vh)`
+                      )
+                      ,
+                      bottom: String(20+this.randT_38*45+"vh"),
+                      width: "7.5px",
+                      height: "7.5px",
+                      borderRadius: "50%",
+                      position: "absolute",
+                      backgroundColor: this.tableauImageCouleur[2][1],
+                      opacity:  !this.aller ? 
+                      x.interpolate(
+                        [0,1],
+                        [0, 1]
+                      )
+                      :
+                      x.interpolate(
+                        [0, 1],
+                        [0, 1]
+                      )
+                      ,
+                    }}
+                  >
+                  </animated.div>
+                  <animated.div
+                    style={{
+                      left: String(this.randL_39*5+"vw"),
+                      // transform: String("translate("+props.x*10+"vw)"),
+                      transform: !this.aller ? 
+                      x.interpolate(
+                        x => 
+                        `translate(${-x*10}vw,${-this.randL_39*x*10}vh)`
+                      )
+                      :
+                      x.interpolate(
+                        x => 
+                        `translate(${-(20-x*10)}vw,${-(this.randL_39*20-this.randL_39*x*10)}vh)`
+                      )
+                      ,
+                      bottom: String(20+this.randT_39*45+"vh"),
+                      width: "7.5px",
+                      height: "7.5px",
+                      borderRadius: "50%",
+                      position: "absolute",
+                      backgroundColor: this.tableauImageCouleur[2][1],
+                      opacity:  !this.aller ? 
+                      x.interpolate(
+                        [0,1],
+                        [0, 1]
+                      )
+                      :
+                      x.interpolate(
+                        [0, 1],
+                        [0, 1]
+                      )
+                      ,
+                    }}
+                  >
+                  </animated.div>
+                  <animated.div
+                    style={{
+                      left: String(this.randL_40*5+"vw"),
+                      // transform: String("translate("+props.x*10+"vw)"),
+                      transform: !this.aller ? 
+                      x.interpolate(
+                        x => 
+                        `translate(${-x*10}vw,${-this.randL_40*x*10}vh)`
+                      )
+                      :
+                      x.interpolate(
+                        x => 
+                        `translate(${-(20-x*10)}vw,${-(this.randL_40*20-this.randL_40*x*10)}vh)`
+                      )
+                      ,
+                      bottom: String(20+this.randT_40*45+"vh"),
+                      width: "7.5px",
+                      height: "7.5px",
                       borderRadius: "50%",
                       position: "absolute",
                       backgroundColor: this.tableauImageCouleur[2][1],
@@ -1802,20 +3612,36 @@ class App extends React.Component {
                   minHeight  : this.state.boutonClique === "apercu" ? "730px" : "400px"
                 }}
               >
-
+                <animated.div className="Titre_page_actuel_mobile" style={{ backgroundColor: props.couleurBordure}}>
+                  <p
+                    style={{
+                      color: "white",
+                      fontSize: "1.5em",
+                      fontWeight: "bold",
+                      fontFamily: "cursive",
+                      textAlign: "center",
+                      writingMode: "vertical-lr",
+                      textOrientation: "upright",
+                      textTransform: "uppercase"
+                    }}
+                  >
+                    {this.tableauImageCouleur[2][8]}
+                  </p>
+                </animated.div>
               </animated.div>
               )
               }
             </Spring>
             <Switch>
-              <Route path="/home" children={<ComposantHome/>} />
-              <Route path="/infoPerso" children={<ComposantInfoPerso/>} />
-              <Route path="/apercu" children={<ComposantApercu/>} />
-              <Route path="/contact" children={<ComposantContact/>} />
-              <Route path="/competence" children={<ComposantCompetence/>} />
+              <Route path="/home" component={ComposantHome} />
+              <Route path="/infoPerso" component={ComposantInfoPerso} />
+              <Route path="/apercu" component={ComposantApercu} />
+              <Route path="/contact" component={ComposantContact} />
+              <Route path="/competence" component={ComposantCompetence} />
+              <Route path="/" component={ComposantHome} />
             </Switch>
           </div>
-        </HashRouter>
+        </div>
       )
     }
   }
@@ -1830,6 +3656,7 @@ class ComposantHome extends React.Component {
   }
 
   render() {
+    console.log(this.props)
     return (
       <div 
         className={window.navigator.userAgent.indexOf('Mobi') !== -1 ? "ContenaireHome_mobile" : "ContenaireHome"} 
@@ -2597,6 +4424,7 @@ class ComposantInfoPerso extends React.Component {
   }
 
   render() {
+    console.log(this.props)
     return (
       <div 
         className={window.navigator.userAgent.indexOf('Mobi') !== -1 ? "ContenaireInfoPerso_mobile" : "ContenaireInfoPerso"}
@@ -2665,10 +4493,15 @@ class ComposantApercu extends React.Component {
       ouvert_2_2 : false,
     }
     this.reset = false
+    this.premiereAnim = true
+  }
+
+  componentDidMount() {
+    this.premiereAnim = true
   }
 
   render() {
-    
+    console.log(this.props)
     return (
       <div 
         className={window.navigator.userAgent.indexOf('Mobi') !== -1 ? "ContenaireApercu_mobile" : "ContenaireApercu"}
@@ -2707,39 +4540,80 @@ class ComposantApercu extends React.Component {
                   ouvert_2_2 : false
                 })
               }
+              this.premiereAnim = false
             }
           }
           from={{
-            y: 0
+            y: 0, 
+            x_1: 0,
+            x_2: 0,
+            x_3: 0,
+            x_4: 0,
+            x_5: 0 
           }}
           to={
             this.state.clique_1_1_1 || 
             this.state.clique_1_1_2 || 
             this.state.clique_1_2_1 || 
             this.state.clique_2_1 || 
-            this.state.clique_2_2
+            this.state.clique_2_2 ||
+            this.premiereAnim
             ? 
-            { y: 1 } 
+            { y: 1, 
+              x_1: 1,
+              x_2: 1,
+              x_3: 1,
+              x_4: 1,
+              x_5: 1 
+            } 
             : 
-            { y: 0 }
+            { y: 0, 
+              x_1: 0,
+              x_2: 0,
+              x_3: 0,
+              x_4: 0,
+              x_5: 0  
+            }
           }
-          config={{
-            duration: 150
-          }}
+          config={
+            key => (
+              key === "y" ? 
+              {duration: 150} 
+              : 
+              key === "x_1" ?
+              {duration: 250}
+              : 
+              key === "x_2" ?
+              { duration: 250, delay: 125}
+              :
+              key === "x_3" ?
+              { duration: 250, delay: 250}
+              :
+              key === "x_4" ?
+              { duration: 250, delay: 375}
+              :
+              key === "x_5" ?
+              { duration: 250, delay: 500}
+              :
+              null
+              )
+          }
         >
           {(props) => (
             <animated.div 
               className={window.navigator.userAgent.indexOf('Mobi') !== -1 ? "ContenairePrincipalApercu_mobile" : "ContenairePrincipalApercu"}
-              style={{
-                height: window.innerHeight < 700 || window.innerWidth < 1100 ? "500px" : "703.5px",
-                width: window.innerWidth < 1100 || window.innerHeight < 700 ? "500px" : "705px",
+              style={window.navigator.userAgent.indexOf('Mobi') === -1 ? {
+                height: (window.innerHeight < 700 || window.innerWidth < 1100) 
+                 ? "500px" : "703.5px",
+                width: (window.innerWidth < 1100 || window.innerHeight < 700) 
+                ? "500px" : "705px",
                 top: window.innerHeight < 700 || window.innerWidth < 1100 ? 
                 String((window.innerHeight - 500)/2)+"px" 
                 : 
                 String((window.innerHeight - 700)/2)+"px" ,
                 right: window.innerWidth < 1500 && window.innerWidth > 800 ? "14vw" : window.innerWidth < 800 ? "10vw" : "28vw",
                 left: window.innerWidth < 800 ? "20vh" : null
-              }}
+              } : null}
             >
               <animated.div
                 className="Apercu_1"
@@ -2860,8 +4734,17 @@ class ComposantApercu extends React.Component {
                         this.setState({ focus_1_1_1: !this.state.focus_1_1_1})
                       }
                     }
-                    style={ ( () => {
+                    style={ ( () => { 
                       if (
+                        this.premiereAnim 
+                      ) {
+                        return {
+                          transform: props.x_1.interpolate(
+                            [0, 0.6, 0.7, 0.8, 0.9, 1],
+                            ["scale(0)", "scale(1.1)", "scale(0.9)", "scale(1.05)", "scale(0.95)", "scale(1)"]
+                          )
+                        }
+                      } else if (
                         this.state.clique_1_1_1
                       ) {
                         return {
@@ -2966,9 +4849,8 @@ class ComposantApercu extends React.Component {
                           style={{ 
                             fontWeight: "bold", 
                             color: "#4169E1",
-                            fontSize: window.navigator.userAgent.indexOf('Mobi') !== -1 ? "3vw" : "1.3em",
-                            textAlign: "center",
-                            marginTop: "-10%"
+                            fontSize: window.navigator.userAgent.indexOf('Mobi') !== -1 ? "clamp(5px, 3vw, 20px)" : "1.3em",
+                            textAlign: "center"
                           }}
                         >
                           { 
@@ -2982,7 +4864,7 @@ class ComposantApercu extends React.Component {
                         <p 
                           style={{ 
                             fontWeight: "bold",
-                            fontSize: window.navigator.userAgent.indexOf('Mobi') !== -1 ? "3vw" : "1em",
+                            fontSize: window.navigator.userAgent.indexOf('Mobi') !== -1 ? "clamp(5px, 2.5vw, 12px)" : "1em",
                             textAlign: "center", 
                             marginRight: "20%", 
                             marginLeft: "20%",
@@ -3005,9 +4887,9 @@ class ComposantApercu extends React.Component {
                           style={{ 
                             color: "#4169E1",
                             fontWeight: "bold", 
-                            fontSize: window.navigator.userAgent.indexOf('Mobi') !== -1 ? "3vw" : "1.3em",
+                            fontSize: window.navigator.userAgent.indexOf('Mobi') !== -1 ? "clamp(5px, 3vw, 20px)" : "1.3em",
                             textAlign: "center",
-                            marginTop: "-10%"
+                            marginTop: window.navigator.userAgent.indexOf('Mobi') !== -1 ? "-40%" : "-10%"
                           }}
                         >
                           { 
@@ -3020,7 +4902,7 @@ class ComposantApercu extends React.Component {
                         <p 
                           style={{ 
                             fontWeight: "bold",
-                            fontSize: window.navigator.userAgent.indexOf('Mobi') !== -1 ? "3vw" : "1em", 
+                            fontSize: window.navigator.userAgent.indexOf('Mobi') !== -1 ? "clamp(5px, 2.5vw, 12px)" : "1em", 
                             textAlign: "center", 
                             marginRight: "20%", 
                             marginLeft: "20%",
@@ -3042,7 +4924,7 @@ class ComposantApercu extends React.Component {
                           style={{ 
                             color: "#4169E1",
                             fontWeight: "bold", 
-                            fontSize: window.navigator.userAgent.indexOf('Mobi') !== -1 ? "3vw" : "1.3em",
+                            fontSize: window.navigator.userAgent.indexOf('Mobi') !== -1 ? "clamp(5px, 3vw, 20px)" : "1.3em",
                             textAlign: "center",
                             marginTop: "-35%"
                           }}
@@ -3052,7 +4934,7 @@ class ComposantApercu extends React.Component {
                         <p 
                           style={{ 
                             fontWeight: "bold",
-                            fontSize: window.navigator.userAgent.indexOf('Mobi') !== -1 ? "3vw" : "1em", 
+                            fontSize: window.navigator.userAgent.indexOf('Mobi') !== -1 ? "clamp(5px, 2.5vw, 12px)" : "1em", 
                             textAlign: "center", 
                             marginRight: "20%", 
                             marginLeft: "20%",
@@ -3143,6 +5025,15 @@ class ComposantApercu extends React.Component {
                     }
                     style={ ( () => {
                       if (
+                        this.premiereAnim 
+                      ) {
+                        return {
+                          transform: props.x_2.interpolate(
+                            [0, 0.6, 0.7, 0.8, 0.9, 1],
+                            ["scale(0)", "scale(1.1)", "scale(0.9)", "scale(1.05)", "scale(0.95)", "scale(1)"]
+                          )
+                        }
+                      } else if (
                         this.state.clique_1_1_2
                       ) {
                         return {
@@ -3263,9 +5154,8 @@ class ComposantApercu extends React.Component {
                           style={{ 
                             fontWeight: "bold", 
                             color: "#4169E1",
-                            fontSize: window.navigator.userAgent.indexOf('Mobi') !== -1 ? "3vw" : "1.3em",
-                            textAlign: "center",
-                            marginTop: "-10%"
+                            fontSize: window.navigator.userAgent.indexOf('Mobi') !== -1 ? "clamp(5px, 3vw, 20px)" : "1.3em",
+                            textAlign: "center"
                           }}
                         >
                           { 
@@ -3279,7 +5169,7 @@ class ComposantApercu extends React.Component {
                         <p 
                           style={{ 
                             fontWeight: "bold",
-                            fontSize: window.navigator.userAgent.indexOf('Mobi') !== -1 ? "3vw" : "1em",
+                            fontSize: window.navigator.userAgent.indexOf('Mobi') !== -1 ? "clamp(5px, 2.5vw, 12px)" : "1em",
                             textAlign: "center", 
                             marginRight: "20%", 
                             marginLeft: "20%",
@@ -3302,7 +5192,7 @@ class ComposantApercu extends React.Component {
                           style={{ 
                             color: "#4169E1",
                             fontWeight: "bold", 
-                            fontSize: window.navigator.userAgent.indexOf('Mobi') !== -1 ? "3vw" : "1.3em",
+                            fontSize: window.navigator.userAgent.indexOf('Mobi') !== -1 ? "clamp(5px, 3vw, 20px)" : "1.3em",
                             textAlign: "center",
                             marginTop: "-10%"
                           }}
@@ -3317,7 +5207,7 @@ class ComposantApercu extends React.Component {
                         <p 
                           style={{ 
                             fontWeight: "bold",
-                            fontSize: window.navigator.userAgent.indexOf('Mobi') !== -1 ? "3vw" : "1em", 
+                            fontSize: window.navigator.userAgent.indexOf('Mobi') !== -1 ? "clamp(5px, 2.5vw, 12px)" : "1em", 
                             textAlign: "center", 
                             marginRight: "20%", 
                             marginLeft: "20%",
@@ -3339,7 +5229,7 @@ class ComposantApercu extends React.Component {
                           style={{ 
                             color: "#4169E1",
                             fontWeight: "bold", 
-                            fontSize: window.navigator.userAgent.indexOf('Mobi') !== -1 ? "3vw" : "1.3em",
+                            fontSize: window.navigator.userAgent.indexOf('Mobi') !== -1 ? "clamp(5px, 3vw, 20px)" : "1.3em",
                             textAlign: "center",
                             marginTop: "-35%"
                           }}
@@ -3349,7 +5239,7 @@ class ComposantApercu extends React.Component {
                         <p 
                           style={{ 
                             fontWeight: "bold",
-                            fontSize: window.navigator.userAgent.indexOf('Mobi') !== -1 ? "3vw" : "1em", 
+                            fontSize: window.navigator.userAgent.indexOf('Mobi') !== -1 ? "clamp(5px, 2.5vw, 12px)" : "1em", 
                             textAlign: "center", 
                             marginRight: "20%", 
                             marginLeft: "20%",
@@ -3426,6 +5316,15 @@ class ComposantApercu extends React.Component {
                   className="Apercu_1_2"
                   style={ ( () => {
                     if (
+                      this.premiereAnim 
+                    ) {
+                      return {
+                        transform: props.x_5.interpolate(
+                          [0, 0.6, 0.7, 0.8, 0.9, 1],
+                          ["scale(0)", "scale(1.1)", "scale(0.9)", "scale(1.05)", "scale(0.95)", "scale(1)"]
+                        )
+                      }
+                    } else if (
                       this.state.clique_1_1_1 ||
                       this.state.clique_1_1_2
                     ) {
@@ -3573,9 +5472,10 @@ class ComposantApercu extends React.Component {
                         <p 
                           style={{ 
                             fontWeight: "bold",
-                            fontSize: window.navigator.userAgent.indexOf('Mobi') !== -1 ? "3vw" : "1.3em",
+                            fontSize: window.navigator.userAgent.indexOf('Mobi') !== -1 ? "clamp(5px, 2.5vw, 12px)" : "1.3em",
                             textAlign: "center",
-                            color: "#4169E1"
+                            color: "#4169E1",
+                            marginRight: "2%",
                           }}
                         >
                           { 
@@ -3589,9 +5489,10 @@ class ComposantApercu extends React.Component {
                         <p 
                           style={{ 
                             fontWeight: "bold",
-                            fontSize: window.navigator.userAgent.indexOf('Mobi') !== -1 ? "3vw" : "1.3em",
+                            fontSize: window.navigator.userAgent.indexOf('Mobi') !== -1 ? "clamp(5px, 2.5vw, 12px)" : "1.3em",
                             textAlign: "center",
-                            color: "#4169E1"
+                            color: "#4169E1",
+                            marginRight: "2%",
                           }}
                         >
                           { 
@@ -3605,9 +5506,10 @@ class ComposantApercu extends React.Component {
                         <p 
                           style={{ 
                             fontWeight: "bold",
-                            fontSize: window.navigator.userAgent.indexOf('Mobi') !== -1 ? "3vw" : "1.3em",
+                            fontSize: window.navigator.userAgent.indexOf('Mobi') !== -1 ? "clamp(5px, 2.5vw, 12px)" : "1.3em",
                             textAlign: "center",
-                            color: "#4169E1"
+                            color: "#4169E1",
+                            marginRight: "2%",
                           }}
                         >
                           { 
@@ -3621,9 +5523,11 @@ class ComposantApercu extends React.Component {
                         <p 
                           style={{ 
                             fontWeight: "bold",
-                            fontSize: window.navigator.userAgent.indexOf('Mobi') !== -1 ? "3vw" : "1.3em",
+                            fontSize: window.navigator.userAgent.indexOf('Mobi') !== -1 ? "clamp(5px, 2.5vw, 12px)" : "1.3em",
                             textAlign: "center",
-                            color: "#4169E1"
+                            color: "#4169E1",
+                            marginRight: "2%",
+                            marginLeft: "2%"
                           }}
                         >
                           { 
@@ -3784,6 +5688,15 @@ class ComposantApercu extends React.Component {
                   }
                   style={ ( () => {
                     if (
+                      this.premiereAnim 
+                    ) {
+                      return {
+                        transform: props.x_3.interpolate(
+                          [0, 0.6, 0.7, 0.8, 0.9, 1],
+                          ["scale(0)", "scale(1.1)", "scale(0.9)", "scale(1.05)", "scale(0.95)", "scale(1)"]
+                        )
+                      }
+                    } else if (
                       this.state.clique_2_1
                     ) {
                       return {
@@ -3888,9 +5801,8 @@ class ComposantApercu extends React.Component {
                           style={{ 
                             fontWeight: "bold", 
                             color: "#4169E1",
-                            fontSize: window.navigator.userAgent.indexOf('Mobi') !== -1 ? "3vw" : "1.3em",
-                            textAlign: "center",
-                            marginTop: "-10%"
+                            fontSize: window.navigator.userAgent.indexOf('Mobi') !== -1 ? "clamp(5px, 3vw, 20px)" : "1.3em",
+                            textAlign: "center"
                           }}
                         >
                           { 
@@ -3904,7 +5816,7 @@ class ComposantApercu extends React.Component {
                         <p 
                           style={{ 
                             fontWeight: "bold",
-                            fontSize: window.navigator.userAgent.indexOf('Mobi') !== -1 ? "3vw" : "1em",
+                            fontSize: window.navigator.userAgent.indexOf('Mobi') !== -1 ? "clamp(5px, 2.5vw, 12px)" : "1em",
                             textAlign: "center", 
                             marginRight: "20%", 
                             marginLeft: "20%",
@@ -3927,7 +5839,7 @@ class ComposantApercu extends React.Component {
                           style={{ 
                             color: "#4169E1",
                             fontWeight: "bold", 
-                            fontSize: window.navigator.userAgent.indexOf('Mobi') !== -1 ? "3vw" : "1.3em",
+                            fontSize: window.navigator.userAgent.indexOf('Mobi') !== -1 ? "clamp(5px, 3vw, 20px)" : "1.3em",
                             textAlign: "center",
                             marginTop: "-10%"
                           }}
@@ -3942,7 +5854,7 @@ class ComposantApercu extends React.Component {
                         <p 
                           style={{ 
                             fontWeight: "bold",
-                            fontSize: window.navigator.userAgent.indexOf('Mobi') !== -1 ? "3vw" : "1em", 
+                            fontSize: window.navigator.userAgent.indexOf('Mobi') !== -1 ? "clamp(5px, 2.5vw, 12px)" : "1em", 
                             textAlign: "center", 
                             marginRight: "20%", 
                             marginLeft: "20%",
@@ -3964,7 +5876,7 @@ class ComposantApercu extends React.Component {
                           style={{ 
                             color: "#4169E1",
                             fontWeight: "bold", 
-                            fontSize: window.navigator.userAgent.indexOf('Mobi') !== -1 ? "3vw" : "1.3em",
+                            fontSize: window.navigator.userAgent.indexOf('Mobi') !== -1 ? "clamp(5px, 3vw, 20px)" : "1.3em",
                             textAlign: "center",
                             marginTop: "-35%"
                           }}
@@ -3974,7 +5886,7 @@ class ComposantApercu extends React.Component {
                         <p 
                           style={{ 
                             fontWeight: "bold",
-                            fontSize: window.navigator.userAgent.indexOf('Mobi') !== -1 ? "3vw" : "1em", 
+                            fontSize: window.navigator.userAgent.indexOf('Mobi') !== -1 ? "clamp(5px, 2.5vw, 12px)" : "1em", 
                             textAlign: "center", 
                             marginRight: "20%", 
                             marginLeft: "20%",
@@ -4066,6 +5978,15 @@ class ComposantApercu extends React.Component {
                   }
                   style={ ( () => {
                     if (
+                      this.premiereAnim 
+                    ) {
+                      return {
+                        transform: props.x_4.interpolate(
+                          [0, 0.6, 0.7, 0.8, 0.9, 1],
+                          ["scale(0)", "scale(1.1)", "scale(0.9)", "scale(1.05)", "scale(0.95)", "scale(1)"]
+                        )
+                      }
+                    } else if (
                       this.state.clique_2_1
                     ) {
                       return {
@@ -4186,9 +6107,9 @@ class ComposantApercu extends React.Component {
                           style={{ 
                             fontWeight: "bold", 
                             color: "#4169E1",
-                            fontSize: window.navigator.userAgent.indexOf('Mobi') !== -1 ? "3vw" : "1.3em",
+                            fontSize: window.navigator.userAgent.indexOf('Mobi') !== -1 ? "clamp(5px, 3vw, 20px)" : "1.3em",
                             textAlign: "center",
-                            marginTop: "-10%"
+                            top: "20px"
                           }}
                         >
                           { 
@@ -4202,7 +6123,7 @@ class ComposantApercu extends React.Component {
                         <p 
                           style={{ 
                             fontWeight: "bold",
-                            fontSize: window.navigator.userAgent.indexOf('Mobi') !== -1 ? "3vw" : "1em",
+                            fontSize: window.navigator.userAgent.indexOf('Mobi') !== -1 ? "clamp(5px, 2.5vw, 12px)" : "1em",
                             textAlign: "center", 
                             marginRight: "20%", 
                             marginLeft: "20%",
@@ -4225,9 +6146,9 @@ class ComposantApercu extends React.Component {
                           style={{ 
                             color: "#4169E1",
                             fontWeight: "bold", 
-                            fontSize: window.navigator.userAgent.indexOf('Mobi') !== -1 ? "3vw" : "1.3em",
+                            fontSize: window.navigator.userAgent.indexOf('Mobi') !== -1 ? "clamp(5px, 3vw, 20px)" : "1.3em",
                             textAlign: "center",
-                            marginTop: "-10%"
+                            marginTop: window.navigator.userAgent.indexOf('Mobi') !== -1 ? "-30%" : "-10%"
                           }}
                         >
                           { 
@@ -4240,7 +6161,7 @@ class ComposantApercu extends React.Component {
                         <p 
                           style={{ 
                             fontWeight: "bold",
-                            fontSize: window.navigator.userAgent.indexOf('Mobi') !== -1 ? "3vw" : "1em", 
+                            fontSize: window.navigator.userAgent.indexOf('Mobi') !== -1 ? "clamp(5px, 2.5vw, 12px)" : "1em", 
                             textAlign: "center", 
                             marginRight: "20%", 
                             marginLeft: "20%",
@@ -4262,7 +6183,7 @@ class ComposantApercu extends React.Component {
                           style={{ 
                             color: "#4169E1",
                             fontWeight: "bold", 
-                            fontSize: window.navigator.userAgent.indexOf('Mobi') !== -1 ? "3vw" : "1.3em",
+                            fontSize: window.navigator.userAgent.indexOf('Mobi') !== -1 ? "clamp(5px, 3vw, 20px)" : "1.3em",
                             textAlign: "center",
                             marginTop: "-35%"
                           }}
@@ -4272,7 +6193,7 @@ class ComposantApercu extends React.Component {
                         <p 
                           style={{ 
                             fontWeight: "bold",
-                            fontSize: window.navigator.userAgent.indexOf('Mobi') !== -1 ? "3vw" : "1em", 
+                            fontSize: window.navigator.userAgent.indexOf('Mobi') !== -1 ? "clamp(5px, 2.5vw, 12px)" : "1em", 
                             textAlign: "center", 
                             marginRight: "20%", 
                             marginLeft: "20%",
@@ -4359,124 +6280,205 @@ class ComposantContact extends React.Component {
   constructor() {
     super()
     this.state = {
+      status_envoi : "rien"
     }
   }
 
-  render() {
-    return (
-      <div 
-        className={window.navigator.userAgent.indexOf('Mobi') !== -1 ? "ContenaireContact_mobile" : "ContenaireContact"}
-      >
-        <form id="contact">
-          <div 
-            className={window.navigator.userAgent.indexOf('Mobi') !== -1 ? "ContenairePrincipalContact_mobile" : "ContenairePrincipalContact"} 
-            style={{ 
-              perspective : "600px"
-            }}
-          >
-            <div 
-              className={window.navigator.userAgent.indexOf('Mobi') !== -1 ? "TitreContact_mobile" : "TitreContact"}
-            >
-              <p className="TexteTitreContact">
-                Une réponse rapide assuré sur la boîte mail renseigné
-              </p>
-            </div>
-            <div 
-              className={window.navigator.userAgent.indexOf('Mobi') !== -1 ? "NomEmail_mobile" : "NomEmail"} 
-              style={{ perspective : "600px"}}
-            >
-              <Spring
-                native
-                from={{ transform : "translateX(-100px) translateZ(20vw) rotateY(270deg)" }}
-                to={{ transform : "translateX(0px) translateZ(0vh) rotateY(360deg)" }}
-                config={{ duration : 750}}
-              >
-                { props => (
-                  <animated.div className="Nom" style={props}>
-                    <input className="InputNom" type="name" placeholder="Nom"/>
-                  </animated.div>
-                )}
-              </Spring>
-              <Spring
-                native
-                from={{ transform : "translateX(100px) translateZ(20vw) rotateY(90deg)" }}
-                to={{ transform : "translateX(0px) translateZ(0vw) rotateY(0deg)" }}
-                config={{ duration : 750}}
-              >
-                { props => (
-                  <animated.div className="Email" style={props}>
-                    <input className="InputEmail" type="email" placeholder="E-mail" />
-                  </animated.div>
-                )}
-              </Spring>
-            </div>
-              <Spring
-                native
-                from={{ transform : "perspective(600px) translateY(-2vh) translateZ(6vh) rotateX(90deg)" }}
-                to={{ transform : "perspective(600px) translateY(0vh) translateZ(0vh) rotateX(0deg)" }}
-                config={{ duration : 750, delay : 750}}
-              >
-                { props => (
-                  <animated.div 
-                    className={window.navigator.userAgent.indexOf('Mobi') !== -1 ? "Sujet_mobile" : "Sujet"} 
-                    style={props}
-                  >
-                    <input className="InputSujet" type="text" placeholder="Sujet" />
-                  </animated.div>
-                )}
-              </Spring>
-              <Spring
-                native
-                from={{ transform : "perspective(600px) translateY(19vh) translateZ(6vh) rotateX(270deg)" }}
-                to={{ transform : "perspective(600px) translateY(0vh) translateZ(0vh) rotateX(360deg)" }}
-                config={{ duration : 750, delay : 750}}
-              >
-                { props => (
-                  <animated.div 
-                    className={window.navigator.userAgent.indexOf('Mobi') !== -1 ? "Message_mobile" : "Message" }
-                    style={props}
-                  >
-                    <textarea className="InputMessage" form="contact" placeholder="Message" />
-                  </animated.div>
-                )}
-              </Spring>
-              <Spring
-                native
-                from={{ x : 0 }}
-                to={{ x : 1 }}
-                config={{ duration : 1000, delay : 1500}}
-              >
-                { props => (
-                  <animated.div 
-                    className={window.navigator.userAgent.indexOf('Mobi') !== -1 ? "Envoyer_mobile" : "Envoyer" }
-                    style={{
-                      transform: props.x.interpolate(
-                        [0, 0.7, 0.8, 0.9, 1], 
-                        ["translateX(-150vw)", "translateX(20vw)", "translateX(-10vw)", "translateX(10vw)", "translateX(0vw)"]
-                      ),
-                      opacity: props.x.interpolate(
-                        [0, 0.5, 1],
-                        [0, 0, 1]
-                      )
-                    }}
-                  >
-                    <div 
-                      className={window.navigator.userAgent.indexOf('Mobi') !== -1 ? "ContenaireEnvoyer1_mobile" : "ContenaireEnvoyer1"}
-                    >
+  envoiDonnée = async (e) => {
+    e.preventDefault();
+    let nom = document.getElementById('nom')
+    let sujet = document.getElementById('sujet')
+    let email = document.getElementById('email')
+    let message = document.getElementById('message')
+    this.setState({ status_envoi : "en_cours" })
+    axios.post("https://qci119s417.execute-api.us-east-1.amazonaws.com/latest/hello", {
+      nom: nom.value,
+      sujet: sujet.value,
+      email: email.value,
+      message: message.value
+    }).then(
+        () => this.setState({ status_envoi : "reussi"})
+      ).catch(
+        () => this.setState({ status_envoi : "erreur"})
+      )
+  }
 
-                    </div>
-                    <div 
-                      className={window.navigator.userAgent.indexOf('Mobi') !== -1 ? "ContenaireEnvoyer2_mobile" : "ContenaireEnvoyer2"}
+  render() {
+    console.log(this.props)
+    if (
+      this.state.status_envoi === "rien"
+    ) {
+      return (
+        <div 
+          className={window.navigator.userAgent.indexOf('Mobi') !== -1 ? "ContenaireContact_mobile" : "ContenaireContact"}
+        >
+          <form id="contact" action="" onSubmit={this.envoiDonnée.bind(this)}>
+            <div 
+              className={window.navigator.userAgent.indexOf('Mobi') !== -1 ? "ContenairePrincipalContact_mobile" : "ContenairePrincipalContact"} 
+              style={{ 
+                perspective : "600px"
+              }}
+            >
+              <div 
+                className={window.navigator.userAgent.indexOf('Mobi') !== -1 ? "TitreContact_mobile" : "TitreContact"}
+              >
+                <p className="TexteTitreContact">
+                  Une réponse rapide assuré sur la boîte mail renseigné
+                </p>
+              </div>
+              <div 
+                className={window.navigator.userAgent.indexOf('Mobi') !== -1 ? "NomEmail_mobile" : "NomEmail"} 
+                style={{ perspective : "600px"}}
+              >
+                <Spring
+                  native
+                  from={{ transform : "translateX(-100px) translateZ(20vw) rotateY(270deg)" }}
+                  to={{ transform : "translateX(0px) translateZ(0vh) rotateY(360deg)" }}
+                  config={{ duration : 750}}
+                >
+                  { props => (
+                    <animated.div className="Nom" style={{...props,minHeight:"30px"}}>
+                      <input 
+                        required
+                        className="InputNom" 
+                        type="name" 
+                        id="nom" 
+                        placeholder="Nom"
+                      />
+                    </animated.div>
+                  )}
+                </Spring>
+                <Spring
+                  native
+                  from={{ transform : "translateX(100px) translateZ(20vw) rotateY(90deg)" }}
+                  to={{ transform : "translateX(0px) translateZ(0vw) rotateY(0deg)" }}
+                  config={{ duration : 750}}
+                >
+                  { props => (
+                    <animated.div className="Email" style={{...props,minHeight:"30px"}}>
+                      <input 
+                        required
+                        className="InputEmail" 
+                        type="email" 
+                        id="email" 
+                        placeholder="E-mail" 
+                      />
+                    </animated.div>
+                  )}
+                </Spring>
+              </div>
+                <Spring
+                  native
+                  from={{ transform : "perspective(600px) translateY(-2vh) translateZ(6vh) rotateX(90deg)" }}
+                  to={{ transform : "perspective(600px) translateY(0vh) translateZ(0vh) rotateX(0deg)" }}
+                  config={{ duration : 750, delay : 750}}
+                >
+                  { props => (
+                    <animated.div 
+                      className={window.navigator.userAgent.indexOf('Mobi') !== -1 ? "Sujet_mobile" : "Sujet"} 
+                      style={{...props,minHeight:"30px"}}
                     >
-                      <input className="BoutonEnvoyer" type="submit" placeholder="Envoyer" />  
-                    </div>
-                  </animated.div>
-                )}
-              </Spring>
+                      <input 
+                        required
+                        className="InputSujet" 
+                        type="text" 
+                        id="sujet" 
+                        placeholder="Sujet" 
+                      />
+                    </animated.div>
+                  )}
+                </Spring>
+                <Spring
+                  native
+                  from={{ transform : "perspective(600px) translateY(19vh) translateZ(6vh) rotateX(270deg)" }}
+                  to={{ transform : "perspective(600px) translateY(0vh) translateZ(0vh) rotateX(360deg)" }}
+                  config={{ duration : 750, delay : 750}}
+                >
+                  { props => (
+                    <animated.div 
+                      className={window.navigator.userAgent.indexOf('Mobi') !== -1 ? "Message_mobile" : "Message" }
+                      style={{...props,minHeight:"120px"}}
+                    >
+                      <textarea 
+                        required
+                        className="InputMessage" 
+                        id="message" 
+                        form="contact" 
+                        placeholder="Message" 
+                      />
+                    </animated.div>
+                  )}
+                </Spring>
+                <Spring
+                  native
+                  from={{ x : 0 }}
+                  to={{ x : 1 }}
+                  config={{ duration : 1000, delay : 1500}}
+                >
+                  { props => (
+                    <animated.div 
+                      className={window.navigator.userAgent.indexOf('Mobi') !== -1 ? "Envoyer_mobile" : "Envoyer" }
+                      style={{
+                        transform: props.x.interpolate(
+                          [0, 0.7, 0.8, 0.9, 1], 
+                          ["translateX(-150vw)", "translateX(20vw)", "translateX(-10vw)", "translateX(10vw)", "translateX(0vw)"]
+                        ),
+                        opacity: props.x.interpolate(
+                          [0, 0.5, 1],
+                          [0, 0, 1]
+                        )
+                      }}
+                    >
+                      <div 
+                        className={window.navigator.userAgent.indexOf('Mobi') !== -1 ? "ContenaireEnvoyer1_mobile" : "ContenaireEnvoyer1"}
+                      >
+
+                      </div>
+                      <div 
+                        className={window.navigator.userAgent.indexOf('Mobi') !== -1 ? "ContenaireEnvoyer2_mobile" : "ContenaireEnvoyer2"}
+                      >
+                        <input className="BoutonEnvoyer" form="contact" type="submit" value="Envoyer" />
+                      </div>
+                    </animated.div>
+                  )}
+                </Spring>
+            </div>
+          </form>
+        </div>
+      )
+    } else if (
+      this.state.status_envoi === "en_cours"
+    ){
+      return (
+        <div className={window.navigator.userAgent.indexOf('Mobi') !== -1 ? "ContenaireContact_mobile_reussi" : "ContenaireContact"}>
+          <div className={window.navigator.userAgent.indexOf('Mobi') !== -1 ? "contenaire_envoyer_encours_mobile" : "contenaire_envoyer"}>
+            <CircularProgress color="#00008B" />
           </div>
-        </form>
-      </div>
-    )
+        </div>
+      )
+    } else if (
+      this.state.status_envoi === "reussi"
+    ) {
+      return (
+        <div className={window.navigator.userAgent.indexOf('Mobi') !== -1 ? "ContenaireContact_mobile_reussi" : "ContenaireContact"}>
+          <div className={window.navigator.userAgent.indexOf('Mobi') !== -1 ? "contenaire_envoyer_mobile" : "contenaire_envoyer"}>
+            <p style={{ color: "#065446", fontWeight: "bold", textAlign: "center" }}>
+              Votre message a bien été réceptionné, merci et a très bientôt ! 
+            </p>
+          </div>
+        </div>
+      )
+    } else {
+      return (
+        <div className={window.navigator.userAgent.indexOf('Mobi') !== -1 ? "ContenaireContact_mobile_erreur" : "ContenaireContact"}> 
+          <div className={window.navigator.userAgent.indexOf('Mobi') !== -1 ? "contenaire_envoyer_erreur_mobile" : "contenaire_erreur_envoyer"} >
+            <p style={{ color: "#cd0a0a", fontWeight: "bold", textAlign: "center" }}>
+              Malheuresement une erreur est survenue lors de l'envoi de votre message. Réessayer ulterieurement
+            </p>
+          </div>
+        </div>
+      )
+    }
   }
 }
 
@@ -4489,6 +6491,7 @@ class ComposantCompetence extends React.Component {
   }
 
   render() {
+    console.log(this.props)
     return (
       <div 
         className={window.navigator.userAgent.indexOf('Mobi') !== -1 ? "ContenaireCompetence_mobile" :"ContenaireCompetence"}
@@ -4733,5 +6736,7 @@ class ComposantCompetence extends React.Component {
     )
   }
 }
+const AppWithRouter = withRouter(App)
+export default AppWithRouter
 
-export default App
+
