@@ -3,6 +3,7 @@ import axios from 'axios';
 import {Spring, animated, Keyframes} from 'react-spring/renderprops'
 import './App.css';
 import CircularProgress from '@material-ui/core/CircularProgress'
+import { connect } from 'react-redux';
 import {
   Switch,
   Route,
@@ -10,11 +11,14 @@ import {
   withRouter
 } from "react-router-dom"
 
+const hauteurInitialConstante = window.innerHeight 
+
 class App extends React.Component {
 
   constructor() {
     super()
     this.state = {
+      clavier_ouvert : false,
       resiz: false,
       offset : 0,
       boutonClique : 'home',
@@ -93,12 +97,17 @@ class App extends React.Component {
     this.randL = Math.random()
     this.randT = Math.random()
     this.aller = true
+    this.hauteurInitial = window.innerHeight 
+    
   }
 
   path = React.createRef()
 
   componentDidMount() {
-    window.onresize = () => this.setState({resiz : !this.state.resiz})
+    this.hauteurInitial = window.innerHeight 
+    window.onresize = () => {
+        this.setState({resiz : !this.state.resiz})
+    }
   }
 
   componentDidUpdate() {
@@ -213,6 +222,18 @@ class App extends React.Component {
     }
   )
 
+  iOS = () => {
+    return [
+      'iPad Simulator',
+      'iPhone Simulator',
+      'iPod Simulator',
+      'iPad',
+      'iPhone',
+      'iPod'
+    ].includes(navigator.platform)
+    || (navigator.userAgent.includes("Mac") && "ontouchend" in document)
+  }
+
   render() {
     // console.log(window.innerHeight)
     // console.log(window.innerWidth)
@@ -220,15 +241,14 @@ class App extends React.Component {
     // console.log(window.navigator.userAgent.indexOf('Mobi') !== -1)
     // console.log(this.state)
     // const offset = this.state.offset
-    console.log("props APP")
-    console.log(this.props)
+    console.log(this.state.clavier_ouvert)
     this.tableauImageCouleur = this.choixImageCouleur()
     if (
       window.navigator.userAgent.indexOf('Mobi') !== -1 
       // && window.innerHeight >= window.innerWidth
     ) {
       return (
-        <div>
+        <div style={{backgroundColor:"red"}}>
           <div
             className="Contenaire_anim_de_fond_mobile" 
           >
@@ -1298,7 +1318,7 @@ class App extends React.Component {
               <Route path="/home" component={ComposantHome} />
               <Route path="/infoPerso" component={ComposantInfoPerso} />
               <Route path="/apercu" component={ComposantApercu} />
-              <Route path="/contact" component={ComposantContact} />
+              <Route path="/contact" component={ComposantContactWithStore} />
               <Route path="/competence" component={ComposantCompetence} />
               <Route path="/" component={ComposantHome} />
             </Switch>
@@ -1307,7 +1327,7 @@ class App extends React.Component {
                 position: "absolute",
                 width: "100%",
                 height: "10%",
-                bottom: this.state.hauteur_bas_bouton,
+                bottom: (this.props.focus_email || this.props.focus_nom || this.props.focus_sujet || this.props.focus_message) && !this.iOS() ? "-90vh" : this.state.hauteur_bas_bouton,
                 left: "0%"
               }}
             >
@@ -1692,7 +1712,7 @@ class App extends React.Component {
                   position: "absolute",
                   width: "100%",
                   height: "10%",
-                  bottom: this.state.hauteur_bas_arrondi,
+                  bottom: (this.props.focus_email || this.props.focus_nom || this.props.focus_sujet || this.props.focus_message) && !this.iOS() ? "-100vh" : this.state.hauteur_bas_arrondi,
                   left: "0%",
                   backgroundColor: props.couleurBordure,
                   borderTopLeftRadius: "50%",
@@ -6303,6 +6323,29 @@ class ComposantContact extends React.Component {
       )
   }
 
+  iOS = () => {
+    return [
+      'iPad Simulator',
+      'iPhone Simulator',
+      'iPod Simulator',
+      'iPad',
+      'iPhone',
+      'iPod'
+    ].includes(navigator.platform)
+    || (navigator.userAgent.includes("Mac") && "ontouchend" in document)
+  }
+
+  componentWillUnmount() {
+      const action = {type: 'UNFOCUS_NOM'}
+      this.props.dispatch(action)
+      const action1 = {type: 'UNFOCUS_EMAIL'}
+      this.props.dispatch(action1)
+      const action2 = {type: 'UNFOCUS_SUJET'}
+      this.props.dispatch(action2)
+      const action3 = {type: 'UNFOCUS_MESSAGE'}
+      this.props.dispatch(action3)
+  }
+
   render() {
     console.log(this.props)
     if (
@@ -6311,6 +6354,9 @@ class ComposantContact extends React.Component {
       return (
         <div 
           className={window.navigator.userAgent.indexOf('Mobi') !== -1 ? "ContenaireContact_mobile" : "ContenaireContact"}
+          style={{
+            height : (this.props.focus_email || this.props.focus_nom || this.props.focus_sujet || this.props.focus_message) && !this.iOS() ? "200vh" : "100vh"
+          }}
         >
           <form id="contact" action="" onSubmit={this.envoiDonnée.bind(this)}>
             <div 
@@ -6344,6 +6390,16 @@ class ComposantContact extends React.Component {
                         type="name" 
                         id="nom" 
                         placeholder="Nom"
+                        onFocus={ () => {
+                          const action = { 
+                            type: 'FOCUS_NOM'}
+                          this.props.dispatch(action)
+                        }}
+                        onBlur={() => {
+                          const action2 = { 
+                            type: 'UNFOCUS_NOM'}
+                          this.props.dispatch(action2)
+                        }}
                       />
                     </animated.div>
                   )}
@@ -6362,6 +6418,16 @@ class ComposantContact extends React.Component {
                         type="email" 
                         id="email" 
                         placeholder="E-mail" 
+                        onFocus={() => {
+                          const action = { 
+                            type: 'FOCUS_EMAIL'}
+                          this.props.dispatch(action)
+                        }}
+                        onBlur={() => {
+                          const action2 = { 
+                            type: 'UNFOCUS_EMAIL'}
+                          this.props.dispatch(action2)
+                        }}
                       />
                     </animated.div>
                   )}
@@ -6384,6 +6450,16 @@ class ComposantContact extends React.Component {
                         type="text" 
                         id="sujet" 
                         placeholder="Sujet" 
+                        onFocus={() => {
+                          const action = { 
+                            type: 'FOCUS_SUJET'}
+                          this.props.dispatch(action)
+                        }}
+                        onBlur={() => {
+                          const action2 = { 
+                            type: 'UNFOCUS_SUJET'}
+                          this.props.dispatch(action2)
+                        }}
                       />
                     </animated.div>
                   )}
@@ -6405,6 +6481,16 @@ class ComposantContact extends React.Component {
                         id="message" 
                         form="contact" 
                         placeholder="Message" 
+                        onFocus={() => {
+                          const action = { 
+                            type: 'FOCUS_MESSAGE'}
+                          this.props.dispatch(action)
+                        }}
+                        onBlur={() => {
+                          const action2 = { 
+                            type: 'UNFOCUS_MESSAGE'}
+                          this.props.dispatch(action2)
+                        }}
                       />
                     </animated.div>
                   )}
@@ -6736,7 +6822,16 @@ class ComposantCompetence extends React.Component {
     )
   }
 }
+const mapStateToProps = (state) => {
+  return {
+    focus_nom : state.focus_nom,
+    focus_email : state.focus_email,
+    focus_sujet : state.focus_sujet,
+    focus_message : state.focus_message,
+  }
+}
+const ComposantContactWithStore = connect(mapStateToProps)(ComposantContact)
 const AppWithRouter = withRouter(App)
-export default AppWithRouter
+export default connect(mapStateToProps)(AppWithRouter)
 
 

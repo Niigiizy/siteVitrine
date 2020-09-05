@@ -647,11 +647,13 @@
 }
 
 .ContenaireContact_mobile {
-  flex: 1;
+  position: absolute;
+  /* flex: 1; */
   top: 0%;
   left: 0%;
   width: 100vw;
-  height: 100vh;
+  /* height: 100vh; */
+  /* min-height: 400px; */
   background-color: #d1d1ec;
   display: flex;
   flex-direction: column;
@@ -1100,6 +1102,7 @@
   flex-direction: column;
   flex: 1;
   height: 5vh;
+  min-height:70px;
   margin-right: 5vw;
   margin-left: 5vw;
 }
@@ -1152,6 +1155,7 @@
   display: flex;
   flex: 1;
   height: 5vh;
+  min-height:30px;
   margin-right: 5vw;
   margin-left: 5vw;
   backface-visibility: hidden;
@@ -1182,6 +1186,7 @@
   display: flex;
   flex: 5;
   height: 20vh;
+  min-height:90px;
   margin-right: 5vw;
   margin-left: 5vw;
   backface-visibility: hidden;
@@ -1212,6 +1217,7 @@
   flex-direction: row;
   flex: 1;
   height: 5vh;
+  min-height:30px;
   margin-right: 5vw;
   margin-left: 5vw;
 }
