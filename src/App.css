@@ -114,7 +114,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background-color: #efe7ff;
+  /* background-color: #efe7ff; */
 }
 
 .DescriptionGlobal1 {
@@ -215,6 +215,8 @@
   width: 16.5vw;
   height: 16.5vw;
   bottom: 0%;
+  max-width: 77px;
+  max-height: 77px;
   left: 4vw;
   backface-visibility: hidden;
   display: flex;
@@ -241,11 +243,13 @@
 .Bouton-1-devant_mobile {
   background-color: #ffffff;
   border : solid;
-  border-width: 1vw;
+  border-width: clamp(0.5px, 1vw, 3px);
   position: absolute;
   border-radius: 50%;
   width: 15vw;
   height: 15vw;
+  max-width: 70px;
+  max-height: 70px;
   bottom: 0%;
   left: 4vw;
   backface-visibility: hidden;
@@ -269,11 +273,13 @@
 .Bouton-2-devant_mobile {
   background-color: #ffffff;
   border : solid;
-  border-width: 1vw;
+  border-width: clamp(0.5px, 1vw, 3px);
   position: absolute;
   border-radius: 50%;
   width: 15vw;
   height: 15vw;
+  max-width: 70px;
+  max-height: 70px;
   bottom: 15%;
   left: 23vw;
   backface-visibility: hidden;
@@ -300,6 +306,8 @@
   border-radius: 50%;
   width: 16.5vw;
   height: 16.5vw;
+  max-width: 77px;
+  max-height: 77px;
   bottom: 15%;
   left: 23vw;
   backface-visibility: hidden;
@@ -327,12 +335,14 @@
 .Bouton-3-devant_mobile {
   background-color: #ffffff;
   border : solid;
-  border-width: 1vw;
+  border-width: clamp(0.5px, 1vw, 3px);
   border-color: #5f27cd;
   position: absolute;
   border-radius: 50%;
   width: 15vw;
   height: 15vw;
+  max-width: 70px;
+  max-height: 70px;
   bottom: 20%;
   left: 42vw;
   backface-visibility: hidden;
@@ -360,6 +370,8 @@
   border-radius: 50%;
   width: 16.5vw;
   height: 16.5vw;
+  max-width: 77px;
+  max-height: 77px;
   bottom: 20%;
   left: 35.8vw;
   backface-visibility: hidden;
@@ -387,12 +399,14 @@
 .Bouton-4-devant_mobile {
   background-color: #ffffff;
   border : solid;
-  border-width: 1vw;
+  border-width: clamp(0.5px, 1vw, 3px);
   border-color: #8395a7;
   position: absolute;
   border-radius: 50%;
   width: 15vw;
   height: 15vw;
+  max-width: 70px;
+  max-height: 70px;
   bottom: 15%;
   left: 61vw;
   backface-visibility: hidden;
@@ -420,6 +434,8 @@
   border-radius: 50%;
   width: 16.5vw;
   height: 16.5vw;
+  max-width: 77px;
+  max-height: 77px;
   bottom: 15%;
   left: 61vw;
   backface-visibility: hidden;
@@ -452,6 +468,8 @@
   border-radius: 50%;
   width: 16.5vw;
   height: 16.5vw;
+  max-width: 77px;
+  max-height: 77px;
   bottom: 0%;
   left: 80vw;
   backface-visibility: hidden;
@@ -477,11 +495,13 @@
 .Bouton-5-devant_mobile {
   background-color: #ffffff;
   border : solid;
-  border-width: 1vw;
+  border-width: clamp(0.5px, 1vw, 3px);
   position: absolute;
   border-radius: 50%;
   width: 15vw;
   height: 15vw;
+  max-width: 70px;
+  max-height: 70px;
   left: 80vw;
   bottom: 0%;
   backface-visibility: hidden;
@@ -610,7 +630,7 @@
   flex: 1;
   width: 100vw;
   height: 100vh;
-  background-color: #d9f9ff;
+  /* background-color: #d9f9ff; */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -624,12 +644,15 @@
 }
 
 .ContenaireApercu_mobile {
-  flex: 1;
+  /* flex: 1;
   width: 100vw;
-  height: 100vh;
-  top: 0%;
-  left: 0%;
-  background-color: #dbe2f6;
+  height: 100vh; */
+  /* top: 0%;
+  left: 0%; */
+  position: absolute;
+  left: 2.5vw;
+  bottom: clamp(10px,35vh,200px);
+  /* background-color: #dbe2f6; */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -647,25 +670,24 @@
 }
 
 .ContenaireContact_mobile {
-  position: absolute;
   /* flex: 1; */
+  position: absolute;
   top: 0%;
   left: 0%;
   width: 100vw;
-  /* height: 100vh; */
-  /* min-height: 400px; */
-  background-color: #d1d1ec;
+  /* background-color: #d1d1ec; */
   display: flex;
   flex-direction: column;
 }
 
 .ContenaireContact_mobile_reussi {
-  flex: 1;
+  /* flex: 1; */
+  position: absolute;
   top: 0%;
   left: 0%;
   width: 100vw;
   height: 100vh;
-  background-color: #d1d1ec;
+  /* background-color: #2a2aa5; */
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -673,12 +695,13 @@
 }
 
 .ContenaireContact_mobile_erreur {
-  flex: 1;
+  /* flex: 1; */
+  position: absolute;
   top: 0%;
   left: 0%;
   width: 100vw;
   height: 100vh;
-  background-color: #d1d1ec;
+  /* background-color: #d1d1ec; */
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -700,7 +723,7 @@
   flex: 1;
   width: 100vw;
   height: 100vh;
-  background-color: #e0e0e0;
+  /* background-color: #e0e0e0; */
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
@@ -785,9 +808,9 @@
   position: relative;
   width: 95vw;
   height: 94.797872338vw;
-  bottom: 15vh;
-  max-width: 500px;
-  max-height: 500px;
+  /* bottom: 15vh; */
+  max-width: 350px;
+  max-height: 350px;
   display: flex;
   flex-direction: row;
 }
