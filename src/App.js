@@ -11,8 +11,6 @@ import {
   withRouter
 } from "react-router-dom"
 
-const hauteurInitialConstante = window.innerHeight 
-
 class App extends React.Component {
 
   constructor() {
@@ -235,13 +233,6 @@ class App extends React.Component {
   }
 
   render() {
-    // console.log(window.innerHeight)
-    // console.log(window.innerWidth)
-    // console.log(window.navigator.userAgent)
-    // console.log(window.navigator.userAgent.indexOf('Mobi') !== -1)
-    // console.log(this.state)
-    // const offset = this.state.offset
-    console.log(this.state.clavier_ouvert)
     this.tableauImageCouleur = this.choixImageCouleur()
     if (
       window.navigator.userAgent.indexOf('Mobi') !== -1 
@@ -1411,6 +1402,7 @@ class App extends React.Component {
                   >
                     <img
                       className="Image-Bouton-1"
+                      alt="Bouton 1 mobile"
                       src={this.tableauImageCouleur[0][0]}
                       style={{
                         marginLeft : this.tableauImageCouleur[0][3],
@@ -1456,7 +1448,6 @@ class App extends React.Component {
                 { props => (
                   <animated.div 
                     className="Bouton-2-devant_mobile"
-                    onClick={ () => console.log("clik") }
                     style={{
                       borderColor: this.tableauImageCouleur[1][1],
                       ...props
@@ -1464,6 +1455,7 @@ class App extends React.Component {
                   >
                       <img
                         className="Image-2"
+                        alt="Bouton 2 mobile"
                         src={this.tableauImageCouleur[1][0]}
                         style={{
                           marginLeft : this.tableauImageCouleur[1][3],
@@ -1497,7 +1489,6 @@ class App extends React.Component {
                 { props => (
                   <animated.div 
                     className="Bouton-2-derriere_mobile"
-                    onClick={ () => console.log("clik") }
                     style={{
                       backgroundColor : this.tableauImageCouleur[1][1],
                       borderColor: this.tableauImageCouleur[1][1],
@@ -1537,7 +1528,6 @@ class App extends React.Component {
                 { props => (
                   <animated.div 
                     className="Bouton-3-devant_mobile"
-                    onClick={ () => console.log("clik") }
                     style={{
                       backgroundColor: this.tableauImageCouleur[2][1],
                       borderColor: this.tableauImageCouleur[2][1],
@@ -1548,6 +1538,7 @@ class App extends React.Component {
                   >
                     <img
                       className="Image-3"
+                      alt="Bouton 3 mobile"
                       src={this.tableauImageCouleur[2][0]}
                       style={{
                         marginLeft : this.tableauImageCouleur[2][3],
@@ -1582,7 +1573,6 @@ class App extends React.Component {
                 { props => (
                   <animated.div 
                     className="Bouton-4-devant_mobile"
-                    onClick={ () => console.log("clik") }
                     style={{
                       borderColor: this.tableauImageCouleur[3][1],
                       ...props
@@ -1590,6 +1580,7 @@ class App extends React.Component {
                   >
                     <img
                       className="Image-4"
+                      alt="Bouton 4 mobile"
                       src={this.tableauImageCouleur[3][0]}
                       style={{
                         marginLeft : this.tableauImageCouleur[3][3],
@@ -1623,7 +1614,6 @@ class App extends React.Component {
                 { props => (
                   <animated.div 
                     className="Bouton-4-derriere_mobile"
-                    onClick={ () => console.log("clik") }
                     style={{
                       backgroundColor: this.tableauImageCouleur[3][1],
                       ...props
@@ -1662,7 +1652,6 @@ class App extends React.Component {
                 { props => (
                   <animated.div 
                     className="Bouton-5-devant_mobile"
-                    onClick={ () => console.log("clik") }
                     style={{
                       borderColor: this.tableauImageCouleur[4][1],
                       ...props
@@ -1670,6 +1659,7 @@ class App extends React.Component {
                   >
                     <img
                       className="Image-5"
+                      alt="Bouton 5 mobile"
                       src={this.tableauImageCouleur[4][0]}
                       style={{
                         marginLeft : this.tableauImageCouleur[4][3],
@@ -1703,7 +1693,6 @@ class App extends React.Component {
               { props => (
                 <animated.div 
                   className="Bouton-5-derriere_mobile"
-                  onClick={ () => console.log("clik") }
                   style={{
                     backgroundColor: this.tableauImageCouleur[4][1],
                     ...props
@@ -3293,6 +3282,7 @@ class App extends React.Component {
                   >
                     <img
                       className="Image-Bouton-1"
+                      alt="Bouton 1"
                       src={this.tableauImageCouleur[0][0]}
                       style={{
                         marginLeft : this.tableauImageCouleur[0][3],
@@ -3340,7 +3330,6 @@ class App extends React.Component {
                 { props => (
                   <animated.div 
                     className="Bouton-2-devant"
-                    onClick={ () => console.log("clik") }
                     style={{
                       borderColor: this.tableauImageCouleur[1][1],
                       ...props
@@ -3348,6 +3337,7 @@ class App extends React.Component {
                   >
                       <img
                         className="Image-2"
+                        alt="Bouton 2"
                         src={this.tableauImageCouleur[1][0]}
                         style={{
                           marginLeft : this.tableauImageCouleur[1][3],
@@ -3381,7 +3371,6 @@ class App extends React.Component {
                 { props => (
                   <animated.div 
                     className="Bouton-2-derriere"
-                    onClick={ () => console.log("clik") }
                     style={{
                       backgroundColor : this.tableauImageCouleur[1][1],
                       borderColor: this.tableauImageCouleur[1][1],
@@ -3433,7 +3422,6 @@ class App extends React.Component {
                 { props => (
                   <animated.div 
                     className="Bouton-3-devant"
-                    onClick={ () => console.log("clik") }
                     style={{
                       backgroundColor: this.tableauImageCouleur[2][1],
                       borderColor: this.tableauImageCouleur[2][1],
@@ -3444,6 +3432,7 @@ class App extends React.Component {
                   >
                     <img
                       className="Image-3"
+                      alt="Bouton 3"
                       src={this.tableauImageCouleur[2][0]}
                       style={{
                         marginLeft : this.tableauImageCouleur[2][3],
@@ -3478,7 +3467,6 @@ class App extends React.Component {
                 { props => (
                   <animated.div 
                     className="Bouton-4-devant"
-                    onClick={ () => console.log("clik") }
                     style={{
                       borderColor: this.tableauImageCouleur[3][1],
                       ...props
@@ -3486,6 +3474,7 @@ class App extends React.Component {
                   >
                     <img
                       className="Image-4"
+                      alt="Bouton 4"
                       src={this.tableauImageCouleur[3][0]}
                       style={{
                         marginLeft : this.tableauImageCouleur[3][3],
@@ -3519,7 +3508,6 @@ class App extends React.Component {
                 { props => (
                   <animated.div 
                     className="Bouton-4-derriere"
-                    onClick={ () => console.log("clik") }
                     style={{
                       backgroundColor: this.tableauImageCouleur[3][1],
                       ...props
@@ -3570,7 +3558,6 @@ class App extends React.Component {
                 { props => (
                   <animated.div 
                     className="Bouton-5-devant"
-                    onClick={ () => console.log("clik") }
                     style={{
                       borderColor: this.tableauImageCouleur[4][1],
                       ...props
@@ -3578,6 +3565,7 @@ class App extends React.Component {
                   >
                     <img
                       className="Image-5"
+                      alt="Bouton 5"
                       src={this.tableauImageCouleur[4][0]}
                       style={{
                         marginLeft : this.tableauImageCouleur[4][3],
@@ -3611,7 +3599,6 @@ class App extends React.Component {
               { props => (
                 <animated.div 
                   className="Bouton-5-derriere"
-                  onClick={ () => console.log("clik") }
                   style={{
                     backgroundColor: this.tableauImageCouleur[4][1],
                     ...props
@@ -3702,7 +3689,6 @@ class ComposantHome extends React.Component {
   }
 
   render() {
-    console.log(this.props)
     return (
       <div 
         className={window.navigator.userAgent.indexOf('Mobi') !== -1 ? "ContenaireHome_mobile" : "ContenaireHome"} 
@@ -4470,7 +4456,6 @@ class ComposantInfoPerso extends React.Component {
   }
 
   render() {
-    console.log(this.props)
     return (
       <div 
         className={window.navigator.userAgent.indexOf('Mobi') !== -1 ? "ContenaireInfoPerso_mobile" : "ContenaireInfoPerso"}
@@ -4547,7 +4532,6 @@ class ComposantApercu extends React.Component {
   }
 
   render() {
-    console.log(this.props)
     return (
       <div 
         className={window.navigator.userAgent.indexOf('Mobi') !== -1 ? "ContenaireApercu_mobile" : "ContenaireApercu"}
@@ -5566,7 +5550,7 @@ class ComposantApercu extends React.Component {
                           { 
                             this.state.clique_1_2_1 
                             ? 
-                            " J'ai essayé d'apporté de l'interactivité avec divers animations en utilisant React Spring, et est utilisé React Routeur pour assuré la navigation sur cette application web monopage."
+                            " J'ai essayé d'apporter de l'interactivité avec divers animations en utilisant React Spring, et ai utilisé React Routeur pour assurer la navigation sur cette application web monopage."
                             : 
                             null
                           }
@@ -5584,7 +5568,7 @@ class ComposantApercu extends React.Component {
                           { 
                             this.state.clique_1_2_1 
                             ? 
-                            " une gestion des divers devices sur lequel ce site pourrait être visité a été effectué en adaptant l'agencement des divers composants."
+                            " une gestion des divers devices sur lesquels ce site pourrait être visité a été effectuée en adaptant l'agencement des divers composants."
                             : 
                             null
                           }
@@ -6047,7 +6031,6 @@ class ComposantApercu extends React.Component {
                   onMouseOver={
                     window.navigator.userAgent.indexOf('Mobi') !== -1 ? null : () => {
                       this.setState({ focus_2_2: !this.state.focus_2_2 })
-                      console.log("mouse enter apercu_2_2")
                     }
                   }
                   onMouseOut={
@@ -6414,7 +6397,6 @@ class ComposantContact extends React.Component {
   }
 
   render() {
-    console.log(this.props)
     if (
       this.state.status_envoi === "rien"
     ) {
@@ -6422,7 +6404,7 @@ class ComposantContact extends React.Component {
         <div 
           className={window.navigator.userAgent.indexOf('Mobi') !== -1 ? "ContenaireContact_mobile" : "ContenaireContact"}
           style={{
-            height : (this.props.focus_email || this.props.focus_nom || this.props.focus_sujet || this.props.focus_message) && !this.iOS() && window.navigator.userAgent.indexOf('Mobi') == -1 ? "200vh" : "100vh",
+            height : (this.props.focus_email || this.props.focus_nom || this.props.focus_sujet || this.props.focus_message) && !this.iOS() && window.navigator.userAgent.indexOf('Mobi') !== -1 ? "200vh" : "100vh",
             // position: (this.props.focus_email || this.props.focus_nom || this.props.focus_sujet || this.props.focus_message) && !this.iOS() && window.navigator.userAgent.indexOf('Mobi') == -1 ? "relative" : "absolute",
             
           }}
@@ -6646,7 +6628,6 @@ class ComposantCompetence extends React.Component {
   }
 
   render() {
-    console.log(this.props)
     return (
       <div 
         className={window.navigator.userAgent.indexOf('Mobi') !== -1 ? "ContenaireCompetence_mobile" :"ContenaireCompetence"}
@@ -6673,6 +6654,7 @@ class ComposantCompetence extends React.Component {
                 <animated.div className="ContenaireImageValider" style={{ opacity: props.opaciteValider}}>
                   <img
                       className="Image-Valider-Competence"
+                      alt="logo valider"
                       src={"/ValiderCompetence.png"}
                       style={{
                         marginRight : "15px",
@@ -6706,6 +6688,7 @@ class ComposantCompetence extends React.Component {
                 <animated.div className="ContenaireImageValider" style={{ opacity: props.opaciteValider }}>
                   <img
                       className="Image-Valider-Competence"
+                      alt="logo valider"
                       src={"/ValiderCompetence.png"}
                       style={{
                         marginRight : "15px",
@@ -6739,6 +6722,7 @@ class ComposantCompetence extends React.Component {
                 <animated.div className="ContenaireImageValider" style={{ opacity: props.opaciteValider}}>
                   <img
                       className="Image-Valider-Competence"
+                      alt="logo valider"
                       src={"/ValiderCompetence.png"}
                       style={{
                         marginRight : "15px",
@@ -6772,6 +6756,7 @@ class ComposantCompetence extends React.Component {
                 <animated.div className="ContenaireImageValider" style={{ opacity : props.opaciteValider}}>
                   <img
                       className="Image-Valider-Competence"
+                      alt="logo valider"
                       src={"/ValiderCompetence.png"}
                       style={{
                         marginRight : "15px",
@@ -6805,6 +6790,7 @@ class ComposantCompetence extends React.Component {
                 <animated.div className="ContenaireImageValider" style={{ opacity : props.opaciteValider}}>
                   <img
                       className="Image-Valider-Competence"
+                      alt="logo valider"
                       src={"/ValiderCompetence.png"}
                       style={{
                         marginRight : "15px",
@@ -6838,6 +6824,7 @@ class ComposantCompetence extends React.Component {
                 <animated.div className="ContenaireImageValider" style={{opacity : props.opaciteValider}}>
                   <img
                       className="Image-Valider-Competence"
+                      alt="logo valider"
                       src={"/ValiderCompetence.png"}
                       style={{
                         marginRight : "15px",
@@ -6871,6 +6858,7 @@ class ComposantCompetence extends React.Component {
                 <animated.div className="ContenaireImageValider" style={{opacity : props.opaciteValider}}>
                   <img
                       className="Image-Valider-Competence"
+                      alt="logo valider"
                       src={"/ValiderCompetence.png"}
                       style={{
                         marginRight : "15px",
