@@ -1,5 +1,11 @@
 {
   "name": "vitrine",
+  "jest": {
+    "moduleNameMapper": {
+      "react-spring/renderprops": "<rootDir>/node_modules/react-spring/renderprops.cjs",
+      "react-spring": "<rootDir>/node_modules/react-spring/web.cjs"
+    }
+  },
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -36,5 +42,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "babel-preset-react-app": "^9.1.2"
   }
 }
