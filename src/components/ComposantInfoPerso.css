@@ -1,0 +1,82 @@
+.ContenaireInfoPerso {
+    flex: 10 ;
+    background-color: #d9f9ff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+  
+.ContenaireInfoPerso_mobile {
+    flex: 1;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.ContenairePrincipalInfoPerso {
+  opacity:0.75;
+  width: 50vw;
+  height: 50vh;
+  min-width: 400px;
+  min-height: 400px;
+  margin-left: 10vw;
+  display: flex;
+  perspective: 600px;
+}
+
+.ContenairePrincipalInfoPerso_mobile {
+  opacity:0.75;
+  width: 90vw;
+  height: 50vh;
+  display: flex;
+  perspective: 600px;
+  padding-bottom: 20vh;
+}
+
+.CarteVisite {
+  flex: 1;
+  background-color: rgb(255, 255, 255);
+  border:  solid;
+  border-color: #0abde3;
+  border-radius: 2vh;
+  box-shadow: #b2dbe4 5px 5px;
+  display: flex;
+  flex-direction: row;
+}
+
+.CarteVisiteGauche {
+  flex: 1;
+  margin-top: 2%;
+  margin-bottom: 2%;
+  border-right: solid;
+  border-width: 1.2pt;
+  border-color: #0abde3;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}  
+
+.TexteCarteVisiteGauche {
+  margin-left: 2%;
+  font-weight: bold;
+  text-align: center;
+}
+
+.CarteVisiteDroite {
+  flex:  1;
+  margin-top: 2%;
+  margin-bottom: 2%;
+  border-left: solid;
+  border-width: 1.2pt;
+  border-color: #0abde3;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.TexteCarteVisiteDroite {
+  margin-left: 2%;
+  font-weight: bold;
+  text-align: center;
+}
