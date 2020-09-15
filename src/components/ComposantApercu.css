@@ -1,21 +1,13 @@
 .ContenaireApercu {
     flex: 1 ;
-    background-color: #dbe2f6;
 }
 .ContenaireApercu_mobile {
-    /* flex: 1;
-    width: 100vw;
-    height: 100vh; */
-    /* top: 0%;
-    left: 0%; */
     position: absolute;
     left: 2.5vw;
     bottom: clamp(10px,35vh,200px);
-    /* background-color: #dbe2f6; */
     display: flex;
     justify-content: center;
     align-items: center;
-    /* padding-top: 35%; */
 }
 
 .ContenairePrincipalApercu {
@@ -31,7 +23,6 @@
     position: relative;
     width: 95vw;
     height: 94.797872338vw;
-    /* bottom: 15vh; */
     max-width: 350px;
     max-height: 350px;
     display: flex;
@@ -202,7 +193,6 @@
     height: 95%;
     margin-top: 7.5%;
     margin-left: 5%;
-    /* margin-right: 5%; */
     background-color: #4169E1;
 }
   
@@ -283,7 +273,6 @@
 .Texte_apercu_context {
     flex: 1;
     display: flex;
-    /* justify-content: center; */
     flex-direction: column;
 }
   

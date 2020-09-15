@@ -1,6 +1,5 @@
 .ContenaireInfoPerso {
-    flex: 10 ;
-    background-color: #d9f9ff;
+    flex: 1 ;
     display: flex;
     justify-content: center;
     align-items: center;

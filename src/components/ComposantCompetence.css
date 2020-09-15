@@ -1,6 +1,5 @@
 .ContenaireCompetence {
     flex: 1 ;
-    background-color: #e0e0e0;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
@@ -9,11 +8,9 @@
 }
   
 .ContenaireCompetence_mobile {
-    /* position: absolute; */
     flex: 1;
     width: 100vw;
     height: 100vh;
-    /* background-color: #e0e0e0; */
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
@@ -57,7 +54,6 @@
   padding-left: 20px;
 }
 .Competence1 {
-  /* position: absolute; */
   flex : 1;
   display: flex;
   flex-direction: row;
@@ -66,14 +62,11 @@
   width: 90%;
   height: 45px;
   margin-bottom: 10px;
-  /* top: 20%; */
-  /* right: 10%; */
   background-color: #222f3e;
   border-radius: 2vh;
 }
 
 .Competence2 {
-  /* position: absolute; */
   flex : 1;
   display: flex;
   flex-direction: row;
@@ -82,14 +75,11 @@
   width: 90%;
   height: 45px;
   margin-bottom: 10px;
-  /* margin-top: 30%; */
-  /* right: 25vw; */
   background-color: #222f3e;
   border-radius: 2vh;
 }
 
 .Competence3 {
-  /* position: absolute; */
   flex : 1;
   display: flex;
   flex-direction: row;
@@ -98,14 +88,11 @@
   width: 90%;
   height: 45px;
   margin-bottom: 10px;
-  /* top: 40vh;
-  right: 25vw; */
   background-color: #222f3e;
   border-radius: 2vh;
 }
 
 .Competence4 {
-  /* position: absolute; */
   flex : 1;
   display: flex;
   flex-direction: row;
@@ -114,8 +101,6 @@
   width: 90%;
   height: 45px;
   margin-bottom: 10px;
-  /* top: 50vh;
-  right: 25vw; */
   background-color: #222f3e;
   border-radius: 2vh;
 }

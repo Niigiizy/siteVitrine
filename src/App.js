@@ -271,7 +271,7 @@ class App extends React.Component {
         <div style={{backgroundColor:"red"}}>
           <div className="App-web_mobile">
             <div style={{ minHeight: "700px"}}>
-            <Spring
+              <Spring
                 native
                 to={{ 
                   couleurBordure : this.tableauImageCouleur[2][9]
@@ -1776,332 +1776,26 @@ class App extends React.Component {
     else {
       return (
         <div>
-          
-          <div className="App-web" >
-            <div 
-              className="ContenaireBoutonNavigation"
-              style={{
-                minHeight  : this.state.boutonClique === "apercu" ? "700px" : "400px"
-              }}
-            >
-              {/*  Animation Bouton 1 */}
-              <Spring
-                native
-                to={this.rotationBoutonDerriere(this.state.rotat)
-                }
+          <Spring
+            native
+            to={{ 
+              couleurBordure : this.tableauImageCouleur[2][9]
+            }}
+          >
+            {props => (
+              <animated.div 
+                style={{
+                  position: "absolute",
+                  width: "100%",
+                  height: "100%",
+                  top: "0%",
+                  left: "0%",
+                  backgroundColor: props.couleurBordure,
+                }}
               >
-                { props => (
-                  
-                  <animated.div 
-                    className="Bouton-1-derriere"
-                    style={{
-                        backgroundColor: this.tableauImageCouleur[0][1],
-                        ...props
-                    }}
-                  
-                  >
-                      <p className="Texte_bouton" >
-                        {this.tableauImageCouleur[0][8]}
-                      </p>
-                  </animated.div >
-                )}
-              </Spring>
-              <Spring
-                native
-                to={this.rotationBoutonDevant(this.state.rotat)
-                }
-              >
-                { props => (
-                  <animated.div 
-                    className="Bouton-1-devant"
-                    style={{
-                      borderColor: this.tableauImageCouleur[0][1],
-                      ...props
-                    }}
-                  >
-                    <img
-                      className="Image-Bouton-1"
-                      alt="Bouton 1"
-                      src={this.tableauImageCouleur[0][0]}
-                      style={{
-                        marginLeft : this.tableauImageCouleur[0][3],
-                        marginTop : this.tableauImageCouleur[0][4],
-                        width: this.tableauImageCouleur[0][5],
-                        height : this.tableauImageCouleur[0][6],
-                        backfaceVisibility: "hidden",
-                        ...props
-                      }}
-                    >
-                    </img>
-                  </animated.div >
-                )}
-              </Spring>
-              <Link to={this.tableauImageCouleur[0][7]}>
-                <div
-                  className="Gestion-rotat-1"
-                  onPointerEnter={() => this.setState( { rotat : true } )} 
-                  onMouseOut={() => this.setState( { rotat : false } ) }
-                  onClick={() => 
-                    this.setState( {etapeRotat : 1, boutonClique : this.tableauImageCouleur[0][2]} )
-                  }
-                >
-                
-                </div>
-              </Link>
-              
-              {/* Animation Bouton 2 */}
-              <Spring
-                native
-                to={this.rotationBoutonDevant(this.state.rotat2)
-                }
-              >
-                { props => (
-                  <animated.div 
-                    className="Bouton-2-devant"
-                    style={{
-                      borderColor: this.tableauImageCouleur[1][1],
-                      ...props
-                    }}
-                  >
-                      <img
-                        className="Image-2"
-                        alt="Bouton 2"
-                        src={this.tableauImageCouleur[1][0]}
-                        style={{
-                          marginLeft : this.tableauImageCouleur[1][3],
-                          marginTop : this.tableauImageCouleur[1][4],
-                          width: this.tableauImageCouleur[1][5],
-                          height : this.tableauImageCouleur[1][6],
-                          backfaceVisibility: "hidden",
-                          ...props
-                        }}
-                      >
-                      </img>
-                  </animated.div >
-                )}
-              </Spring>
-              <Spring
-                native
-                to={this.rotationBoutonDerriere(this.state.rotat2)
-                }
-              >
-                { props => (
-                  <animated.div 
-                    className="Bouton-2-derriere"
-                    style={{
-                      backgroundColor : this.tableauImageCouleur[1][1],
-                      borderColor: this.tableauImageCouleur[1][1],
-                      ...props
-                    }}
-                  >
-                      <p className="Texte_bouton" >
-                        {this.tableauImageCouleur[1][8]}
-                      </p>
-                  </animated.div>
-                )}
-              </Spring>
-              <Link to={this.tableauImageCouleur[1][7]}>
-                <div
-                  className="Gestion-rotat-2"
-                  onMouseEnter={() => this.setState( { rotat2 : true } )} 
-                  onMouseOut={() => this.setState( { rotat2 : false } ) }
-                  onClick={() => 
-                    this.setState( {etapeRotat : 1, boutonClique : this.tableauImageCouleur[1][2]} )
-                  }
-                >
-
-                </div>
-              </Link>
-              {/* Animation Bouton 3 */}
-              <Spring
-                native
-                to={this.rotationBoutonDevant(this.state.rotat3)
-                }
-              >
-                { props => (
-                  <animated.div 
-                    className="Bouton-3-devant"
-                    style={{
-                      backgroundColor: this.tableauImageCouleur[2][1],
-                      borderColor: this.tableauImageCouleur[2][1],
-                      left: this.tableauImageCouleur[2][1],
-                      bottom: this.tableauImageCouleur[2][2],
-                      ...props 
-                    }}
-                  >
-                    <img
-                      className="Image-3"
-                      alt="Bouton 3"
-                      src={this.tableauImageCouleur[2][0]}
-                      style={{
-                        marginLeft : this.tableauImageCouleur[2][3],
-                        marginTop : this.tableauImageCouleur[2][4],
-                        width: this.tableauImageCouleur[2][5],
-                        height : this.tableauImageCouleur[2][6],
-                        backfaceVisibility: "hidden",
-                        ...props
-                      }}
-                    >
-                    </img>
-                  </animated.div >
-                )}
-              </Spring>
-              {/* Animation Bouton 4 */}
-              <Spring
-                native
-                to={this.rotationBoutonDevant(this.state.rotat4)
-                }
-              >
-                { props => (
-                  <animated.div 
-                    className="Bouton-4-devant"
-                    style={{
-                      borderColor: this.tableauImageCouleur[3][1],
-                      ...props
-                    }}
-                  >
-                    <img
-                      className="Image-4"
-                      alt="Bouton 4"
-                      src={this.tableauImageCouleur[3][0]}
-                      style={{
-                        marginLeft : this.tableauImageCouleur[3][3],
-                        marginTop : this.tableauImageCouleur[3][4],
-                        width: this.tableauImageCouleur[3][5],
-                        height : this.tableauImageCouleur[3][6],
-                        backfaceVisibility: "hidden",
-                        ...props
-                      }}
-                    >
-                    </img>
-                  </animated.div >
-                )}
-              </Spring>
-              <Spring
-                native
-                to={this.rotationBoutonDerriere(this.state.rotat4)
-                }
-              >
-                { props => (
-                  <animated.div 
-                    className="Bouton-4-derriere"
-                    style={{
-                      backgroundColor: this.tableauImageCouleur[3][1],
-                      ...props
-                    }}
-                  >
-                      <p className="Texte_bouton" >
-                        {this.tableauImageCouleur[3][8]}
-                      </p>
-                  </animated.div>
-                )}
-              </Spring>
-              <Link to={this.tableauImageCouleur[3][7]}>
-                <div
-                  className="Gestion-rotat-4"
-                  onMouseEnter={() => this.setState( { rotat4 : true } )} 
-                  onMouseOut={() => this.setState( { rotat4 : false } ) }
-                  onClick={() => 
-                    this.setState( {etapeRotat : 1, boutonClique : this.tableauImageCouleur[3][2] } )
-                  }
-                >
-                </div>
-              </Link>
-            
-              {/* Animation Bouton 5 */}
-              <Spring
-                native
-                to={this.rotationBoutonDevant(this.state.rotat5)
-                }
-              >
-                { props => (
-                  <animated.div 
-                    className="Bouton-5-devant"
-                    style={{
-                      borderColor: this.tableauImageCouleur[4][1],
-                      ...props
-                    }}
-                  >
-                    <img
-                      className="Image-5"
-                      alt="Bouton 5"
-                      src={this.tableauImageCouleur[4][0]}
-                      style={{
-                        marginLeft : this.tableauImageCouleur[4][3],
-                        marginTop : this.tableauImageCouleur[4][4],
-                        width: this.tableauImageCouleur[4][5],
-                        height : this.tableauImageCouleur[4][6],
-                        backfaceVisibility: "hidden",
-                        ...props
-                      }}
-                    >
-                    </img>
-                  </animated.div >
-                )}
-              </Spring>
-              <Spring
-              native
-              to={this.rotationBoutonDerriere(this.state.rotat5)
-              }
-            >
-              { props => (
-                <animated.div 
-                  className="Bouton-5-derriere"
-                  style={{
-                    backgroundColor: this.tableauImageCouleur[4][1],
-                    ...props
-                  }}
-                >
-                    <p className="Texte_bouton" >
-                      {this.tableauImageCouleur[4][8]}
-                    </p>
-                </animated.div >
-              )}
-            </Spring>
-              <Link to={this.tableauImageCouleur[4][7]}>
-                <div
-                  className="Gestion-rotat-5"
-                  onMouseEnter={() => this.setState( { rotat5 : true } )} 
-                  onMouseOut={() => this.setState( { rotat5 : false } ) }
-                  onClick={() => 
-                    this.setState( {etapeRotat : 1, boutonClique : this.tableauImageCouleur[4][2]} )
-                  }
-                >
-
-                </div>
-              </Link>
-            </div>
-            <Spring
-              native
-              to={{ 
-                couleurBordure : this.tableauImageCouleur[2][1]
-              }}
-            >
-              { props => (
-                <animated.div 
-                  className="BordureArrondiGauche" 
-                  style={{ 
-                    backgroundColor : props.couleurBordure,
-                    minHeight  : this.state.boutonClique === "apercu" ? "730px" : "400px"
-                  }}
-                >
-                  <animated.div className="Titre_page_actuel_mobile" style={{ backgroundColor: props.couleurBordure}}>
-                    <p className="Texte_titre_page_actuel_mobile">
-                      {this.tableauImageCouleur[2][8]}
-                    </p>
-                  </animated.div>
-                </animated.div>
-              ) }
-            </Spring>
-            <Switch>
-              <Route path="/home" component={ComposantHome} />
-              <Route path="/infoPerso" component={ComposantInfoPerso} />
-              <Route path="/apercu" component={ComposantApercu} />
-              <Route path="/contact" component={ComposantContactWithStore} />
-              <Route path="/competence" component={ComposantCompetence} />
-              <Route path="/" component={ComposantHome} />
-            </Switch>
-          </div>
+              </animated.div>
+            ) }
+          </Spring>
           <div
             className="Contenaire_anim_de_fond"
           >
@@ -3549,6 +3243,331 @@ class App extends React.Component {
                 </div>
               )}
             </this.AnimInfini>
+          </div>
+          <div className="App-web" >
+            <div 
+              className="ContenaireBoutonNavigation"
+              style={{
+                minHeight  : this.state.boutonClique === "apercu" ? "700px" : "400px"
+              }}
+            >
+              {/*  Animation Bouton 1 */}
+              <Spring
+                native
+                to={this.rotationBoutonDerriere(this.state.rotat)
+                }
+              >
+                { props => (
+                  
+                  <animated.div 
+                    className="Bouton-1-derriere"
+                    style={{
+                        backgroundColor: this.tableauImageCouleur[0][1],
+                        ...props
+                    }}
+                  
+                  >
+                      <p className="Texte_bouton" >
+                        {this.tableauImageCouleur[0][8]}
+                      </p>
+                  </animated.div >
+                )}
+              </Spring>
+              <Spring
+                native
+                to={this.rotationBoutonDevant(this.state.rotat)
+                }
+              >
+                { props => (
+                  <animated.div 
+                    className="Bouton-1-devant"
+                    style={{
+                      borderColor: this.tableauImageCouleur[0][1],
+                      ...props
+                    }}
+                  >
+                    <img
+                      className="Image-Bouton-1"
+                      alt="Bouton 1"
+                      src={this.tableauImageCouleur[0][0]}
+                      style={{
+                        marginLeft : this.tableauImageCouleur[0][3],
+                        marginTop : this.tableauImageCouleur[0][4],
+                        width: this.tableauImageCouleur[0][5],
+                        height : this.tableauImageCouleur[0][6],
+                        backfaceVisibility: "hidden",
+                        ...props
+                      }}
+                    >
+                    </img>
+                  </animated.div >
+                )}
+              </Spring>
+              <Link to={this.tableauImageCouleur[0][7]}>
+                <div
+                  className="Gestion-rotat-1"
+                  onPointerEnter={() => this.setState( { rotat : true } )} 
+                  onMouseOut={() => this.setState( { rotat : false } ) }
+                  onClick={() => 
+                    this.setState( {etapeRotat : 1, boutonClique : this.tableauImageCouleur[0][2]} )
+                  }
+                >
+                
+                </div>
+              </Link>
+              
+              {/* Animation Bouton 2 */}
+              <Spring
+                native
+                to={this.rotationBoutonDevant(this.state.rotat2)
+                }
+              >
+                { props => (
+                  <animated.div 
+                    className="Bouton-2-devant"
+                    style={{
+                      borderColor: this.tableauImageCouleur[1][1],
+                      ...props
+                    }}
+                  >
+                      <img
+                        className="Image-2"
+                        alt="Bouton 2"
+                        src={this.tableauImageCouleur[1][0]}
+                        style={{
+                          marginLeft : this.tableauImageCouleur[1][3],
+                          marginTop : this.tableauImageCouleur[1][4],
+                          width: this.tableauImageCouleur[1][5],
+                          height : this.tableauImageCouleur[1][6],
+                          backfaceVisibility: "hidden",
+                          ...props
+                        }}
+                      >
+                      </img>
+                  </animated.div >
+                )}
+              </Spring>
+              <Spring
+                native
+                to={this.rotationBoutonDerriere(this.state.rotat2)
+                }
+              >
+                { props => (
+                  <animated.div 
+                    className="Bouton-2-derriere"
+                    style={{
+                      backgroundColor : this.tableauImageCouleur[1][1],
+                      borderColor: this.tableauImageCouleur[1][1],
+                      ...props
+                    }}
+                  >
+                      <p className="Texte_bouton" >
+                        {this.tableauImageCouleur[1][8]}
+                      </p>
+                  </animated.div>
+                )}
+              </Spring>
+              <Link to={this.tableauImageCouleur[1][7]}>
+                <div
+                  className="Gestion-rotat-2"
+                  onMouseEnter={() => this.setState( { rotat2 : true } )} 
+                  onMouseOut={() => this.setState( { rotat2 : false } ) }
+                  onClick={() => 
+                    this.setState( {etapeRotat : 1, boutonClique : this.tableauImageCouleur[1][2]} )
+                  }
+                >
+
+                </div>
+              </Link>
+              {/* Animation Bouton 3 */}
+              <Spring
+                native
+                to={this.rotationBoutonDevant(this.state.rotat3)
+                }
+              >
+                { props => (
+                  <animated.div 
+                    className="Bouton-3-devant"
+                    style={{
+                      backgroundColor: this.tableauImageCouleur[2][1],
+                      borderColor: this.tableauImageCouleur[2][1],
+                      left: this.tableauImageCouleur[2][1],
+                      bottom: this.tableauImageCouleur[2][2],
+                      ...props 
+                    }}
+                  >
+                    <img
+                      className="Image-3"
+                      alt="Bouton 3"
+                      src={this.tableauImageCouleur[2][0]}
+                      style={{
+                        marginLeft : this.tableauImageCouleur[2][3],
+                        marginTop : this.tableauImageCouleur[2][4],
+                        width: this.tableauImageCouleur[2][5],
+                        height : this.tableauImageCouleur[2][6],
+                        backfaceVisibility: "hidden",
+                        ...props
+                      }}
+                    >
+                    </img>
+                  </animated.div >
+                )}
+              </Spring>
+              {/* Animation Bouton 4 */}
+              <Spring
+                native
+                to={this.rotationBoutonDevant(this.state.rotat4)
+                }
+              >
+                { props => (
+                  <animated.div 
+                    className="Bouton-4-devant"
+                    style={{
+                      borderColor: this.tableauImageCouleur[3][1],
+                      ...props
+                    }}
+                  >
+                    <img
+                      className="Image-4"
+                      alt="Bouton 4"
+                      src={this.tableauImageCouleur[3][0]}
+                      style={{
+                        marginLeft : this.tableauImageCouleur[3][3],
+                        marginTop : this.tableauImageCouleur[3][4],
+                        width: this.tableauImageCouleur[3][5],
+                        height : this.tableauImageCouleur[3][6],
+                        backfaceVisibility: "hidden",
+                        ...props
+                      }}
+                    >
+                    </img>
+                  </animated.div >
+                )}
+              </Spring>
+              <Spring
+                native
+                to={this.rotationBoutonDerriere(this.state.rotat4)
+                }
+              >
+                { props => (
+                  <animated.div 
+                    className="Bouton-4-derriere"
+                    style={{
+                      backgroundColor: this.tableauImageCouleur[3][1],
+                      ...props
+                    }}
+                  >
+                      <p className="Texte_bouton" >
+                        {this.tableauImageCouleur[3][8]}
+                      </p>
+                  </animated.div>
+                )}
+              </Spring>
+              <Link to={this.tableauImageCouleur[3][7]}>
+                <div
+                  className="Gestion-rotat-4"
+                  onMouseEnter={() => this.setState( { rotat4 : true } )} 
+                  onMouseOut={() => this.setState( { rotat4 : false } ) }
+                  onClick={() => 
+                    this.setState( {etapeRotat : 1, boutonClique : this.tableauImageCouleur[3][2] } )
+                  }
+                >
+                </div>
+              </Link>
+            
+              {/* Animation Bouton 5 */}
+              <Spring
+                native
+                to={this.rotationBoutonDevant(this.state.rotat5)
+                }
+              >
+                { props => (
+                  <animated.div 
+                    className="Bouton-5-devant"
+                    style={{
+                      borderColor: this.tableauImageCouleur[4][1],
+                      ...props
+                    }}
+                  >
+                    <img
+                      className="Image-5"
+                      alt="Bouton 5"
+                      src={this.tableauImageCouleur[4][0]}
+                      style={{
+                        marginLeft : this.tableauImageCouleur[4][3],
+                        marginTop : this.tableauImageCouleur[4][4],
+                        width: this.tableauImageCouleur[4][5],
+                        height : this.tableauImageCouleur[4][6],
+                        backfaceVisibility: "hidden",
+                        ...props
+                      }}
+                    >
+                    </img>
+                  </animated.div >
+                )}
+              </Spring>
+              <Spring
+              native
+              to={this.rotationBoutonDerriere(this.state.rotat5)
+              }
+            >
+              { props => (
+                <animated.div 
+                  className="Bouton-5-derriere"
+                  style={{
+                    backgroundColor: this.tableauImageCouleur[4][1],
+                    ...props
+                  }}
+                >
+                    <p className="Texte_bouton" >
+                      {this.tableauImageCouleur[4][8]}
+                    </p>
+                </animated.div >
+              )}
+            </Spring>
+              <Link to={this.tableauImageCouleur[4][7]}>
+                <div
+                  className="Gestion-rotat-5"
+                  onMouseEnter={() => this.setState( { rotat5 : true } )} 
+                  onMouseOut={() => this.setState( { rotat5 : false } ) }
+                  onClick={() => 
+                    this.setState( {etapeRotat : 1, boutonClique : this.tableauImageCouleur[4][2]} )
+                  }
+                >
+
+                </div>
+              </Link>
+            </div>
+            <Spring
+              native
+              to={{ 
+                couleurBordure : this.tableauImageCouleur[2][1]
+              }}
+            >
+              { props => (
+                <animated.div 
+                  className="BordureArrondiGauche" 
+                  style={{ 
+                    backgroundColor : props.couleurBordure,
+                    minHeight  : this.state.boutonClique === "apercu" ? "730px" : "400px"
+                  }}
+                >
+                  <animated.div className="Titre_page_actuel_mobile" style={{ backgroundColor: props.couleurBordure}}>
+                    <p className="Texte_titre_page_actuel_mobile">
+                      {this.tableauImageCouleur[2][8]}
+                    </p>
+                  </animated.div>
+                </animated.div>
+              ) }
+            </Spring>
+            <Switch>
+              <Route path="/home" component={ComposantHome} />
+              <Route path="/infoPerso" component={ComposantInfoPerso} />
+              <Route path="/apercu" component={ComposantApercu} />
+              <Route path="/contact" component={ComposantContactWithStore} />
+              <Route path="/competence" component={ComposantCompetence} />
+              <Route path="/" component={ComposantHome} />
+            </Switch>
           </div>
         </div>
       )
